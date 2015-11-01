@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ArrayTrie<T> implements Trie<T> {
+    private static final int SENTINEL = '\uE000';
     private static final int DEFAULT_DATA_SIZE = 1<<10;
     
     private Map<Character, Integer> base;
@@ -41,12 +42,81 @@ public class ArrayTrie<T> implements Trie<T> {
             throw new IllegalArgumentException("Empty keys are not allowed");
         }
         
-        Integer obj = base.get(key.charAt(0));
+        Character firstChar = key.charAt(0);
+        Integer obj = base.get(firstChar);
         if (obj == null) {
             return null;
         }
         
-        char[] chars = key.toCharArray();
         int dataOffset = obj;
+        if (dataOffset == 0) {
+            base.put(firstChar, tail);
+            put(key.toCharArray(), 1);
+            return;
+        }
+        
+        char[] chars = key.toCharArray();
+        for (int i = 1; i < chars.length; i++) {
+            while (true) {
+                if (data[dataOffset] == chars[i]) {
+                    dataOffset++;
+                    break;
+                } else if (next[dataOffset] >= 0) {
+                    dataOffset = next[dataOffset];
+                    continue;
+                } else {
+                    next[dataOffset] = tail;
+                    put(chars, i);
+                    return;
+                }
+            }
+        }
+        
+        if (data[dataOffset] == SENTINEL) {
+            return;
+        } else {
+            while (next[dataOffset] >= 0) {
+                dataOffset = next[dataOffset];
+                if (data[dataOffset] == SENTINEL) {
+                    return;
+                }
+            }
+        }
+        
+        checkAndGrow(1);
+        next[dataOffset] = tail;
+        data[tail++] = SENTINEL;
+        size++;
+    }
+    
+    private void put(char[] chars, int start) {
+        assert chars != null;
+        assert start >= 0;
+        checkAndGrow(chars.length-start+1);
+        while (start < chars.length) {
+            data[tail++] = chars[start++];
+        }
+        
+        data[tail++] = SENTINEL;
+        size++;
+    }
+    
+    private void checkAndGrow(int size) {
+        if (data.length > (tail+size)) {
+            return;
+        }
+        
+        int newSize = data.length;
+        do {
+            newSize <<= 1;
+        } while (newSize <= (tail+size));
+        
+        char[] newData = new char[newSize];
+        System.arraycopy(data, 0, newData, 0, tail);
+        this.data = newData;
+        
+        int[] newNext = new int[newSize];
+        System.arraycopy(next, 0, newNext, 0, tail);
+        this.next = newNext;
     }
 }
