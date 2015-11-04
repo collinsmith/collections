@@ -6,6 +6,12 @@ public interface Buildable<T extends Buildable<T, B>, B extends Builder<? super 
                     throws IllegalAccessException, InstantiationException {
         return clazz.newInstance().builder();
     }
+            
+    static <T extends Buildable<T, B>, B extends Builder<T>>
+            B getBuilder(Class<T> clazz, T initialValues)
+                    throws IllegalAccessException, InstantiationException {
+        return clazz.newInstance().builder(initialValues);
+    }
     
     static void test() {
         try {
