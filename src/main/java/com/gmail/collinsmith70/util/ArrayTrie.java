@@ -3,8 +3,10 @@ package com.gmail.collinsmith70.util;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Predicates;
 import com.google.common.base.Strings;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ArrayTrie<T> implements Trie<T> {
     private static final int SENTINEL = '\uE000';
@@ -52,7 +54,7 @@ public class ArrayTrie<T> implements Trie<T> {
         if (dataOffset == 0) {
             base.put(firstChar, tail);
             put(key.toCharArray(), 1);
-            return;
+            return null;
         }
         
         char[] chars = key.toCharArray();
@@ -67,18 +69,18 @@ public class ArrayTrie<T> implements Trie<T> {
                 } else {
                     next[dataOffset] = tail;
                     put(chars, i);
-                    return;
+                    return null;
                 }
             }
         }
         
         if (data[dataOffset] == SENTINEL) {
-            return;
+            return null;
         } else {
             while (next[dataOffset] >= 0) {
                 dataOffset = next[dataOffset];
                 if (data[dataOffset] == SENTINEL) {
-                    return;
+                    return null;
                 }
             }
         }
@@ -87,6 +89,7 @@ public class ArrayTrie<T> implements Trie<T> {
         next[dataOffset] = tail;
         data[tail++] = SENTINEL;
         size++;
+        return null;
     }
     
     private void put(char[] chars, int start) {
@@ -118,5 +121,65 @@ public class ArrayTrie<T> implements Trie<T> {
         int[] newNext = new int[newSize];
         System.arraycopy(next, 0, newNext, 0, tail);
         this.next = newNext;
+    }
+
+    @Override
+    public Set<String> getKeysPrefixedWith(String prefix) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int size() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isEmpty() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean containsKey(Object key) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean containsValue(Object value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public T get(Object key) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public T remove(Object key) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void putAll(Map<? extends String, ? extends T> m) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<String> keySet() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Collection<T> values() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<Entry<String, T>> entrySet() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
