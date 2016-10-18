@@ -17,7 +17,7 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
     return null;
   }
 
-  private static class Node<E> {
+  static class Node<E> {
 
     Node<E> next;
 
@@ -58,7 +58,7 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
 
   }
 
-  private static final class ImmutableNode<E> extends Node<E> {
+  static final class ImmutableNode<E> extends Node<E> {
 
     static <E> Node<E> newImmutableNode(Node<E> next, E data) {
       return new ImmutableNode<E>(next, data);
