@@ -36,4 +36,13 @@ public class ListTest<T extends List> {
     assertTrue(obj.equals(removed));
   }
 
+  @Test
+  public void test_contains() throws IllegalAccessException, InstantiationException {
+    Object obj = new Object();
+    T instance = clazz.newInstance();
+    assertFalse(instance.contains(obj));
+    instance.add(obj);
+    assertTrue(instance.contains(obj));
+  }
+
 }
