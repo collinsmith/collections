@@ -7,6 +7,8 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
   private final Node<E> head;
   private Node<E> tail;
 
+  private int size;
+
   public SinglyLinkedList() {
     this.head = new Node();
     this.tail = null;
@@ -19,7 +21,7 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
 
   @Override
   public int size() {
-    return 0;
+    return size;
   }
 
   @Override
