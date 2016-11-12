@@ -5,9 +5,11 @@ import java.util.AbstractList;
 public class SinglyLinkedList<E> extends AbstractList<E> {
 
   private final Node<E> head;
+  private Node<E> tail;
 
   public SinglyLinkedList() {
     this.head = new Node();
+    this.tail = null;
   }
 
   @Override
