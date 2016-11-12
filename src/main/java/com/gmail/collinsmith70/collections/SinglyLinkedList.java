@@ -25,8 +25,19 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
 
   private static class Node<E> {
 
+    private static final String TAG = Node.class.getSimpleName();
+
     E data;
     Node<E> next;
+
+    boolean hasNext() {
+      return next != null;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("%s: { data=%s, next=%s }", TAG, data, next);
+    }
 
   }
 
