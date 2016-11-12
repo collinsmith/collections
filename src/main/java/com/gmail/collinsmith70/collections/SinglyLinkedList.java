@@ -11,15 +11,18 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
 
   public SinglyLinkedList() {
     this.head = new Node();
+    _clear();
+  }
+
+  private void _clear() {
+    this.head.next = null;
     this.tail = null;
     this.size = 0;
   }
 
   @Override
   public void clear() {
-    this.head.next = null;
-    this.tail = null;
-    this.size = 0;
+    _clear();
   }
 
   @Override
