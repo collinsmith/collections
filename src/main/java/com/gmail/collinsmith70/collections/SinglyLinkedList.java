@@ -25,7 +25,7 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
 
   private static class Node<E> {
 
-    private static final String TAG = Node.class.getSimpleName();
+    static final String TAG = Node.class.getSimpleName();
 
     E data;
     Node<E> next;
