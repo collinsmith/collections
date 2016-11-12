@@ -16,6 +16,13 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
   }
 
   @Override
+  public void clear() {
+    this.head.next = null;
+    this.tail = null;
+    this.size = 0;
+  }
+
+  @Override
   public E get(int index) {
     return null;
   }
