@@ -12,6 +12,7 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
   public SinglyLinkedList() {
     this.head = new Node();
     this.tail = null;
+    this.size = 0;
   }
 
   @Override
