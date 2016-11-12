@@ -4,8 +4,10 @@ import java.util.AbstractList;
 
 public class SinglyLinkedList<E> extends AbstractList<E> {
 
-  public SinglyLinkedList() {
+  private final Node<E> head;
 
+  public SinglyLinkedList() {
+    this.head = new Node();
   }
 
   @Override
