@@ -23,6 +23,11 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
     super.add(index, element);
   }
 
+  @Override
+  public E remove(int index) {
+    return super.remove(index);
+  }
+
   private static class Node<E> {
 
     static final String TAG = Node.class.getSimpleName();
