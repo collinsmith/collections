@@ -1,5 +1,7 @@
 package com.gmail.collinsmith70.collections;
 
+import com.google.common.base.Preconditions;
+
 import java.util.AbstractList;
 
 public class SinglyLinkedList<E> extends AbstractList<E> {
@@ -37,7 +39,16 @@ public class SinglyLinkedList<E> extends AbstractList<E> {
 
   @Override
   public void add(int index, E element) {
-    super.add(index, element);
+    Preconditions.checkElementIndex(index, size());
+    Node<E> current = head.next;
+    for (int i = 0; i < index; i++) {
+      current = current.next;
+    }
+
+    Node<E> added = new Node<>();
+    added.data = element;
+    added.next = current.next;
+    current.next = added;
   }
 
   @Override
