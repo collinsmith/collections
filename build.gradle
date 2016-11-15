@@ -1,11 +1,17 @@
+group 'com.gmail.collinsmith70.collections'
+version '1.0'
+
 apply plugin: 'java'
 
-sourceCompatibility = '1.8'
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
-if (!hasProperty('mainClass')) {
-    ext.mainClass = ''
-}
+sourceSets.main.java.srcDirs = ["src"]
+
+sourceSets.test.java.srcDirs = ["test/src"]
+sourceSets.test.resources.srcDirs = ["test/res"]
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -15,4 +21,12 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
     
     compile group: 'com.google.guava', name: 'guava', version: '19.0-rc2'
+}
+
+jar {
+    manifest {
+        attributes "Specification-Title":    "Collection of Data Structures",
+                   "Implementation-Title":   rootProject.group,
+                   "Implementation-Version": version
+    }
 }
