@@ -1,0 +1,105 @@
+package com.gmail.collinsmith70.collections;
+
+import com.google.common.base.Preconditions;
+
+import java.util.AbstractSequentialList;
+import java.util.ListIterator;
+
+public class SinglyLinkedList<E, N extends SinglyLinkedList.Node<E, N>> extends AbstractSequentialList<E> {
+
+  int size = 0;
+  N first;
+  N last;
+
+  public SinglyLinkedList() {
+  }
+
+  @Override
+  public int size() {
+    return 0;
+  }
+
+  /**
+   * Returns the (non-null) Node at the specified element index.
+   */
+  N node(int index) {
+    // assert isElementIndex(index);
+
+    N x = first;
+    for (int i = 0; i < index; i++)
+      x = x.next;
+    return x;
+  }
+
+  protected static class Node<E, N extends Node<E, N>> {
+    E data;
+    N next;
+
+    Node(E element, N next) {
+      this.data = element;
+      this.next = next;
+    }
+  }
+
+  @Override
+  public ListIterator<E> listIterator(int index) {
+    Preconditions.checkElementIndex(index, size());
+    return new SinglyLinkedListIterator<Node>(index);
+  }
+
+  protected class SinglyLinkedListIterator<N extends Node<E, N>> implements ListIterator<E> {
+    protected N current;
+    protected N next;
+    protected int nextIndex;
+
+    SinglyLinkedListIterator(int index) {
+
+    }
+
+    @Override
+    public boolean hasNext() {
+      return false;
+    }
+
+    @Override
+    public E next() {
+      return null;
+    }
+
+    @Override
+    public boolean hasPrevious() {
+      return false;
+    }
+
+    @Override
+    public E previous() {
+      return null;
+    }
+
+    @Override
+    public int nextIndex() {
+      return 0;
+    }
+
+    @Override
+    public int previousIndex() {
+      return 0;
+    }
+
+    @Override
+    public void remove() {
+
+    }
+
+    @Override
+    public void set(E e) {
+
+    }
+
+    @Override
+    public void add(E e) {
+
+    }
+  }
+
+}
