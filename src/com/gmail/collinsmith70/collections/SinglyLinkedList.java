@@ -14,6 +14,10 @@ public class SinglyLinkedList<E, N extends SinglyLinkedList.Node<E, N>> extends 
   public SinglyLinkedList() {
   }
 
+  protected void checkElementIndex(int index) {
+    Preconditions.checkElementIndex(index, size());
+  }
+
   @Override
   public int size() {
     return 0;
@@ -43,7 +47,7 @@ public class SinglyLinkedList<E, N extends SinglyLinkedList.Node<E, N>> extends 
 
   @Override
   public ListIterator<E> listIterator(int index) {
-    Preconditions.checkElementIndex(index, size());
+    checkElementIndex(index);
     return new SinglyLinkedListIterator<Node>(index);
   }
 

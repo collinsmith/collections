@@ -1,7 +1,5 @@
 package com.gmail.collinsmith70.collections;
 
-import com.google.common.base.Preconditions;
-
 import java.util.ListIterator;
 
 public class DoublyLinkedList<E> extends SinglyLinkedList<E, DoublyLinkedList.Node<E>> {
@@ -38,7 +36,7 @@ public class DoublyLinkedList<E> extends SinglyLinkedList<E, DoublyLinkedList.No
 
   @Override
   public ListIterator<E> listIterator(int index) {
-    Preconditions.checkElementIndex(index, size());
+    checkElementIndex(index);
     return new DoublyLinkedListIterator(index);
   }
 
