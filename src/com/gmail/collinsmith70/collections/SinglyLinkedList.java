@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 
 import java.util.AbstractSequentialList;
 import java.util.ListIterator;
+import java.util.function.Supplier;
 
 public class SinglyLinkedList<E, N extends SinglyLinkedList.Node<E, N>> extends AbstractSequentialList<E> {
 
@@ -12,6 +13,23 @@ public class SinglyLinkedList<E, N extends SinglyLinkedList.Node<E, N>> extends 
   N last;
 
   public SinglyLinkedList() {
+  }
+
+  /**
+   * Links e as first element.
+   */
+  protected void linkFirst(E e, Supplier<N> supplier) {
+    final N first = this.first;
+    final N newNode = supplier.get();
+    newNode.data = e;
+    newNode.next = first;
+    this.first = newNode;
+    if (first == null) {
+      last = newNode;
+    }
+
+    size++;
+    modCount++;
   }
 
   protected void checkElementIndex(int index) {
