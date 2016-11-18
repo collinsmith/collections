@@ -23,7 +23,7 @@ public class DoublyLinkedList<E> extends SinglyLinkedList<E, DoublyLinkedList.No
 
   @Override
   Node<E> node(int index) {
-    // assert isElementIndex(index);
+    assert isElementIndex(index);
 
     int size = size();
     if (index < (size >> 1)) {
