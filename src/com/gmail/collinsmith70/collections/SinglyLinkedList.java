@@ -18,6 +18,10 @@ public class SinglyLinkedList<E, N extends SinglyLinkedList.Node<E, N>> extends 
     Preconditions.checkElementIndex(index, size());
   }
 
+  protected final boolean isElementIndex(int index) {
+    return 0 <= index && index < size();
+  }
+
   @Override
   public int size() {
     return 0;
@@ -27,11 +31,13 @@ public class SinglyLinkedList<E, N extends SinglyLinkedList.Node<E, N>> extends 
    * Returns the (non-null) Node at the specified element index.
    */
   N node(int index) {
-    // assert isElementIndex(index);
+    assert isElementIndex(index);
 
     N x = first;
-    for (int i = 0; i < index; i++)
+    for (int i = 0; i < index; i++) {
       x = x.next;
+    }
+
     return x;
   }
 
