@@ -72,7 +72,7 @@ public class SinglyLinkedList<E, N extends SinglyLinkedList.Node<E, N>> extends 
   @Override
   public ListIterator<E> listIterator(int index) {
     checkElementIndex(index);
-    return new SinglyLinkedListIterator<Node>(index);
+    return new SinglyLinkedListIterator<N>(index);
   }
 
   protected class SinglyLinkedListIterator<N extends Node<E, N>> implements ListIterator<E> {
