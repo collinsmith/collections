@@ -30,3 +30,12 @@ jar {
                    "Implementation-Version": version
     }
 }
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+        exceptionFormat "short"
+
+        //info.events = ["failed", "skipped"]
+    }
+}
