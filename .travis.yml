@@ -5,10 +5,10 @@ jdk:
   - oraclejdk8
 
 #before_install:
-# - chmod +x gradle
+ - chmod +x gradlew
   
 script:
-  - ./gradle clean build
+  - ./gradlew clean build
   
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
