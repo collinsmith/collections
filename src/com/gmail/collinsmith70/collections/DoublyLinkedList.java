@@ -3,7 +3,7 @@ package com.gmail.collinsmith70.collections;
 import java.util.ListIterator;
 import java.util.function.Supplier;
 
-public class DoublyLinkedList<E> extends SinglyLinkedList<E, DoublyLinkedList.Node<E>> {
+public class DoublyLinkedList<E> extends AbstractSinglyLinkedList<E, DoublyLinkedList.Node<E>> {
 
   private DoublyLinkedList() {
   }
@@ -39,7 +39,7 @@ public class DoublyLinkedList<E> extends SinglyLinkedList<E, DoublyLinkedList.No
     }
   }
 
-  protected static class Node<E> extends SinglyLinkedList.Node<E, Node<E>> {
+  protected static class Node<E> extends AbstractSinglyLinkedList.Node<E, Node<E>> {
     Node<E> prev;
 
     Node() {
@@ -58,7 +58,8 @@ public class DoublyLinkedList<E> extends SinglyLinkedList<E, DoublyLinkedList.No
     return new DoublyLinkedListIterator(index);
   }
 
-  protected class DoublyLinkedListIterator extends SinglyLinkedList<E, Node<E>>.SinglyLinkedListIterator<Node<E>> {
+  protected class DoublyLinkedListIterator
+      extends AbstractSinglyLinkedList<E, Node<E>>.SinglyLinkedListIterator<Node<E>> {
 
     DoublyLinkedListIterator(int index) {
       super(index);
