@@ -92,3 +92,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+#NetBeans
+/nbproject/
+/.nb-gradle/
+.nb-gradle-properties
