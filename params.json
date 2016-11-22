@@ -1,0 +1,6 @@
+{
+  "name": "Collections",
+  "tagline": "Aggregation of useful data structures which I have implementations for.",
+  "body": "# Java Collection of Data Structures\r\n[![Build Status](https://travis-ci.org/collinsmith/collections.png)](https://travis-ci.org/collinsmith/collections)\r\n\r\n\r\nA collection of all data structures I have implementations for in Java.",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
