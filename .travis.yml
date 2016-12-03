@@ -6,15 +6,46 @@ jdk:
 
 before_install:
  - chmod +x gradlew
-  
+
 script:
   - ./gradlew clean build
-  
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-  
+
 cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+
+before_deploy:
+  - mv .travis/ssh_config ~/.ssh/config
+  - openssl aes-256-cbc -K $encrypted_a99766e4b879_key -iv $encrypted_a99766e4b879_iv -in .travis/github_deploy_key.enc -out github_deploy_key -d
+  - chmod 600 github_deploy_key
+  - eval `ssh-agent -s`
+  - ssh-add github_deploy_key
+  - export RELEASE_JAR_LIBRARY=$(ls build/libs/*.jar)
+  - export GIT_TAG=${RELEASE_JAR_LIBRARY%.jar}
+  - GIT_TAG=${GIT_TAG##*/}
+  - GIT_TAG=${GIT_TAG/collections-/v}
+  - echo "Deploying $RELEASE_JAR_LIBRARY to GitHub releases as $GIT_TAG"
+  - git config --global user.email "builds@travis-ci.org"
+  - git config --global user.name "Travis CI"
+  - git tag $GIT_TAG -a -f -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER. This tag should not be relied upon due to constant forced retags to current build head, and master head should be used instead."
+  - git push -fq git@github.com:collinsmith/collections.git --tags
+
+deploy:
+  provider: releases
+  api_key:
+    secure: Ujfk1XebrFM8Pigw9CN2Q3Wt2AFZDvmtpeN69uh7TXzuE7+8mCnsYc2A1K9F24556bT79x5tgEZ4E0b+Ira4yzwpzsx0rsmfaS93mL4m0fl+JQsO0XQz3RFokW9/JGibbe1BRs++1hO+twN1lCjKLPz+a13ekFX/AfYjyK8wuCIaHRioCjckgOb8m1Ox4rhf8aNQmFNC8OYogUVMN+CUyOYJnuxIlqtIjpHlkcop/cU3mzocN62z+TMSuBKugedAc87yfBrpHFWyrSSM4RXyki2dKyGw17kZ+TRDyYyoa+zrd8JRppcOpwnjKzy3UONtQcYEuJbV26F2oVmcFj3Mepc9fZ6YuzkDzYsn18mHuXpW0uwo04UKaTc70unoGkMD7UmLxVP+sXerLZmLCz1IGw3LckvBXKuPTMjHqumaFUK3vFk+ubcTtjOgo6RTGs5HsF8lDPY1juGzPjM9trW56Va/FBj+nyaG4hU2joemShiTlJt/VWuWUHXuvS2Lu7u6A7V7ilrlEcCuqmY2BVgap2H/GPyYayVwNJbr5w6VSoLR7yXcK/H+13M+m8kZzyxbA4TCeAYzxnhMqNwLeEw9fWU82+2cheutHYZcVl5HbrPWWHtryBZ1HT+Ja3l1JbsMZiYhA+kXYVoMHK66BKUGEbHvoaygOilYAcDjAU1Ym0I=
+  file_glob: true
+  file: "${RELEASE_JAR_LIBRARY}"
+  skip_cleanup: true
+  on:
+    repo: collinsmith/collections
+    tags: false
+    branch: master
+branches:
+  except:
+    - /^v[0-9]*-SNAPSHOT$/
