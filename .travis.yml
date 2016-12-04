@@ -38,6 +38,7 @@ before_deploy:
   - ls -a $HOME
   - ls -a
   - pwd
+  - ls -la build
 
 deploy:
   provider: releases
