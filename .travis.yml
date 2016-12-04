@@ -37,6 +37,7 @@ before_deploy:
   - git push -fq git@github.com:collinsmith/collections.git --tags
   - ls -a $HOME
   - ls -a
+  - pwd
 
 deploy:
   provider: releases
