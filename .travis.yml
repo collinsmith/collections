@@ -39,6 +39,8 @@ before_deploy:
   - ls -a
   - pwd
   - ls -la build
+  - rm -Rf gh-pages
+  - cd $HOME
   - git clone --quiet --branch=gh-pages git@github.com:collinsmith/collections.git gh-pages > /dev/null
   - cd $HOME/gh-pages
   - cp -Rf $HOME/build/docs/ javadoc/
