@@ -39,6 +39,12 @@ before_deploy:
   - ls -a
   - pwd
   - ls -la build
+  - git clone --quiet --branch=gh-pages git@github.com:collinsmith/collections.git gh-pages > /dev/null
+  - cd $HOME/gh-pages
+  - cp -Rf $HOME/build/docs/ javadoc/
+  - git add -f javadoc/
+  - git commit -m "Lastest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
+  - git push -fq origin gh-pages > /dev/null
 
 deploy:
   provider: releases
