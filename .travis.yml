@@ -36,6 +36,7 @@ before_deploy:
   - git tag $GIT_TAG -a -f -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER. This tag should not be relied upon due to constant forced retags to current build head, and master head should be used instead."
   - git push -fq git@github.com:collinsmith/collections.git --tags
   - ls -a $HOME
+  - ls -a
 
 deploy:
   provider: releases
