@@ -57,4 +57,5 @@ deploy:
 branches:
   except:
     - /^v[0-9]*-SNAPSHOT$/
+    - /^untagged-*$/
     - gh-pages
