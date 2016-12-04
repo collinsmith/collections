@@ -52,7 +52,7 @@ deploy:
   skip_cleanup: true
   on:
     repo: collinsmith/collections
-    tags: false
+    tags: true
     branch: master
 branches:
   except:
