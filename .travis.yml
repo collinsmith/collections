@@ -35,13 +35,6 @@ before_deploy:
   - git config --global user.name "Travis CI"
   - git tag $GIT_TAG -a -f -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER. This tag should not be relied upon due to constant forced retags to current build head, and master head should be used instead."
   - git push -fq git@github.com:collinsmith/collections.git --tags
-  - cd $HOME
-  - git clone --quiet --branch=gh-pages git@github.com:collinsmith/collections.git gh-pages > /dev/null
-  - #cd $HOME/gh-pages
-  - #cp -Rf $HOME/build/$TRAVIS_REPO_SLUG/build/docs/javadoc $HOME/gh-pages/javadoc
-  - #git add -f javadoc/
-  - #git commit -m "Lastest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
-  - #git push -fq origin gh-pages > /dev/null
 
 deploy:
   provider: releases
@@ -54,6 +47,16 @@ deploy:
     repo: collinsmith/collections
     tags: false
     branch: master
+
+after_deploy:
+  - cd $HOME
+  - git clone --quiet --branch=gh-pages git@github.com:collinsmith/collections.git gh-pages > /dev/null
+  - #cd $HOME/gh-pages
+  - #cp -Rf $HOME/build/$TRAVIS_REPO_SLUG/build/docs/javadoc $HOME/gh-pages/javadoc
+  - #git add -f javadoc/
+  - #git commit -m "Lastest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
+  - #git push -fq origin gh-pages > /dev/null
+
 branches:
   except:
     - /^v[0-9]*[.][0-9]*-SNAPSHOT$/
