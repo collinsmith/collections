@@ -41,7 +41,7 @@ before_deploy:
   - cp -Rf $HOME/build/$TRAVIS_REPO_SLUG/build/docs/javadoc $HOME/gh-pages/javadoc
   - git add -f javadoc/
   - git commit -m "Lastest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
-  - git push -fq origin gh-pages > /dev/null
+  - #git push -fq origin gh-pages > /dev/null
 
 deploy:
   provider: releases
