@@ -51,11 +51,11 @@ deploy:
 after_deploy:
   - cd $HOME
   - git clone --quiet --branch=gh-pages git@github.com:collinsmith/collections.git gh-pages > /dev/null
-  - #cd $HOME/gh-pages
-  - #cp -Rf $HOME/build/$TRAVIS_REPO_SLUG/build/docs/javadoc $HOME/gh-pages/javadoc
-  - #git add -f javadoc/
-  - #git commit -m "Lastest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
-  - #git push -fq origin gh-pages > /dev/null
+  - cd $HOME/gh-pages
+  - cp -Rf $HOME/build/$TRAVIS_REPO_SLUG/build/docs/javadoc $HOME/gh-pages/javadoc
+  - git add -f javadoc/
+  - git commit -m "Lastest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
+  - git push -fq origin gh-pages > /dev/null
 
 branches:
   except:
