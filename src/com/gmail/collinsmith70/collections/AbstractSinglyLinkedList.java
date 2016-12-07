@@ -42,7 +42,7 @@ public abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinked
 
   @Override
   public int size() {
-    return 0;
+    return size;
   }
 
   /**
