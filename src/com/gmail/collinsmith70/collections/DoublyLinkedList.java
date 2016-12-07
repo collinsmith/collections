@@ -27,6 +27,14 @@ public class DoublyLinkedList<E> extends AbstractSinglyLinkedList<E, DoublyLinke
   }
 
   @Override
+  protected Node<E> linkLast(E e) {
+    final Node<E> last = this.last;
+    final Node<E> newNode = super.linkLast(e);
+    newNode.prev = last;
+    return newNode;
+  }
+
+  @Override
   Node<E> node(int index) {
     assert isElementIndex(index);
 
