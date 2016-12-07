@@ -35,6 +35,25 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
     return newNode;
   }
 
+  /**
+   * Links e as last element.
+   */
+  protected N linkLast(E e) {
+    final N last = this.last;
+    final N newNode = get();
+    newNode.data = e;
+    this.last = newNode;
+    if (last == null) {
+      first = newNode;
+    } else {
+      last.next = newNode;
+    }
+
+    size++;
+    modCount++;
+    return newNode;
+  }
+
   protected void checkElementIndex(int index) {
     Preconditions.checkElementIndex(index, size());
   }
