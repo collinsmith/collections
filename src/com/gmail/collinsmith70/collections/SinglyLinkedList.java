@@ -7,7 +7,16 @@ public class SinglyLinkedList<E> extends AbstractSinglyLinkedList<E, SinglyLinke
   public SinglyLinkedList() {
   }
 
+  @Override
+  public Node<E> get() {
+    return new Node<>();
+  }
+
   protected static class Node<E> extends AbstractSinglyLinkedList.Node<E, Node<E>> {
+    Node() {
+      this(null, null);
+    }
+
     Node(E element, Node<E> next) {
       super(element, next);
     }

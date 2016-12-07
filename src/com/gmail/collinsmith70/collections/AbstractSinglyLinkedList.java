@@ -6,7 +6,9 @@ import java.util.AbstractSequentialList;
 import java.util.ListIterator;
 import java.util.function.Supplier;
 
-public abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.Node<E, N>> extends AbstractSequentialList<E> {
+abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.Node<E, N>>
+    extends AbstractSequentialList<E>
+    implements Supplier<N> {
 
   int size = 0;
   N first;
@@ -18,9 +20,9 @@ public abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinked
   /**
    * Links e as first element.
    */
-  protected void linkFirst(E e, Supplier<N> supplier) {
+  protected N linkFirst(E e) {
     final N first = this.first;
-    final N newNode = supplier.get();
+    final N newNode = get();
     newNode.data = e;
     newNode.next = first;
     this.first = newNode;
@@ -30,6 +32,7 @@ public abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinked
 
     size++;
     modCount++;
+    return newNode;
   }
 
   protected void checkElementIndex(int index) {
@@ -62,6 +65,10 @@ public abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinked
   protected static class Node<E, N extends Node<E, N>> {
     E data;
     N next;
+
+    Node() {
+      this(null, null);
+    }
 
     Node(E element, N next) {
       this.data = element;

@@ -1,24 +1,29 @@
 package com.gmail.collinsmith70.collections;
 
 import java.util.ListIterator;
-import java.util.function.Supplier;
 
 public class DoublyLinkedList<E> extends AbstractSinglyLinkedList<E, DoublyLinkedList.Node<E>> {
 
   private DoublyLinkedList() {
   }
 
+  @Override
+  public Node<E> get() {
+    return new Node<>();
+  }
+
   /**
    * Links e as first element.
    */
   @Override
-  protected void linkFirst(E e, Supplier<DoublyLinkedList.Node<E>> supplier) {
+  protected Node<E> linkFirst(E e) {
     final Node<E> first = this.first;
-    final Node<E> newNode = new Node<>();
-    super.linkFirst(e, () -> newNode);
+    final Node<E> newNode = super.linkFirst(e);
     if (first != null) {
       first.prev = newNode;
     }
+
+    return newNode;
   }
 
   @Override
