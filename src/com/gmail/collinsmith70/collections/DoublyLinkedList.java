@@ -12,9 +12,6 @@ public class DoublyLinkedList<E> extends AbstractSinglyLinkedList<E, DoublyLinke
     return new Node<>();
   }
 
-  /**
-   * Links e as first element.
-   */
   @Override
   protected Node<E> linkFirst(E e) {
     final Node<E> first = this.first;
