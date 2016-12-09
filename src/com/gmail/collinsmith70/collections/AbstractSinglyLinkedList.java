@@ -54,6 +54,24 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
     return newNode;
   }
 
+  protected N linkBefore(E e, int index) {
+    final Link links = links(index);
+    final N successor = links.node;
+    final N predecessor = links.previous;
+    final N newNode = get();
+    newNode.data = e;
+    newNode.next = successor;
+    if (predecessor == null) {
+      first = newNode;
+    } else {
+      predecessor.next = newNode;
+    }
+
+    size++;
+    modCount++;
+    return newNode;
+  }
+
   protected void checkElementIndex(int index) {
     Preconditions.checkElementIndex(index, size());
   }
@@ -79,6 +97,37 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
     }
 
     return x;
+  }
+
+  /**
+   * Returns the (non-null) Node at the specified element index, paired with its possibly null node
+   * preceding it.
+   */
+  Link links(int index) {
+    assert isElementIndex(index);
+
+    N x = null;
+    N y = first;
+    for (int i = 0; i < index; i++) {
+      x = y;
+      y = y.next;
+    }
+
+    return new Link(x, y);
+  }
+
+  protected class Link {
+    N previous;
+    N node;
+
+    Link() {
+      this(null, null);
+    }
+
+    Link(N previous, N node) {
+      this.previous = previous;
+      this.node = node;
+    }
   }
 
   protected static class Node<E, N extends Node<E, N>> {
