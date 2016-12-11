@@ -35,6 +35,22 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
     return newNode;
   }
 
+  protected E unlinkFirst() {
+    assert first != null;
+    final E element = first.data;
+    final N next = first.next;
+    first.data = null;
+    first.next = null;
+    first = next;
+    if (next == null) {
+      last = null;
+    }
+
+    size--;
+    modCount++;
+    return element;
+  }
+
   /**
    * Links e as last element.
    */
