@@ -70,6 +70,23 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
     return newNode;
   }
 
+  protected E unlinkLast() {
+    assert last != null;
+    final E element = last.data;
+    final N prev = node(size() - 1);
+    last.data = null;
+    last = prev;
+    if (prev == null) {
+      first = null;
+    } else {
+      prev.next = null;
+    }
+
+    size--;
+    modCount++;
+    return element;
+  }
+
   protected N linkBefore(E e, int index) {
     final Link links = links(index);
     final N successor = links.node;
