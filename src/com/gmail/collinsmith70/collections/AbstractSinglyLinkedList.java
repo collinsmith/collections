@@ -105,6 +105,44 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
     return newNode;
   }
 
+  /**
+   * Unlinks non-null node.
+   */
+  E unlink(N node) {
+    assert node != null;
+    final E element = node.data;
+    final N next = node.next;
+    final N prev = getPrevious(node);
+
+    if (prev == null) {
+      first = next;
+    } else {
+      prev.next = next;
+    }
+
+    if (next == null) {
+      last = prev;
+    } else {
+      node.next = null;
+    }
+
+    node.data = null;
+    size--;
+    modCount++;
+    return element;
+  }
+
+  protected N getPrevious(N node) {
+    assert node != null;
+
+    N x = first;
+    while (x.next != node) {
+      x = x.next;
+    }
+
+    return x;
+  }
+
   protected void checkElementIndex(int index) {
     Preconditions.checkElementIndex(index, size());
   }

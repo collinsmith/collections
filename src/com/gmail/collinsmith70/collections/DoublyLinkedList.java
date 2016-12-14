@@ -77,6 +77,38 @@ public class DoublyLinkedList<E> extends AbstractSinglyLinkedList<E, DoublyLinke
   }
 
   @Override
+  E unlink(Node<E> node) {
+    assert node != null;
+    final E element = node.data;
+    final Node<E> next = node.next;
+    final Node<E> prev = node.prev;
+
+    if (prev == null) {
+      first = next;
+    } else {
+      prev.next = next;
+      node.prev = null;
+    }
+
+    if (next == null) {
+      last = prev;
+    } else {
+      next.prev = prev;
+      node.next = null;
+    }
+
+    node.data = null;
+    size--;
+    modCount++;
+    return element;
+  }
+
+  @Override
+  protected Node<E> getPrevious(Node<E> node) {
+    return node.prev;
+  }
+
+  @Override
   Node<E> node(int index) {
     assert isElementIndex(index);
 
