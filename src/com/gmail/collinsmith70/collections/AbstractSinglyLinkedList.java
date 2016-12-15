@@ -225,6 +225,7 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
     protected N current;
     protected N next;
     protected int nextIndex;
+    protected int expectedModCount = modCount;
 
     SinglyLinkedListIterator(int index) {
 
