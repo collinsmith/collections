@@ -151,6 +151,10 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
     return 0 <= index && index < size();
   }
 
+  protected final boolean isPositionIndex(int index) {
+    return 0 <= index && index <= size();
+  }
+
   @Override
   public int size() {
     return size;
@@ -218,17 +222,19 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
   @Override
   public ListIterator<E> listIterator(int index) {
     checkElementIndex(index);
-    return new SinglyLinkedListIterator<N>(index);
+    return new SinglyLinkedListIterator(index);
   }
 
-  protected class SinglyLinkedListIterator<N extends Node<E, N>> implements ListIterator<E> {
+  protected class SinglyLinkedListIterator implements ListIterator<E> {
     protected N current;
     protected N next;
     protected int nextIndex;
     protected int expectedModCount = modCount;
 
     SinglyLinkedListIterator(int index) {
-
+      assert isElementIndex(index);
+      next = (index == size()) ? null : node(index);
+      nextIndex = index;
     }
 
     @Override

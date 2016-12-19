@@ -146,7 +146,7 @@ public class DoublyLinkedList<E> extends AbstractSinglyLinkedList<E, DoublyLinke
   }
 
   protected class DoublyLinkedListIterator
-      extends AbstractSinglyLinkedList<E, Node<E>>.SinglyLinkedListIterator<Node<E>> {
+      extends AbstractSinglyLinkedList<E, Node<E>>.SinglyLinkedListIterator {
 
     DoublyLinkedListIterator(int index) {
       super(index);

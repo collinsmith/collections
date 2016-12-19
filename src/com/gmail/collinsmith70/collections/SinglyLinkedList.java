@@ -29,7 +29,7 @@ public class SinglyLinkedList<E> extends AbstractSinglyLinkedList<E, SinglyLinke
   }
 
   protected class SinglyLinkedListIterator
-      extends AbstractSinglyLinkedList<E, Node<E>>.SinglyLinkedListIterator<Node<E>> {
+      extends AbstractSinglyLinkedList<E, Node<E>>.SinglyLinkedListIterator {
 
     SinglyLinkedListIterator(int index) {
       super(index);
