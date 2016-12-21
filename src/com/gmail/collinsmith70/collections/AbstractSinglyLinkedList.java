@@ -239,7 +239,7 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
 
     @Override
     public boolean hasNext() {
-      return false;
+      return nextIndex < size;
     }
 
     @Override
