@@ -3,7 +3,9 @@ package com.gmail.collinsmith70.collections;
 import com.google.common.base.Preconditions;
 
 import java.util.AbstractSequentialList;
+import java.util.ConcurrentModificationException;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
 abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.Node<E, N>>
@@ -244,7 +246,14 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
 
     @Override
     public E next() {
-      return null;
+      checkForComodification();
+      if (!hasNext())
+        throw new NoSuchElementException();
+
+      current = next;
+      next = next.next;
+      nextIndex++;
+      return current.data;
     }
 
     @Override
@@ -280,6 +289,12 @@ abstract class AbstractSinglyLinkedList<E, N extends AbstractSinglyLinkedList.No
     @Override
     public void add(E e) {
 
+    }
+
+    protected final void checkForComodification() {
+      if (modCount != expectedModCount) {
+        throw new ConcurrentModificationException();
+      }
     }
   }
 
