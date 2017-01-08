@@ -4,23 +4,19 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-public class SinglyLinkedListTest {
+import static com.gmail.collinsmith70.collections.TestData.PRIMES;
 
-  final int[] PRIMES = { 2, 3, 5, 7, 11 };
+public class SinglyLinkedListTest {
 
   @Test
   public void testGet() {
     SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
-    for (int prime : PRIMES) {
-      l.addLast(prime);
-    }
-
-    System.out.println(l);
     for (int i = 0; i < PRIMES.length; i++) {
       int prime = PRIMES[i];
       l.addLast(prime);
       for (int j = 0; j <= i; j++) {
         Assert.assertEquals((int)l.get(j), PRIMES[j]);
+        System.out.printf("%s; [%d]%d=%d%n", l, j, l.get(j), PRIMES[j]);
       }
     }
   }
