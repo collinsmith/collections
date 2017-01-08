@@ -73,6 +73,7 @@ public class SinglyLinkedList<E> {
       first = last = null;
     } else {
       last = getPrevious(last);
+      last.next = null;
     }
 
     size--;
@@ -81,7 +82,7 @@ public class SinglyLinkedList<E> {
 
   private Node<E> getPrevious(Node<E> node) {
     Node<E> prev = null;
-    for (Node<E> n = first; n != null; prev = n, n = n.next);
+    for (Node<E> n = first; n != null && n != node; prev = n, n = n.next);
     return prev;
   }
 
