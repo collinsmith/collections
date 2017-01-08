@@ -9,6 +9,23 @@ public class SinglyLinkedListTest {
   final int[] PRIMES = { 2, 3, 5, 7, 11 };
 
   @Test
+  public void testGet() {
+    SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+    }
+
+    System.out.println(l);
+    for (int i = 0; i < PRIMES.length; i++) {
+      int prime = PRIMES[i];
+      l.addLast(prime);
+      for (int j = 0; j <= i; j++) {
+        Assert.assertEquals((int)l.get(j), PRIMES[j]);
+      }
+    }
+  }
+
+  @Test
   public void testAddLast() {
     SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
     System.out.println(l);
