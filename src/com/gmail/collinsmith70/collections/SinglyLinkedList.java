@@ -13,6 +13,16 @@ public class SinglyLinkedList<E> {
     return size;
   }
 
+  public boolean contains(Object obj) {
+    for (Node<E> n = first; n != null; n = n.next) {
+      if (n.element.equals(obj)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   public void addFirst(E element) {
     if (first == null) {
       first = last = new Node<>(element, null);
