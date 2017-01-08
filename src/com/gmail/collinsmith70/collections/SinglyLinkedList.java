@@ -13,6 +13,10 @@ public class SinglyLinkedList<E> {
     return size;
   }
 
+  public boolean isEmpty() {
+    return size() == 0;
+  }
+
   public boolean contains(Object obj) {
     for (Node<E> n = first; n != null; n = n.next) {
       if (n.element.equals(obj)) {
@@ -79,7 +83,10 @@ public class SinglyLinkedList<E> {
       sb.append(',');
     }
 
-    sb.deleteCharAt(sb.length()-1);
+    if (!isEmpty()) {
+      sb.deleteCharAt(sb.length() - 1);
+    }
+
     sb.append("}");
     return sb.toString();
   }
