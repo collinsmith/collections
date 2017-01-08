@@ -1,74 +1,63 @@
 package com.gmail.collinsmith70.collections;
 
+import junit.framework.Assert;
+
 import org.junit.Test;
 
 public class SinglyLinkedListTest {
 
+  final int[] PRIMES = { 2, 3, 5, 7, 11 };
+
   @Test
   public void testAddLast() {
-    System.out.println("testAddLast");
     SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
     System.out.println(l);
-    l.addLast(1);
-    System.out.println(l);
-    l.addLast(3);
-    System.out.println(l);
-    l.addLast(5);
-    System.out.println(l);
-    l.addLast(7);
-    System.out.println(l);
-    l.addLast(11);
-    System.out.println(l);
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+      Assert.assertEquals((int)l.get(l.size()-1), prime);
+      System.out.println(l);
+    }
   }
 
   @Test
   public void testAddFirst() {
-    System.out.println("testAddFirst");
     SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
     System.out.println(l);
-    l.addFirst(1);
-    System.out.println(l);
-    l.addFirst(3);
-    System.out.println(l);
-    l.addFirst(5);
-    System.out.println(l);
-    l.addFirst(7);
-    System.out.println(l);
-    l.addFirst(11);
-    System.out.println(l);
+    for (int prime : PRIMES) {
+      l.addFirst(prime);
+      Assert.assertEquals((int) l.get(0), prime);
+      System.out.println(l);
+    }
   }
 
   @Test
   public void testRemoveLast() {
-    System.out.println("testRemoveLast");
     SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
-    l.addLast(1);
-    l.addLast(3);
-    l.addLast(5);
-    l.addLast(7);
-    l.addLast(11);
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+    }
+
     System.out.println(l);
-    int i;
-    while (!l.isEmpty()) {
-      i = l.removeLast();
-      System.out.println(l + "; " + i);
+    for (int i = PRIMES.length - 1; i >= 0; i--) {
+      int prime = PRIMES[i];
+      int n = l.removeLast();
+      Assert.assertEquals(n, prime);
+      System.out.println(l + "; " + n);
     }
   }
 
   @Test
   public void testRemoveFirst() {
-    System.out.println("testRemoveFirst");
     SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
-    l.addLast(1);
-    l.addLast(3);
-    l.addLast(5);
-    l.addLast(7);
-    l.addLast(11);
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+    }
+
     System.out.println(l);
-    int i;
-    while (!l.isEmpty()) {
-      i = l.removeFirst();
-      System.out.println(l + "; " + i);
+    for (int prime : PRIMES) {
+      int n = l.removeFirst();
+      Assert.assertEquals(n, prime);
+      System.out.println(l + "; " + n);
     }
   }
 

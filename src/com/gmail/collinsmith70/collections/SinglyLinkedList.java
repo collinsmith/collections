@@ -27,6 +27,19 @@ public class SinglyLinkedList<E> {
     return false;
   }
 
+  public E get(int index) {
+    if (index < 0 || index >= size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    Node<E> n = first;
+    for (int i = 0; i < index; i++) {
+      n = n.next;
+    }
+
+    return n.element;
+  }
+
   public void addFirst(E element) {
     if (first == null) {
       first = last = new Node<>(element, null);
