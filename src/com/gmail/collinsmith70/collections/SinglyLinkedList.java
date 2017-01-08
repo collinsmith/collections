@@ -76,8 +76,10 @@ public class SinglyLinkedList<E> {
     sb.append(":{");
     for (Node<E> n = first; n != null; n = n.next) {
       sb.append(n.element);
+      sb.append(',');
     }
 
+    sb.deleteCharAt(sb.length()-1);
     sb.append("}");
     return sb.toString();
   }
