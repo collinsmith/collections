@@ -30,21 +30,26 @@ public class SinglyLinkedList<E> {
   public void addFirst(E element) {
     if (first == null) {
       first = last = new Node<>(element, null);
+      size++;
+      return;
     }
 
     Node<E> n = new Node<>(element, first);
     first = n;
+    size++;
   }
 
   public void addLast(E element) {
     if (first == null) {
       first = last = new Node<>(element, null);
+      size++;
       return;
     }
 
     Node<E> n = new Node<>(element, null);
     last.next = n;
     last = n;
+    size++;
   }
 
   public E removeFirst() {
