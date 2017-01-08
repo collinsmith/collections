@@ -59,6 +59,7 @@ public class SinglyLinkedList<E> {
 
     E element = first.element;
     first = first.next;
+    size--;
     return element;
   }
 
@@ -68,7 +69,13 @@ public class SinglyLinkedList<E> {
     }
 
     E element = last.element;
-    last = getPrevious(last);
+    if (last == first) {
+      first = last = null;
+    } else {
+      last = getPrevious(last);
+    }
+
+    size--;
     return element;
   }
 
