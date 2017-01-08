@@ -21,4 +21,15 @@ public class DoublyLinkedListTest {
     }
   }
 
+  @Test
+  public void testAddLast() {
+    DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+    System.out.println(l);
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+      Assert.assertEquals((int) l.get(l.size() - 1), prime);
+      System.out.println(l);
+    }
+  }
+
 }
