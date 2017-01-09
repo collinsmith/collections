@@ -25,9 +25,11 @@ public class SinglyLinkedListTest {
   public void testAddLast() {
     SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
     System.out.println(l);
-    for (int prime : PRIMES) {
+    for (int i = 0; i < PRIMES.length; i++) {
+      int prime = PRIMES[i];
       l.addLast(prime);
-      Assert.assertEquals((int)l.get(l.size()-1), prime);
+      Assert.assertEquals(l.size(), i + 1);
+      Assert.assertEquals((int) l.get(l.size() - 1), prime);
       System.out.println(l);
     }
   }
@@ -36,8 +38,10 @@ public class SinglyLinkedListTest {
   public void testAddFirst() {
     SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
     System.out.println(l);
-    for (int prime : PRIMES) {
+    for (int i = 0; i < PRIMES.length; i++) {
+      int prime = PRIMES[i];
       l.addFirst(prime);
+      Assert.assertEquals(l.size(), i + 1);
       Assert.assertEquals((int) l.get(0), prime);
       System.out.println(l);
     }
@@ -54,6 +58,7 @@ public class SinglyLinkedListTest {
     for (int i = PRIMES.length - 1; i >= 0; i--) {
       int prime = PRIMES[i];
       int n = l.removeLast();
+      Assert.assertEquals(l.size(), i);
       Assert.assertEquals(n, prime);
       System.out.println(l + "; " + n);
     }
@@ -67,8 +72,10 @@ public class SinglyLinkedListTest {
     }
 
     System.out.println(l);
-    for (int prime : PRIMES) {
+    for (int i = 0; i < PRIMES.length; i++) {
+      int prime = PRIMES[i];
       int n = l.removeFirst();
+      Assert.assertEquals(l.size(), PRIMES.length - i - 1);
       Assert.assertEquals(n, prime);
       System.out.println(l + "; " + n);
     }
