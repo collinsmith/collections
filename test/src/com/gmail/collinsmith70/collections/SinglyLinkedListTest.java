@@ -22,6 +22,61 @@ public class SinglyLinkedListTest {
   }
 
   @Test
+  public void testAddRemove() {
+    SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+    System.out.println(l);
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.removeLast();
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.removeLast();
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.removeFirst();
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.addFirst(prime);
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.removeLast();
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.removeLast();
+      System.out.println(l);
+    }
+  }
+
+  @Test
   public void testAddLast() {
     SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
     System.out.println(l);
