@@ -65,6 +65,21 @@ public class DoublyLinkedList<E> {
     size++;
   }
 
+  public E removeFirst() {
+    if (first == null) {
+      return null;
+    }
+
+    E element = first.element;
+    first = first.next;
+    if (first != null) {
+      first.prev = null;
+    }
+
+    size--;
+    return element;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

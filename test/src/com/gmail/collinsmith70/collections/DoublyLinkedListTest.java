@@ -43,4 +43,19 @@ public class DoublyLinkedListTest {
     }
   }
 
+  @Test
+  public void testRemoveFirst() {
+    DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+    }
+
+    System.out.println(l);
+    for (int prime : PRIMES) {
+      int n = l.removeFirst();
+      Assert.assertEquals(n, prime);
+      System.out.println(l + "; " + n);
+    }
+  }
+
 }
