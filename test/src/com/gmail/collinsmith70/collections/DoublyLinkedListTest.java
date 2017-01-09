@@ -22,6 +22,61 @@ public class DoublyLinkedListTest {
   }
 
   @Test
+  public void testAddRemove() {
+    SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+    System.out.println(l);
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.removeLast();
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.removeLast();
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.addLast(prime);
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.removeFirst();
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.addFirst(prime);
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.removeLast();
+      System.out.println(l);
+    }
+
+    for (int prime : PRIMES) {
+      l.removeLast();
+      System.out.println(l);
+    }
+  }
+
+  @Test
   public void testAddFirst() {
     DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
     System.out.println(l);
