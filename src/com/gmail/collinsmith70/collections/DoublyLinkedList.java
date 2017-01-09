@@ -39,8 +39,21 @@ public class DoublyLinkedList<E> {
     return n.element;
   }
 
-  public void addLast(E element) {
+  public void addFirst(E element) {
     if (first == null) {
+      first = last = new Node<>(null, element, null);
+      size++;
+      return;
+    }
+
+    Node<E> n = new Node<>(null, element, first);
+    first.prev = n;
+    first = n;
+    size++;
+  }
+
+  public void addLast(E element) {
+    if (last == null) {
       first = last = new Node<>(null, element, null);
       size++;
       return;

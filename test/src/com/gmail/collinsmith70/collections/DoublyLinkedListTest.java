@@ -22,6 +22,17 @@ public class DoublyLinkedListTest {
   }
 
   @Test
+  public void testAddFirst() {
+    DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+    System.out.println(l);
+    for (int prime : PRIMES) {
+      l.addFirst(prime);
+      Assert.assertEquals((int) l.get(0), prime);
+      System.out.println(l);
+    }
+  }
+
+  @Test
   public void testAddLast() {
     DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
     System.out.println(l);
