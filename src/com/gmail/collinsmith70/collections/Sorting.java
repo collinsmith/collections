@@ -22,11 +22,28 @@ public class Sorting {
       for (int i = 1; i < array.length; i++) {
         if (array[i-1] > array[i]) {
           swap(array, i-1, i);
-          System.out.println(Arrays.toString(array));
           swap = true;
+          if (debug) {
+            System.out.println(Arrays.toString(array));
+          }
         }
       }
     } while (swap);
+  }
+
+  public static void insertionSort(int[] array) {
+    for (int i = 1; i < array.length; i++) {
+      if (debug) {
+        System.out.printf("Pass %d: %s at %d%n", i, Arrays.toString(array), array[i]);
+      }
+
+      for (int j = i - 1; j >= 0 && array[j] > array[j + 1]; j--) {
+        swap(array, j, j + 1);
+        if (debug) {
+          System.out.println(Arrays.toString(array));
+        }
+      }
+    }
   }
 
   public static void swap(int[] array, int i, int j) {
