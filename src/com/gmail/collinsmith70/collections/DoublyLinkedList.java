@@ -74,6 +74,25 @@ public class DoublyLinkedList<E> {
     first = first.next;
     if (first != null) {
       first.prev = null;
+    } else {
+      first = last = null;
+    }
+
+    size--;
+    return element;
+  }
+
+  public E removeLast() {
+    if (last == null) {
+      return null;
+    }
+
+    E element = last.element;
+    last = last.prev;
+    if (last != null) {
+      last.next = null;
+    } else {
+      first = last = null;
     }
 
     size--;
