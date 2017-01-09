@@ -25,8 +25,10 @@ public class DoublyLinkedListTest {
   public void testAddFirst() {
     DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
     System.out.println(l);
-    for (int prime : PRIMES) {
+    for (int i = 0; i < PRIMES.length; i++) {
+      int prime = PRIMES[i];
       l.addFirst(prime);
+      Assert.assertEquals(l.size(), i + 1);
       Assert.assertEquals((int) l.get(0), prime);
       System.out.println(l);
     }
@@ -36,8 +38,10 @@ public class DoublyLinkedListTest {
   public void testAddLast() {
     DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
     System.out.println(l);
-    for (int prime : PRIMES) {
+    for (int i = 0; i < PRIMES.length; i++) {
+      int prime = PRIMES[i];
       l.addLast(prime);
+      Assert.assertEquals(l.size(), i + 1);
       Assert.assertEquals((int) l.get(l.size() - 1), prime);
       System.out.println(l);
     }
@@ -51,8 +55,10 @@ public class DoublyLinkedListTest {
     }
 
     System.out.println(l);
-    for (int prime : PRIMES) {
+    for (int i = 0; i < PRIMES.length; i++) {
+      int prime = PRIMES[i];
       int n = l.removeFirst();
+      Assert.assertEquals(l.size(), PRIMES.length - i - 1);
       Assert.assertEquals(n, prime);
       System.out.println(l + "; " + n);
     }
@@ -69,6 +75,7 @@ public class DoublyLinkedListTest {
     for (int i = PRIMES.length - 1; i >= 0; i--) {
       int prime = PRIMES[i];
       int n = l.removeLast();
+      Assert.assertEquals(l.size(), i);
       Assert.assertEquals(n, prime);
       System.out.println(l + "; " + n);
     }
