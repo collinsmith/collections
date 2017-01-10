@@ -36,4 +36,11 @@ public class SortingTest {
     Assert.assertArrayEquals(PRIMES, ints);
   }
 
+  @Test
+  public void testMergeSort() {
+    int[] ints = Arrays.copyOf(SORTING_PRIMES, SORTING_PRIMES.length);
+    Sorting.mergeSort(ints);
+    Assert.assertArrayEquals(PRIMES, ints);
+  }
+
 }
