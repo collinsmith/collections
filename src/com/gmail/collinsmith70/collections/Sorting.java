@@ -245,6 +245,39 @@ public class Sorting {
     }
   }
 
+  public static void shellSort(int[] array) {
+    if (debug) {
+      System.out.println(Arrays.toString(array));
+    }
+
+    final int[] gaps = {701, 301, 132, 57, 23, 10, 4, 1};
+
+    boolean swap;
+    for (int gap : gaps) {
+      if (debug) {
+        System.out.println("gap=" + gap);
+      }
+
+      for (int j, i = gap; i < array.length; i++) {
+        swap = false;
+        int temp = array[i];
+        for (j = i; gap <= j && temp < array[j - gap]; j -= gap) {
+          if (debug) {
+            System.out.printf("swapping %d with %d%n", array[j - gap], array[j]);
+            swap = true;
+          }
+
+          array[j] = array[j - gap];
+        }
+
+        array[j] = temp;
+        if (debug && swap) {
+          System.out.println(Arrays.toString(array));
+        }
+      }
+    }
+  }
+
   public static void swap(int[] array, int i, int j) {
     int temp = array[i];
     array[i] = array[j];

@@ -57,4 +57,11 @@ public class SortingTest {
     Assert.assertArrayEquals(PRIMES, ints);
   }
 
+  @Test
+  public void testShellSort() {
+    int[] ints = Arrays.copyOf(SORTING_PRIMES, SORTING_PRIMES.length);
+    Sorting.shellSort(ints);
+    Assert.assertArrayEquals(PRIMES, ints);
+  }
+
 }
