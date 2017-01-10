@@ -216,6 +216,35 @@ public class Sorting {
     }
   }
 
+  public static void selectionSort(int[] array) {
+    if (debug) {
+      System.out.println(Arrays.toString(array));
+    }
+
+    int min, minId;
+    for (int i = 0; i < array.length; i++) {
+      minId = Integer.MIN_VALUE;
+      min = Integer.MAX_VALUE;
+      for (int j = i; j < array.length; j++) {
+        if (array[j] < min) {
+          min = array[j];
+          minId = j;
+          if (debug) {
+            System.out.printf("min=%d%n", min);
+          }
+        }
+      }
+
+      if (i != minId) {
+        swap(array, i, minId);
+        if (debug) {
+          System.out.printf("swapping %d with %d%n", i, minId);
+          System.out.println(Arrays.toString(array));
+        }
+      }
+    }
+  }
+
   public static void swap(int[] array, int i, int j) {
     int temp = array[i];
     array[i] = array[j];

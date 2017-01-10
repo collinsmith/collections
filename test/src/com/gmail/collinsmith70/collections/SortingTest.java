@@ -50,4 +50,11 @@ public class SortingTest {
     Assert.assertArrayEquals(PRIMES, ints);
   }
 
+  @Test
+  public void testSelectionSort() {
+    int[] ints = Arrays.copyOf(SORTING_PRIMES, SORTING_PRIMES.length);
+    Sorting.selectionSort(ints);
+    Assert.assertArrayEquals(PRIMES, ints);
+  }
+
 }
