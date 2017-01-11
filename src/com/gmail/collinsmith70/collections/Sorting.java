@@ -278,6 +278,83 @@ public class Sorting {
     }
   }
 
+  public static void radixSortLSD(int[] array) {
+    radixSortLSD(array, 1, -1);
+    if (debug) {
+      System.out.println(Arrays.toString(array));
+    }
+  }
+
+  private static void radixSortLSD(int[] array, int radix, int highestOneBit) {
+    if (debug && highestOneBit < 0) {
+      System.out.println(Arrays.toString(array));
+      System.out.println(toBinaryString(array));
+    }
+
+    int ones = 0;
+    int max = Integer.MIN_VALUE;
+    for (int i = 0; i < array.length; i++) {
+      if (max < array[i]) {
+        max = array[i];
+      }
+
+      if ((array[i] & radix) == 0) {
+        int temp = array[i];
+        System.arraycopy(array, ones, array, ones + 1, i - ones);
+        array[ones++] = temp;
+      }
+    }
+
+    if (highestOneBit < 0) {
+      highestOneBit = Integer.highestOneBit(max);
+    }
+
+    if (debug) {
+      System.out.println("radix=" + radix);
+      System.out.println(toBinaryString(array));
+    }
+
+    if (radix <= highestOneBit) {
+      radixSortLSD(array, radix << 1, highestOneBit);
+    }
+  }
+
+  private static String toBinaryString(int[] array) {
+    StringBuilder sb = new StringBuilder(32);
+    int maxBit = Integer.MIN_VALUE;
+    for (int i : array) {
+      if (i >= maxBit) {
+        maxBit = i;
+      }
+    }
+
+    maxBit = valueToBit(maxBit);
+    String format = String.format("%%%ds %%c", maxBit + 1);
+    for (int i : array) {
+      sb.append(String.format(format, Integer.toBinaryString(i), 'A' + (i - 1)));
+      sb.append("\n");
+    }
+
+    if (array.length > 0) {
+      sb.deleteCharAt(sb.length()-1);
+    }
+
+    return sb.toString();
+  }
+
+  private static int valueToBit(int i) {
+    int j = 0;
+    final int highestBit = 30;
+    final int highestOneBit = 1 << highestBit;
+    while (true) {
+      if ((i & (highestOneBit >> j)) > 0) {
+        return highestBit - j;
+      }
+
+      j++;
+    }
+  }
+
   public static void swap(int[] array, int i, int j) {
     int temp = array[i];
     array[i] = array[j];
