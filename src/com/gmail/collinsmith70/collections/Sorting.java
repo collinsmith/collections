@@ -327,7 +327,7 @@ public class Sorting {
    * Worst: O(wN)
    * Avg:   O(wN)
    *
-   * Space: O(w + N)
+   * Space: O(w + N) -> O(1) in this implementation
    */
   public static void radixSortLSD(int[] array) {
     radixSortLSD(array, 1, -1);
