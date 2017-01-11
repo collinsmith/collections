@@ -11,6 +11,13 @@ public class Sorting {
 
   }
 
+  /**
+   * Best:  O(n)
+   * Worst: O(n^2)
+   * Avg:   O(n^2)
+   *
+   * Space: O(n)
+   */
   public static void bubbleSort(int[] array) {
     int pass = 1;
     boolean swap;
@@ -32,6 +39,13 @@ public class Sorting {
     } while (swap);
   }
 
+  /**
+   * Best:  O(n)
+   * Worst: O(n^2)
+   * Avg:   O(n^2)
+   *
+   * Space: O(n)
+   */
   public static void insertionSort(int[] array) {
     for (int i = 1; i < array.length; i++) {
       if (debug) {
@@ -47,6 +61,49 @@ public class Sorting {
     }
   }
 
+  /**
+   * Best:  O(n^2)
+   * Worst: O(n^2)
+   * Avg:   O(n^2)
+   *
+   * Space: O(1)
+   */
+  public static void selectionSort(int[] array) {
+    if (debug) {
+      System.out.println(Arrays.toString(array));
+    }
+
+    int min, minId;
+    for (int i = 0; i < array.length; i++) {
+      minId = Integer.MIN_VALUE;
+      min = Integer.MAX_VALUE;
+      for (int j = i; j < array.length; j++) {
+        if (array[j] < min) {
+          min = array[j];
+          minId = j;
+          if (debug) {
+            System.out.printf("min=%d%n", min);
+          }
+        }
+      }
+
+      if (i != minId) {
+        swap(array, i, minId);
+        if (debug) {
+          System.out.printf("swapping %d with %d%n", i, minId);
+          System.out.println(Arrays.toString(array));
+        }
+      }
+    }
+  }
+
+  /**
+   * Best:  O(n*logn)
+   * Worst: O(n*logn)
+   * Avg:   O(n*logn)
+   *
+   * Space: O(n)
+   */
   public static void mergeSort(int[] array) {
     int[] sorted = mergeSort(array, array);
     System.arraycopy(sorted, 0, array, 0, array.length);
@@ -126,6 +183,13 @@ public class Sorting {
     }
   }
 
+  /**
+   * Best:  O(n*logn)
+   * Worst: O(n*logn)
+   * Avg:   O(n*logn)
+   *
+   * Space: O(1)
+   */
   public static void mergeSortInPlace(int[] array) {
     mergeSortInPlace(array, 0, array.length);
   }
@@ -216,35 +280,13 @@ public class Sorting {
     }
   }
 
-  public static void selectionSort(int[] array) {
-    if (debug) {
-      System.out.println(Arrays.toString(array));
-    }
-
-    int min, minId;
-    for (int i = 0; i < array.length; i++) {
-      minId = Integer.MIN_VALUE;
-      min = Integer.MAX_VALUE;
-      for (int j = i; j < array.length; j++) {
-        if (array[j] < min) {
-          min = array[j];
-          minId = j;
-          if (debug) {
-            System.out.printf("min=%d%n", min);
-          }
-        }
-      }
-
-      if (i != minId) {
-        swap(array, i, minId);
-        if (debug) {
-          System.out.printf("swapping %d with %d%n", i, minId);
-          System.out.println(Arrays.toString(array));
-        }
-      }
-    }
-  }
-
+  /**
+   * Best:  O(n*logn)
+   * Worst: O(n*log^2(n))
+   * Avg:   O(n*log^2(n))
+   *
+   * Space: O(1)
+   */
   public static void shellSort(int[] array) {
     if (debug) {
       System.out.println(Arrays.toString(array));
@@ -278,6 +320,15 @@ public class Sorting {
     }
   }
 
+  /**
+   * w = word size (highest bit in largest sequence)
+   * N = number of keys (array.length)
+   * Best:  O(wN)
+   * Worst: O(wN)
+   * Avg:   O(wN)
+   *
+   * Space: O(w + N)
+   */
   public static void radixSortLSD(int[] array) {
     radixSortLSD(array, 1, -1);
     if (debug) {
