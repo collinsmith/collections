@@ -36,49 +36,49 @@ public class ArrayHeap<E extends Comparable<? super E>> {
     return size() == 0;
   }
 
-  private void siftUp(int i) {
-    E child = elements.get(i);
+  private void siftUp(int index) {
+    E child = elements.get(index);
     E parent;
-    while (0 < i) {
-      int j = Node.getParent(i);
-      parent = elements.get(j);
+    while (0 < index) {
+      int parentIndex = Node.getParent(index);
+      parent = elements.get(parentIndex);
       if (child.compareTo(parent) >= 0) {
         break;
       }
 
-      elements.set(i, parent);
-      i = j;
+      elements.set(index, parent);
+      index = parentIndex;
     }
 
-    elements.set(i, child);
+    elements.set(index, child);
   }
 
-  private void siftDown(int i) {
-    E root = elements.get(i);
-    while (i < size()) {
-      int minId;
+  private void siftDown(int index) {
+    E root = elements.get(index);
+    while (index < size()) {
+      int minIndex;
       E min;
 
-      int leftId = Node.getLeft(i);
-      E left = isValidId(leftId) ? elements.get(leftId) : null;
+      int leftIndex = Node.getLeft(index);
+      E left = isValidId(leftIndex) ? elements.get(leftIndex) : null;
 
-      int rightId = Node.getRight(i);
-      E right = isValidId(rightId) ? elements.get(rightId) : null;
+      int rightIndex = Node.getRight(index);
+      E right = isValidId(rightIndex) ? elements.get(rightIndex) : null;
       if (left == null && right == null) {
         break;
       } else if (left != null && right != null) {
         if (left.compareTo(right) < 0) {
-          minId = leftId;
+          minIndex = leftIndex;
           min = left;
         } else {
-          minId = rightId;
+          minIndex = rightIndex;
           min = right;
         }
       } else if (left != null) {
-        minId = leftId;
+        minIndex = leftIndex;
         min = left;
       } else { // if (right != null)
-        minId = rightId;
+        minIndex = rightIndex;
         min = right;
       }
 
@@ -86,15 +86,15 @@ public class ArrayHeap<E extends Comparable<? super E>> {
         break;
       }
 
-      elements.set(i, min);
-      i = minId;
+      elements.set(index, min);
+      index = minIndex;
     }
 
-    elements.set(i, root);
+    elements.set(index, root);
   }
 
-  private boolean isValidId(int i) {
-    return 0 <= i && i < size();
+  private boolean isValidId(int index) {
+    return 0 <= index && index < size();
   }
 
   public void add(E element) {
@@ -118,16 +118,16 @@ public class ArrayHeap<E extends Comparable<? super E>> {
 
   private static class Node {
 
-    public static int getParent(int n) {
-      return (n - 1) >>> 1;
+    public static int getParent(int index) {
+      return (index - 1) >>> 1;
     }
 
-    public static int getLeft(int n) {
-      return (n << 1) + 1;
+    public static int getLeft(int index) {
+      return (index << 1) + 1;
     }
 
-    public static int getRight(int n) {
-      return (n << 1) + 2;
+    public static int getRight(int index) {
+      return (index << 1) + 2;
     }
 
   }
