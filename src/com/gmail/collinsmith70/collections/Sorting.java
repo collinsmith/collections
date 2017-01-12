@@ -370,6 +370,16 @@ public class Sorting {
     }
   }
 
+  /**
+   * w = word size (highest bit in largest value), 31 in this case (no optimizations for finding
+   *         this value first and then looping down from it).
+   * N = number of keys (array.length)
+   * Best:  O(wN)
+   * Worst: O(wN)
+   * Avg:   O(wN)
+   *
+   * Space: O(w + N) -> O(1) in this implementation
+   */
   public static void radixSortMSD(int[] array) {
     radixSortMSD(array, 1 << 30, 0, array.length);
     if (debug) {
