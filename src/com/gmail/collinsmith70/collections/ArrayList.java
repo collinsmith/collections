@@ -15,6 +15,11 @@ public class ArrayList<E> {
     elements = (E[])new Object[initialCapacity];
   }
 
+  ArrayList(E[] elements) {
+    this.elements = Arrays.copyOf(elements, elements.length);
+    this.size = elements.length;
+  }
+
   public int size() {
     return size;
   }
@@ -29,6 +34,14 @@ public class ArrayList<E> {
     }
 
     return elements[index];
+  }
+
+  public void set(int index, E element) {
+    if (index < 0 || index >= size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    elements[index] = element;
   }
 
   public boolean checkAndGrow(int by) {

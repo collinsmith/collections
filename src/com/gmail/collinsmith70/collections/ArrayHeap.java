@@ -1,7 +1,5 @@
 package com.gmail.collinsmith70.collections;
 
-import java.util.Arrays;
-
 public class ArrayHeap<E extends Comparable<? super E>> {
 
   public static <E extends Comparable<? super E>> ArrayHeap<E> heapify(E[] elements) {
@@ -10,73 +8,62 @@ public class ArrayHeap<E extends Comparable<? super E>> {
     return heap;
   }
 
-  private E[] elements;
-  private int size;
+  private ArrayList<E> elements;
 
   public ArrayHeap() {
     this(16);
   }
 
   public ArrayHeap(int initialCapacity) {
-    this.elements = (E[])new Object[initialCapacity];
+    this.elements = new ArrayList<>(initialCapacity);
   }
 
   private ArrayHeap(E[] elements) {
-    this.elements = Arrays.copyOf(elements, elements.length);
-    this.size = elements.length;
+    this.elements = new ArrayList<>(elements);
   }
 
   private void heapify() {
-    for (int i = (elements.length >>> 1) - 1; 0 <= i; i--) {
+    for (int i = (size() >>> 1) - 1; 0 <= i; i--) {
       siftDown(i);
     }
   }
 
   public int size() {
-    return size;
+    return elements.size();
   }
 
   public boolean isEmpty() {
     return size() == 0;
   }
 
-  public boolean checkAndGrow(int by) {
-    if (size() - 1 + by < elements.length) {
-      return false;
-    }
-
-    elements = Arrays.copyOf(elements, elements.length << 1);
-    return true;
-  }
-
   private void siftUp(int i) {
-    E child = elements[i];
+    E child = elements.get(i);
     E parent;
     while (0 < i) {
       int j = Node.getParent(i);
-      parent = elements[j];
+      parent = elements.get(j);
       if (child.compareTo(parent) >= 0) {
         break;
       }
 
-      elements[i] = parent;
+      elements.set(i, parent);
       i = j;
     }
 
-    elements[i] = child;
+    elements.set(i, child);
   }
 
   private void siftDown(int i) {
-    E root = elements[i];
+    E root = elements.get(i);
     while (i < size()) {
       int minId;
       E min;
 
       int leftId = Node.getLeft(i);
-      E left = isValidId(leftId) ? elements[leftId] : null;
+      E left = isValidId(leftId) ? elements.get(leftId) : null;
 
       int rightId = Node.getRight(i);
-      E right = isValidId(rightId) ? elements[rightId] : null;
+      E right = isValidId(rightId) ? elements.get(rightId) : null;
       if (left == null && right == null) {
         break;
       } else if (left != null && right != null) {
@@ -99,11 +86,11 @@ public class ArrayHeap<E extends Comparable<? super E>> {
         break;
       }
 
-      elements[i] = min;
+      elements.set(i, min);
       i = minId;
     }
 
-    elements[i] = root;
+    elements.set(i, root);
   }
 
   private boolean isValidId(int i) {
@@ -111,22 +98,22 @@ public class ArrayHeap<E extends Comparable<? super E>> {
   }
 
   public void add(E element) {
-    checkAndGrow(1);
-    elements[size++] = element;
+    elements.addLast(element);
     siftUp(size() - 1);
   }
 
   public E removeLowest() {
-    if (isEmpty()) {
-      return null;
+    switch (size()) {
+      case 0:
+        return null;
+      case 1:
+        return elements.removeLast();
+      default:
+        E element = elements.get(0);
+        elements.set(0, elements.removeLast());
+        siftDown(0);
+        return element;
     }
-
-    size--;
-    E element = elements[0];
-    elements[0] = elements[size()];
-    elements[size()] = null;
-    siftDown(0);
-    return element;
   }
 
   private static class Node {
