@@ -72,6 +72,13 @@ public class SortingTest {
   }
 
   @Test
+  public void testHeapSort() {
+    int[] ints = Arrays.copyOf(SORTING_PRIMES, SORTING_PRIMES.length);
+    Sorting.heapSort(ints);
+    Assert.assertArrayEquals(PRIMES, ints);
+  }
+
+  @Test
   public void testLSDRadixSort() {
     // This test uses different input that others because it contains far more
     // even numbers, and is available as an example here:

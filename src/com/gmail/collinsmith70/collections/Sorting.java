@@ -1,7 +1,7 @@
 package com.gmail.collinsmith70.collections;
 
-import java.util.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Sorting {
 
@@ -417,6 +417,27 @@ public class Sorting {
         radixSortMSD(array, radix >>> 1, from, ones);
         radixSortMSD(array, radix >>> 1, ones, to);
       }
+    }
+  }
+
+  public static void heapSort(int[] array) {
+    // int[] won't autobox to Integer[], so this ugly workaround is used
+    Integer[] newArray = new Integer[array.length];
+    for (int i = 0; i < array.length; i++) {
+      newArray[i] = array[i];
+    }
+
+    System.out.println(Arrays.toString(newArray));
+    heapSort(newArray);
+    for (int i = 0; i < array.length; i++) {
+      array[i] = newArray[i];
+    }
+  }
+
+  public static void heapSort(Integer[] array) {
+    ArrayHeap<Integer> heap = ArrayHeap.heapify(array);
+    for (int i = 0; i < array.length; i++) {
+      array[i] = heap.removeLowest();
     }
   }
 
