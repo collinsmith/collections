@@ -370,7 +370,65 @@ public class Sorting {
     }
   }
 
+  public static void radixSortMSD(int[] array) {
+    radixSortMSD(array, 1 << 30, 0, array.length);
+    if (debug) {
+      System.out.println(Arrays.toString(array));
+      System.out.println(toBinaryString(array));
+    }
+  }
+
+  private static void radixSortMSD(int[] array, final int radix, final int from, final int to) {
+    int ones = to;
+    for (int i = to - 1; from <= i; i--) {
+      if ((array[i] & radix) == radix) {
+        int temp = array[i];
+        System.arraycopy(array, i + 1, array, i, ones - i - 1);
+        array[--ones] = temp;
+      }
+    }
+
+    if (debug && ones < to) {
+      System.out.println("radix=" + radix);
+      System.out.println(toBinaryString(array, from, to));
+    }
+
+    if (1 < radix) {
+      if (ones == to) {
+        radixSortMSD(array, radix >>> 1, from, to);
+      } else {
+        if (debug) {
+          System.out.printf("fork %s as %s and %s%n",
+              toLetterString(Arrays.copyOfRange(array, from, to)),
+              toLetterString(Arrays.copyOfRange(array, from, ones)),
+              toLetterString(Arrays.copyOfRange(array, ones, to)));
+        }
+
+        radixSortMSD(array, radix >>> 1, from, ones);
+        radixSortMSD(array, radix >>> 1, ones, to);
+      }
+    }
+  }
+
+  private static String toLetterString(int[] array) {
+    StringBuilder sb = new StringBuilder(32);
+    sb.append('[');
+    for (int i : array) {
+      sb.append(String.format("%c, ", 'A' + (i - 1)));
+    }
+
+    if (array.length > 0)  {
+      sb.delete(sb.length()-2, sb.length());
+    }
+    sb.append(']');
+    return sb.toString();
+  }
+
   private static String toBinaryString(int[] array) {
+    return toBinaryString(array, 0, array.length);
+  }
+
+  private static String toBinaryString(int[] array, int from, int to) {
     StringBuilder sb = new StringBuilder(32);
     int maxBit = Integer.MIN_VALUE;
     for (int i : array) {
@@ -381,12 +439,12 @@ public class Sorting {
 
     maxBit = valueToBit(maxBit);
     String format = String.format("%%%ds %%c", maxBit + 1);
-    for (int i : array) {
-      sb.append(String.format(format, Integer.toBinaryString(i), 'A' + (i - 1)));
+    for (int i = from; i < to; i++) {
+      sb.append(String.format(format, Integer.toBinaryString(array[i]), 'A' + (array[i] - 1)));
       sb.append("\n");
     }
 
-    if (array.length > 0) {
+    if ((to - from) > 0) {
       sb.deleteCharAt(sb.length()-1);
     }
 

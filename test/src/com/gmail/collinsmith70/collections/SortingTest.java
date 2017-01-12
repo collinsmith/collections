@@ -95,4 +95,35 @@ public class SortingTest {
     Assert.assertArrayEquals(sorted, ints);
   }
 
+  @Test
+  public void testMSDRadixSort() {
+    // This test uses different input that others because it contains far more
+    // even numbers, and is available as an example here:
+    // http://www.cs.princeton.edu/courses/archive/spr02/cs226/lectures/radix.4up.pdf
+    int[] ints = {
+        0b00001,
+        0b10011,
+        0b01111,
+        0b10010,
+        0b10100,
+        0b01001,
+        0b01110,
+        0b00111,
+        0b00101,
+        0b11000,
+        0b00001,
+        0b01101,
+        0b10000,
+        0b01100,
+        0b00101
+    };
+
+    Sorting.radixSortMSD(ints);
+
+    int[] sorted = Arrays.copyOf(ints, ints.length);
+    Arrays.sort(sorted);
+
+    Assert.assertArrayEquals(sorted, ints);
+  }
+
 }
