@@ -420,6 +420,63 @@ public class Sorting {
     }
   }
 
+  /**
+   * Best:  O(nlogn)
+   * Worst: O(n^2)
+   * Avg:   O(nlogn)
+   *
+   * Space: O(logn)
+   */
+  public static void quickSort(int[] array) {
+    quickSort(array, 0, array.length-1);
+  }
+
+  private static void quickSort(int[] array, int from, int to) {
+    if (from >= to) {
+      return;
+    }
+
+    int partition = partition(array, from, to);
+    if (debug) {
+      System.out.printf("partition %s as %s (pivot=%d) %s%n",
+          Arrays.toString(Arrays.copyOfRange(array, from, to + 1)),
+          Arrays.toString(Arrays.copyOfRange(array, from, partition)),
+          array[partition],
+          Arrays.toString(Arrays.copyOfRange(array, partition + 1, to + 1)));
+    }
+
+    quickSort(array, from, partition);
+    quickSort(array, partition + 1, to);
+    if (debug) {
+      System.out.printf("merged    %s %d %s as %s%n",
+          Arrays.toString(Arrays.copyOfRange(array, from, partition)),
+          array[partition],
+          Arrays.toString(Arrays.copyOfRange(array, partition + 1, to + 1)),
+          Arrays.toString(Arrays.copyOfRange(array, from, to + 1)));
+    }
+  }
+
+  private static int partition(int[] array, int from, int to) {
+    int pivot = array[from];
+    int i = from - 1;
+    int j = to + 1;
+    while (true) {
+      do {
+        i++;
+      } while (array[i] < pivot);
+
+      do {
+        j--;
+      } while (pivot < array[j]);
+
+      if (j <= i) {
+        return j;
+      }
+
+      swap(array, i, j);
+    }
+  }
+
   private static String toLetterString(int[] array) {
     StringBuilder sb = new StringBuilder(32);
     sb.append('[');
