@@ -89,23 +89,18 @@ public class SinglyLinkedList<E> {
       n = n.next;
     }
 
-    if (prev == null && n == null) {
-      first = last = new Node<>(element, null);
-      size++;
-      return;
-    } else if (prev == null) {
-      n = new Node<>(element, first);
-      first = n;
-      size++;
-      return;
+    Node<E> newNode = new Node<>(element, n);
+    if (prev == null) {
+      first = newNode;
     } else {
-      Node<E> newNode = new Node<>(element, n);
       prev.next = newNode;
-      size++;
-      if (prev == last) {
-        last = newNode;
-      }
     }
+
+    if (prev == last) {
+      last = newNode;
+    }
+
+    size++;
   }
 
   public E removeFirst() {
