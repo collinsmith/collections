@@ -131,7 +131,14 @@ public class ArrayList<E> implements List<E> {
 
   @Override
   public boolean remove(Object obj) {
-    throw new UnsupportedOperationException();
+    for (int i = 0; i < size(); i++) {
+      if (Objects.equals(elements[i], obj)) {
+        remove(i);
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @Override
