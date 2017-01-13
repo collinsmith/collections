@@ -146,8 +146,8 @@ public class ArrayList<E> implements List<E> {
     StringBuilder sb = new StringBuilder();
     sb.append(getClass().getSimpleName());
     sb.append(":[");
-    for (int i = 0; i < size(); i++) {
-      sb.append(elements[i]);
+    for (E element : elements) {
+      sb.append(element);
       sb.append(", ");
     }
 
