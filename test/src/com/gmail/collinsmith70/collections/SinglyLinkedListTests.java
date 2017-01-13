@@ -206,7 +206,45 @@ public class SinglyLinkedListTests {
 
   }
 
-  public static class add {
+  public static class add_Object {
+
+    @Test
+    public void first() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.add(PRIMES[0]);
+      assertSame(l.first, l.last);
+      assertEquals(PRIMES[0], (int) l.first.element);
+      assertEquals(1, l.size);
+    }
+
+    @Test
+    public void second() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.add(PRIMES[0]);
+      l.add(PRIMES[1]);
+      assertNotSame(l.first, l.last);
+      assertEquals(PRIMES[0], (int) l.first.element);
+      assertEquals(PRIMES[1], (int) l.last.element);
+      assertEquals(2, l.size);
+    }
+
+    @Test
+    public void nth() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.add(PRIMES[0]);
+      l.add(PRIMES[1]);
+      for (int i = 2; i < PRIMES.length; i++) {
+        l.add(PRIMES[i]);
+        assertNotSame(l.first, l.last);
+        assertEquals(PRIMES[i], (int) l.last.element);
+        assertEquals(PRIMES[0], (int) l.first.element);
+        assertEquals(i + 1, l.size);
+      }
+    }
+
+  }
+
+  public static class add_int_E {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_empty_low() {
