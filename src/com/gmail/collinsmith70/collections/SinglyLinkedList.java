@@ -78,13 +78,48 @@ public class SinglyLinkedList<E> {
     size++;
   }
 
+  public void add(int index, E element) {
+    if (index < 0 || index > size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    Node<E> n = first, prev = null;
+    for (int i = 0; i < index; i++) {
+      prev = n;
+      n = n.next;
+    }
+
+    if (prev == null && n == null) {
+      first = last = new Node<>(element, null);
+      size++;
+      return;
+    } else if (prev == null) {
+      n = new Node<>(element, first);
+      first = n;
+      size++;
+      return;
+    } else {
+      Node<E> newNode = new Node<>(element, n);
+      prev.next = newNode;
+      size++;
+      if (prev == last) {
+        last = newNode;
+      }
+    }
+  }
+
   public E removeFirst() {
     if (first == null) {
       return null;
     }
 
     E element = first.element;
-    first = first.next;
+    if (first == last) {
+      first = last = null;
+    } else {
+      first = first.next;
+    }
+
     size--;
     return element;
   }
@@ -100,6 +135,32 @@ public class SinglyLinkedList<E> {
     } else {
       last = getPrevious(last);
       last.next = null;
+    }
+
+    size--;
+    return element;
+  }
+
+  public E remove(int index) {
+    if (index < 0 || index >= size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    Node<E> n = first, prev = null;
+    for (int i = 0; i < index; i++) {
+      prev = n;
+      n = n.next;
+    }
+
+    E element = n.element;
+    if (prev == null) {
+      first = n.next;
+    } else {
+      prev.next = n.next;
+    }
+
+    if (n == last) {
+      last = prev;
     }
 
     size--;
