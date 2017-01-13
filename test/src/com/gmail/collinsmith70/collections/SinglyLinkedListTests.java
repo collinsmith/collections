@@ -18,6 +18,18 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Enclosed.class)
 public class SinglyLinkedListTests {
 
+  public static class _SinglyLinkedList {
+
+    @Test
+    public void default_constructor() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      assertNull(l.first);
+      assertNull(l.last);
+      assertEquals(0, l.size);
+    }
+
+  }
+
   public static class size {
 
     @Test
