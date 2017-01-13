@@ -30,6 +30,32 @@ public class SinglyLinkedListTests {
 
   }
 
+  public static class clear {
+
+    @Test
+    public void empty() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.clear();
+      assertNull(l.first);
+      assertNull(l.last);
+      assertEquals(0, l.size);
+    }
+
+    @Test
+    public void nonempty() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      for (int prime : PRIMES) {
+        l.addLast(prime);
+      }
+
+      l.clear();
+      assertNull(l.first);
+      assertNull(l.last);
+      assertEquals(0, l.size);
+    }
+
+  }
+
   public static class size {
 
     @Test
@@ -332,7 +358,34 @@ public class SinglyLinkedListTests {
 
   }
 
-  public static class remove {
+  public static class remove_Object {
+
+    @Test
+    public void _false() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      boolean removed = l.remove((Integer) PRIMES[0]);
+      assertFalse(removed);
+    }
+
+    @Test
+    public void _true() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      boolean removed = l.remove((Integer) PRIMES[0]);
+      assertTrue(removed);
+    }
+
+    @Test
+    public void true_removed_null() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(null);
+      boolean removed = l.remove(null);
+      assertTrue(removed);
+    }
+
+  }
+
+  public static class remove_int {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_empty_low() {

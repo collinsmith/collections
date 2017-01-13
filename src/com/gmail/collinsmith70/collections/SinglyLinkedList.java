@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SinglyLinkedList<E> {
+public class SinglyLinkedList<E> implements List<E> {
 
   Node<E> first;
   Node<E> last;
@@ -13,14 +13,18 @@ public class SinglyLinkedList<E> {
   public SinglyLinkedList() {
   }
 
+  @Override
   public int size() {
     return size;
   }
 
-  public boolean isEmpty() {
-    return size() == 0;
+  @Override
+  public void clear() {
+    first = last = null;
+    size = 0;
   }
 
+  @Override
   public boolean contains(Object obj) {
     for (Node<E> n = first; n != null; n = n.next) {
       if (Objects.equals(n.element, obj)) {
@@ -31,6 +35,7 @@ public class SinglyLinkedList<E> {
     return false;
   }
 
+  @Override
   public E get(int index) {
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
@@ -44,6 +49,7 @@ public class SinglyLinkedList<E> {
     return n.element;
   }
 
+  @Override
   public void set(int index, E element) {
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
@@ -57,6 +63,7 @@ public class SinglyLinkedList<E> {
     n.element = element;
   }
 
+  @Override
   public void addFirst(E element) {
     if (first == null) {
       first = last = new Node<>(element, null);
@@ -69,6 +76,7 @@ public class SinglyLinkedList<E> {
     size++;
   }
 
+  @Override
   public void addLast(E element) {
     if (first == null) {
       first = last = new Node<>(element, null);
@@ -82,6 +90,7 @@ public class SinglyLinkedList<E> {
     size++;
   }
 
+  @Override
   public void add(int index, E element) {
     if (index < 0 || index > size()) {
       throw new IndexOutOfBoundsException();
@@ -107,6 +116,7 @@ public class SinglyLinkedList<E> {
     size++;
   }
 
+  @Override
   public E removeFirst() {
     if (first == null) {
       throw new NoSuchElementException();
@@ -123,6 +133,7 @@ public class SinglyLinkedList<E> {
     return element;
   }
 
+  @Override
   public E removeLast() {
     if (last == null) {
       throw new NoSuchElementException();
@@ -140,6 +151,7 @@ public class SinglyLinkedList<E> {
     return element;
   }
 
+  @Override
   public E remove(int index) {
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
@@ -166,6 +178,19 @@ public class SinglyLinkedList<E> {
     return element;
   }
 
+  @Override
+  public boolean remove(Object obj) {
+    int i = 0;
+    for (Node<E> n = first; n != null; n = n.next, i++) {
+      if (Objects.equals(n.element, obj)) {
+        remove(i);
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   private Node<E> getPrevious(Node<E> node) {
     Node<E> prev = null;
     for (Node<E> n = first; n != null && n != node; prev = n, n = n.next);
@@ -190,6 +215,7 @@ public class SinglyLinkedList<E> {
     return sb.toString();
   }
 
+  @Override
   public <T> T[] toArray(T[] array) {
     int size = size();
     if (array.length < size) {
