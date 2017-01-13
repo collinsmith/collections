@@ -42,6 +42,20 @@ public class SinglyLinkedListTests {
       }
     }
 
+    @Test
+    public void decrementing() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      for (int prime : PRIMES) {
+        l.addLast(prime);
+      }
+
+      assertEquals(l.size, l.size());
+      for (int i = 0; i < PRIMES.length; i++) {
+        l.removeLast();
+        assertEquals(l.size, l.size());
+      }
+    }
+
   }
 
   public static class isEmpty {
