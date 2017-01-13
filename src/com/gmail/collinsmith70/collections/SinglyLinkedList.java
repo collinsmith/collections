@@ -106,11 +106,11 @@ public class SinglyLinkedList<E> {
     sb.append(":{");
     for (Node<E> n = first; n != null; n = n.next) {
       sb.append(n.element);
-      sb.append(',');
+      sb.append(", ");
     }
 
     if (!isEmpty()) {
-      sb.deleteCharAt(sb.length() - 1);
+      sb.delete(sb.length() - 2, sb.length());
     }
 
     sb.append("}");

@@ -83,11 +83,11 @@ public class ArrayList<E> {
     sb.append(":{");
     for (int i = 0; i < size(); i++) {
       sb.append(elements[i]);
-      sb.append(',');
+      sb.append(", ");
     }
 
     if (!isEmpty()) {
-      sb.deleteCharAt(sb.length() - 1);
+      sb.delete(sb.length()-2, sb.length());
     }
 
     sb.append("}(");
