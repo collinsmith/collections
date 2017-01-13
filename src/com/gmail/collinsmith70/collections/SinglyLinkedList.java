@@ -234,6 +234,21 @@ public class SinglyLinkedList<E> implements List<E> {
     return array;
   }
 
+  String toStateString() {
+    StringBuilder sb = new StringBuilder();
+    for (Node<E> n = first; n != null; n = n.next) {
+      sb.append(n.element);
+      sb.append(", ");
+    }
+
+    if (!isEmpty()) {
+      sb.delete(sb.length() - 2, sb.length());
+    }
+
+    return String.format("%s:{first=%s, last=%s, size=%d, elements=[%s]}",
+        getClass().getSimpleName(), first, last, size, sb.toString());
+  }
+
   static class Node<E> {
     E element;
     Node<E> next;
