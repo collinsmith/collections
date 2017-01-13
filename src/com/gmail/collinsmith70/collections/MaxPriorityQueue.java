@@ -1,11 +1,28 @@
 package com.gmail.collinsmith70.collections;
 
+import java.util.Arrays;
+
 public class MaxPriorityQueue<E extends Comparable<? super E>> {
 
+  static boolean debug = false;
+
   public static <E extends Comparable<? super E>> void heapSort(E[] elements) {
+    if (debug) {
+      System.out.println(Arrays.toString(elements));
+    }
+
     MaxPriorityQueue<E> heap = heapify(elements);
+    if (debug) {
+      System.out.println("heapify: " + heap.elements);
+    }
+
     for (int i = elements.length-1; 0 <= i; i--) {
       elements[i] = heap.removeHighest();
+      if (debug) {
+        System.out.printf("%s %s%n",
+            Arrays.toString(Arrays.copyOfRange(elements, i, elements.length)),
+            heap.elements);
+      }
     }
   }
 

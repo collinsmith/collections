@@ -471,7 +471,9 @@ public class Sorting {
       newArray[i] = array[i];
     }
 
+    MaxPriorityQueue.debug = Sorting.debug;
     MaxPriorityQueue.heapSort(newArray);
+    MaxPriorityQueue.debug = !Sorting.debug;
     for (int i = 0; i < newArray.length; i++) {
       array[i] = newArray[i];
     }
