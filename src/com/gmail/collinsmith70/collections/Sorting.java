@@ -428,9 +428,9 @@ public class Sorting {
    * Space: O(1)
    */
   public static void heapSort(int[] array) {
-    ArrayHeap.debug = Sorting.debug;
-    ArrayHeap.heapSort(array);
-    ArrayHeap.debug = !Sorting.debug;
+    IntMinPriorityQueue.debug = Sorting.debug;
+    IntMinPriorityQueue.heapSort(array);
+    IntMinPriorityQueue.debug = !Sorting.debug;
   }
 
   /**

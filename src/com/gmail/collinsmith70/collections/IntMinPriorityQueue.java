@@ -3,7 +3,7 @@ package com.gmail.collinsmith70.collections;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public class ArrayHeap {
+public class IntMinPriorityQueue {
 
   static boolean debug = false;
 
@@ -12,7 +12,7 @@ public class ArrayHeap {
       System.out.println(Arrays.toString(elements));
     }
 
-    ArrayHeap heap = heapify(elements);
+    IntMinPriorityQueue heap = heapify(elements);
     if (debug) {
       System.out.println("heapify: " + Arrays.toString(heap.elements));
     }
@@ -27,27 +27,27 @@ public class ArrayHeap {
     }
   }
 
-  public static ArrayHeap heapify(int[] elements) {
-    return new ArrayHeap(elements).heapify();
+  public static IntMinPriorityQueue heapify(int[] elements) {
+    return new IntMinPriorityQueue(elements).heapify();
   }
 
   int[] elements;
   int size;
 
-  public ArrayHeap() {
+  public IntMinPriorityQueue() {
     this(16);
   }
 
-  public ArrayHeap(int initialCapacity) {
+  public IntMinPriorityQueue(int initialCapacity) {
     this.elements = new int[initialCapacity];
   }
 
-  private ArrayHeap(int[] elements) {
+  private IntMinPriorityQueue(int[] elements) {
     this.elements = Arrays.copyOf(elements, elements.length);
     this.size = elements.length;
   }
 
-  private ArrayHeap heapify() {
+  private IntMinPriorityQueue heapify() {
     for (int i = (size() >>> 1) - 1; 0 <= i; i--) {
       siftDown(i);
     }
