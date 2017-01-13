@@ -1,6 +1,7 @@
 package com.gmail.collinsmith70.collections;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SinglyLinkedList<E> {
 
@@ -21,7 +22,7 @@ public class SinglyLinkedList<E> {
 
   public boolean contains(Object obj) {
     for (Node<E> n = first; n != null; n = n.next) {
-      if (n.element.equals(obj)) {
+      if (Objects.equals(n.element, obj)) {
         return true;
       }
     }
