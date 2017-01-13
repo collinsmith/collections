@@ -2,6 +2,7 @@ package com.gmail.collinsmith70.collections;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class ArrayList<E> implements List<E> {
 
@@ -51,7 +52,13 @@ public class ArrayList<E> implements List<E> {
 
   @Override
   public boolean contains(Object obj) {
-    throw new UnsupportedOperationException();
+    for (E element : elements) {
+      if (Objects.equals(element, obj)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private boolean checkAndGrow(int by) {
