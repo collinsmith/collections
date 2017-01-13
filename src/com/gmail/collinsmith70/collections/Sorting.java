@@ -421,24 +421,7 @@ public class Sorting {
   }
 
   public static void heapSort(int[] array) {
-    // int[] won't autobox to Integer[], so this ugly workaround is used
-    Integer[] newArray = new Integer[array.length];
-    for (int i = 0; i < array.length; i++) {
-      newArray[i] = array[i];
-    }
-
-    System.out.println(Arrays.toString(newArray));
-    heapSort(newArray);
-    for (int i = 0; i < array.length; i++) {
-      array[i] = newArray[i];
-    }
-  }
-
-  public static void heapSort(Integer[] array) {
-    ArrayHeap<Integer> heap = ArrayHeap.heapify(array);
-    for (int i = 0; i < array.length; i++) {
-      array[i] = heap.removeLowest();
-    }
+    ArrayHeap.heapSort(array);
   }
 
   /**

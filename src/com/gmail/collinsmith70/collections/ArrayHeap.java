@@ -1,35 +1,47 @@
 package com.gmail.collinsmith70.collections;
 
-public class ArrayHeap<E extends Comparable<? super E>> {
+import java.util.Arrays;
+import java.util.NoSuchElementException;
 
-  public static <E extends Comparable<? super E>> ArrayHeap<E> heapify(E[] elements) {
-    ArrayHeap<E> heap = new ArrayHeap<>(elements);
-    heap.heapify();
-    return heap;
+public class ArrayHeap {
+
+  public static void heapSort(int[] elements) {
+    ArrayHeap heap = heapify(elements);
+    for (int i = 0; i < elements.length; i++) {
+      elements[i] = heap.removeLowest();
+    }
   }
 
-  private ArrayList<E> elements;
+  public static ArrayHeap heapify(int[] elements) {
+    return new ArrayHeap(elements).heapify();
+  }
+
+  int[] elements;
+  int size;
 
   public ArrayHeap() {
     this(16);
   }
 
   public ArrayHeap(int initialCapacity) {
-    this.elements = new ArrayList<>(initialCapacity);
+    this.elements = new int[initialCapacity];
   }
 
-  private ArrayHeap(E[] elements) {
-    this.elements = new ArrayList<>(elements);
+  private ArrayHeap(int[] elements) {
+    this.elements = Arrays.copyOf(elements, elements.length);
+    this.size = elements.length;
   }
 
-  private void heapify() {
+  private ArrayHeap heapify() {
     for (int i = (size() >>> 1) - 1; 0 <= i; i--) {
       siftDown(i);
     }
+
+    return this;
   }
 
   public int size() {
-    return elements.size();
+    return size;
   }
 
   public boolean isEmpty() {
@@ -37,80 +49,75 @@ public class ArrayHeap<E extends Comparable<? super E>> {
   }
 
   private void siftUp(int index) {
-    E child = elements.get(index);
-    E parent;
+    int child = elements[index];
+    int parent;
     while (0 < index) {
       int parentIndex = Node.getParent(index);
-      parent = elements.get(parentIndex);
-      if (child.compareTo(parent) >= 0) {
+      parent = elements[parentIndex];
+      if (child >= parent) {
         break;
       }
 
-      elements.set(index, parent);
+      elements[index] = parent;
       index = parentIndex;
     }
 
-    elements.set(index, child);
+    elements[index] = child;
   }
 
   private void siftDown(int index) {
-    E root = elements.get(index);
+    int root = elements[index];
     while (index < size()) {
       int minIndex;
-      E min;
+      int min;
 
       int leftIndex = Node.getLeft(index);
-      E left = isValidId(leftIndex) ? elements.get(leftIndex) : null;
-
       int rightIndex = Node.getRight(index);
-      E right = isValidId(rightIndex) ? elements.get(rightIndex) : null;
-      if (left == null && right == null) {
+      if (!isValidId(leftIndex) && !isValidId(rightIndex)) {
         break;
-      } else if (left != null && right != null) {
-        if (left.compareTo(right) < 0) {
+      } else if (isValidId(leftIndex) && isValidId(rightIndex)) {
+        if (elements[leftIndex] < elements[rightIndex]) {
           minIndex = leftIndex;
-          min = left;
+          min = elements[leftIndex];
         } else {
           minIndex = rightIndex;
-          min = right;
+          min = elements[rightIndex];
         }
-      } else if (left != null) {
+      } else if (isValidId(leftIndex)) {
         minIndex = leftIndex;
-        min = left;
+        min = elements[leftIndex];
       } else { // if (right != null)
         minIndex = rightIndex;
-        min = right;
+        min = elements[rightIndex];
       }
 
-      if (root.compareTo(min) <= 0) {
+      if (root <= min) {
         break;
       }
 
-      elements.set(index, min);
+      elements[index] = min;
       index = minIndex;
     }
 
-    elements.set(index, root);
+    elements[index] = root;
   }
 
   private boolean isValidId(int index) {
     return 0 <= index && index < size();
   }
 
-  public void add(E element) {
-    elements.addLast(element);
+  public void add(int element) {
+    elements[size++] = element;
     siftUp(size() - 1);
   }
 
-  public E removeLowest() {
+  public int removeLowest() {
     switch (size()) {
       case 0:
-        return null;
-      case 1:
-        return elements.removeLast();
+        throw new NoSuchElementException();
       default:
-        E element = elements.get(0);
-        elements.set(0, elements.removeLast());
+        int element = elements[0];
+        elements[0] = elements[--size];
         siftDown(0);
         return element;
     }
