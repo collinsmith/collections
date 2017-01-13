@@ -145,7 +145,7 @@ public class ArrayList<E> implements List<E> {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(getClass().getSimpleName());
-    sb.append(":{");
+    sb.append(":[");
     for (int i = 0; i < size(); i++) {
       sb.append(elements[i]);
       sb.append(", ");
@@ -155,7 +155,7 @@ public class ArrayList<E> implements List<E> {
       sb.delete(sb.length()-2, sb.length());
     }
 
-    sb.append("}(");
+    sb.append("](");
     sb.append(elements.length);
     sb.append(")");
     return sb.toString();
