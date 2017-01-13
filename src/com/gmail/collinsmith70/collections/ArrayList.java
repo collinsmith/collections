@@ -96,4 +96,8 @@ public class ArrayList<E> {
     return sb.toString();
   }
 
+  public E[] toArray() {
+    return Arrays.copyOf(elements, size());
+  }
+
 }

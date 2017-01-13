@@ -6,15 +6,14 @@ public class MinPriorityQueue<E extends Comparable<? super E>> {
 
   static boolean debug = false;
 
+  private static final int ROOT = 0;
+
   public static <E extends Comparable<? super E>> void heapSort(E[] elements) {
     if (debug) {
       System.out.println(Arrays.toString(elements));
     }
 
     MinPriorityQueue<E> heap = heapify(elements);
-    if (debug) {
-      System.out.println("heapify: " + heap.elements);
-    }
 
     for (int i = 0; i < elements.length; i++) {
       elements[i] = heap.removeLowest();
@@ -27,7 +26,12 @@ public class MinPriorityQueue<E extends Comparable<? super E>> {
   }
 
   public static <E extends Comparable<? super E>> MinPriorityQueue<E> heapify(E[] elements) {
-    return new MinPriorityQueue<>(elements).heapify();
+    MinPriorityQueue<E> queue = new MinPriorityQueue<>(elements).heapify();
+    if (debug) {
+      System.out.println("heapify: " + queue.elements);
+    }
+
+    return queue;
   }
 
   ArrayList<E> elements;
@@ -45,7 +49,7 @@ public class MinPriorityQueue<E extends Comparable<? super E>> {
   }
 
   private MinPriorityQueue<E> heapify() {
-    for (int i = (size() >>> 1) - 1; 0 <= i; i--) {
+    for (int i = (size() >>> 1) - 1; ROOT <= i; i--) {
       siftDown(i);
     }
 
@@ -63,7 +67,7 @@ public class MinPriorityQueue<E extends Comparable<? super E>> {
   private void siftUp(int index) {
     E child = elements.get(index);
     E parent;
-    while (0 < index) {
+    while (ROOT < index) {
       int parentIndex = Node.getParent(index);
       parent = elements.get(parentIndex);
       if (child.compareTo(parent) >= 0) {
@@ -133,10 +137,30 @@ public class MinPriorityQueue<E extends Comparable<? super E>> {
       case 1:
         return elements.removeLast();
       default:
-        E element = elements.get(0);
-        elements.set(0, elements.removeLast());
-        siftDown(0);
+        E element = elements.get(ROOT);
+        elements.set(ROOT, elements.removeLast());
+        siftDown(ROOT);
         return element;
+    }
+  }
+
+  public void update(int index) {
+    if (!isValidId(index)) {
+      return;
+    }
+
+    if (debug) {
+      System.out.printf("update [%d](%s) in %s%n", index, elements.get(index), elements);
+    }
+
+    if (index == ROOT) {
+      siftDown(index);
+    } else {
+      siftUp(index);
+    }
+
+    if (debug) {
+      System.out.println(elements);
     }
   }
 
