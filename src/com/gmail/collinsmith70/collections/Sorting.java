@@ -420,8 +420,36 @@ public class Sorting {
     }
   }
 
+  /**
+   * Best:  O(nlogn)
+   * Worst: O(nlogn)
+   * Avg:   O(nlogn)
+   *
+   * Space: O(1)
+   */
   public static void heapSort(int[] array) {
     ArrayHeap.heapSort(array);
+  }
+
+  /**
+   * Requires manually copying primitive to wrapper variant.
+   *
+   * Best:  O(nlogn)
+   * Worst: O(nlogn)
+   * Avg:   O(nlogn)
+   *
+   * Space: O(1)
+   */
+  public static void heapSortWrapper(int[] array) {
+    Integer[] newArray = new Integer[array.length];
+    for (int i = 0; i < newArray.length; i++) {
+      newArray[i] = array[i];
+    }
+
+    MinPriorityQueue.heapSort(newArray);
+    for (int i = 0; i < newArray.length; i++) {
+      array[i] = newArray[i];
+    }
   }
 
   /**
