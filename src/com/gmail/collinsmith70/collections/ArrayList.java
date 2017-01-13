@@ -65,14 +65,44 @@ public class ArrayList<E> {
     elements[size++] = element;
   }
 
+  public void add(int index, E element) {
+    if (index < 0 || index > size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    checkAndGrow(1);
+    System.arraycopy(elements, index, elements, index + 1, size() - index);
+    elements[index] = element;
+    size++;
+  }
+
   public E removeFirst() {
+    if (isEmpty()) {
+      return null;
+    }
+
     E element = elements[0];
     System.arraycopy(elements, 1, elements, 0, size--);
     return element;
   }
 
   public E removeLast() {
+    if (isEmpty()) {
+      return null;
+    }
+
     E element = elements[--size];
+    return element;
+  }
+
+  public E remove(int index) {
+    if (index < 0 || index >= size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    size--;
+    E element = elements[index];
+    System.arraycopy(elements, index + 1, elements, index, size() - index);
     return element;
   }
 
