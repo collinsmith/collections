@@ -86,7 +86,7 @@ public class ArrayHeap {
       } else if (isValidId(leftIndex)) {
         minIndex = leftIndex;
         min = elements[leftIndex];
-      } else { // if (right != null)
+      } else { // if (isValidId(rightIndex))
         minIndex = rightIndex;
         min = elements[rightIndex];
       }
