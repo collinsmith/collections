@@ -117,6 +117,16 @@ public class DoublyLinkedList<E> {
     return sb.toString();
   }
 
+  public E[] toArray() {
+    int i = 0;
+    E[] elements = (E[])new Object[size()];
+    for (Node<E> n = first; n != null; n = n.next) {
+      elements[i++] = n.element;
+    }
+
+    return elements;
+  }
+
   static class Node<E> {
     E element;
     Node<E> next;
