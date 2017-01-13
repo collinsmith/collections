@@ -1,8 +1,9 @@
 package com.gmail.collinsmith70.collections;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class ArrayList<E> {
+public class ArrayList<E> implements List<E> {
 
   E[] elements;
   int size;
@@ -20,14 +21,17 @@ public class ArrayList<E> {
     this.size = elements.length;
   }
 
+  @Override
+  public void clear() {
+    size = 0;
+  }
+
+  @Override
   public int size() {
     return size;
   }
 
-  public boolean isEmpty() {
-    return size() == 0;
-  }
-
+  @Override
   public E get(int index) {
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
@@ -36,6 +40,7 @@ public class ArrayList<E> {
     return elements[index];
   }
 
+  @Override
   public void set(int index, E element) {
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
@@ -44,7 +49,12 @@ public class ArrayList<E> {
     elements[index] = element;
   }
 
-  public boolean checkAndGrow(int by) {
+  @Override
+  public boolean contains(Object obj) {
+    throw new UnsupportedOperationException();
+  }
+
+  private boolean checkAndGrow(int by) {
     if (size() - 1 + by < elements.length) {
       return false;
     }
@@ -54,17 +64,20 @@ public class ArrayList<E> {
     return true;
   }
 
+  @Override
   public void addFirst(E element) {
     checkAndGrow(1);
     System.arraycopy(elements, 0, elements, 1, size++);
     elements[0] = element;
   }
 
+  @Override
   public void addLast(E element) {
     checkAndGrow(1);
     elements[size++] = element;
   }
 
+  @Override
   public void add(int index, E element) {
     if (index < 0 || index > size()) {
       throw new IndexOutOfBoundsException();
@@ -76,6 +89,7 @@ public class ArrayList<E> {
     size++;
   }
 
+  @Override
   public E removeFirst() {
     if (isEmpty()) {
       return null;
@@ -86,6 +100,7 @@ public class ArrayList<E> {
     return element;
   }
 
+  @Override
   public E removeLast() {
     if (isEmpty()) {
       return null;
@@ -95,6 +110,7 @@ public class ArrayList<E> {
     return element;
   }
 
+  @Override
   public E remove(int index) {
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
@@ -104,6 +120,11 @@ public class ArrayList<E> {
     E element = elements[index];
     System.arraycopy(elements, index + 1, elements, index, size() - index);
     return element;
+  }
+
+  @Override
+  public boolean remove(Object obj) {
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -126,8 +147,19 @@ public class ArrayList<E> {
     return sb.toString();
   }
 
-  public E[] toArray() {
-    return Arrays.copyOf(elements, size());
+  @Override
+  public <T> T[] toArray(T[] array) {
+    int size = size();
+    if (array.length < size) {
+      array = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
+    }
+
+    System.arraycopy(elements, 0, array, 0, size);
+    if (array.length > size) {
+      array[size] = null;
+    }
+
+    return array;
   }
 
 }
