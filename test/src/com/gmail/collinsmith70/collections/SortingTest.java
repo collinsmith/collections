@@ -79,9 +79,16 @@ public class SortingTest {
   }
 
   @Test
-  public void testHeapSortWrapper() {
+  public void testHeapSortMinPriorityQueue() {
     int[] ints = Arrays.copyOf(SORTING_PRIMES, SORTING_PRIMES.length);
-    Sorting.heapSortWrapper(ints);
+    Sorting.heapSortMinPriorityQueue(ints);
+    Assert.assertArrayEquals(PRIMES, ints);
+  }
+
+  @Test
+  public void testHeapSortMaxPriorityQueue() {
+    int[] ints = Arrays.copyOf(SORTING_PRIMES, SORTING_PRIMES.length);
+    Sorting.heapSortMaxPriorityQueue(ints);
     Assert.assertArrayEquals(PRIMES, ints);
   }
 
