@@ -201,7 +201,7 @@ public class SinglyLinkedList<E> implements List<E> {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(getClass().getSimpleName());
-    sb.append(":{");
+    sb.append(":[");
     for (Node<E> n = first; n != null; n = n.next) {
       sb.append(n.element);
       sb.append(", ");
@@ -211,7 +211,7 @@ public class SinglyLinkedList<E> implements List<E> {
       sb.delete(sb.length() - 2, sb.length());
     }
 
-    sb.append("}");
+    sb.append("]");
     return sb.toString();
   }
 
