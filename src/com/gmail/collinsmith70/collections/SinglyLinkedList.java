@@ -40,6 +40,19 @@ public class SinglyLinkedList<E> {
     return n.element;
   }
 
+  public void set(int index, E element) {
+    if (index < 0 || index >= size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    Node<E> n = first;
+    for (int i = 0; i < index; i++) {
+      n = n.next;
+    }
+
+    n.element = element;
+  }
+
   public void addFirst(E element) {
     if (first == null) {
       first = last = new Node<>(element, null);
