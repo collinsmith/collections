@@ -1,5 +1,6 @@
 package com.gmail.collinsmith70.collections;
 
+import java.lang.reflect.Array;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -189,14 +190,22 @@ public class SinglyLinkedList<E> {
     return sb.toString();
   }
 
-  public E[] toArray() {
-    int i = 0;
-    E[] elements = (E[])new Object[size()];
-    for (Node<E> n = first; n != null; n = n.next) {
-      elements[i++] = n.element;
+  public <T> T[] toArray(T[] array) {
+    int size = size();
+    if (array.length < size) {
+      array = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
     }
 
-    return elements;
+    int i = 0;
+    for (Node<E> n = first; n != null; n = n.next) {
+      array[i++] = (T) n.element;
+    }
+
+    if (array.length > size) {
+      array[size] = null;
+    }
+
+    return array;
   }
 
   static class Node<E> {

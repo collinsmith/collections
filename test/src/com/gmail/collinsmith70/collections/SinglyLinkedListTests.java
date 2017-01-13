@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 import static com.gmail.collinsmith70.collections.TestData.PRIMES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
@@ -478,6 +479,43 @@ public class SinglyLinkedListTests {
         assertEquals(PRIMES[i], last);
         assertEquals(i, l.size);
         assertEquals(PRIMES[i - 1], (int) l.last.element);
+      }
+    }
+
+  }
+
+  public static class toArray {
+
+    @Test
+    public void empty() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      Integer[] array = l.toArray(new Integer[l.size()]);
+      assertNotNull(array);
+      assertEquals(0, array.length);
+    }
+
+    @Test
+    public void single() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      Integer[] array = l.toArray(new Integer[l.size()]);
+      assertNotNull(array);
+      assertEquals(1, array.length);
+      assertEquals(PRIMES[0], (int) array[0]);
+    }
+
+    @Test
+    public void nth() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      for (int i = 1; i < PRIMES.length; i++) {
+        l.addLast(PRIMES[i]);
+        Integer[] array = l.toArray(new Integer[l.size()]);
+        assertNotNull(array);
+        assertEquals(i + 1, array.length);
+        for (int j = 0; j < array.length; j++) {
+          assertEquals(PRIMES[j], (int) array[j]);
+        }
       }
     }
 
