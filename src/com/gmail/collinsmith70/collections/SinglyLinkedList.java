@@ -1,5 +1,7 @@
 package com.gmail.collinsmith70.collections;
 
+import java.util.NoSuchElementException;
+
 public class SinglyLinkedList<E> {
 
   Node<E> first;
@@ -105,7 +107,7 @@ public class SinglyLinkedList<E> {
 
   public E removeFirst() {
     if (first == null) {
-      return null;
+      throw new NoSuchElementException();
     }
 
     E element = first.element;
@@ -121,7 +123,7 @@ public class SinglyLinkedList<E> {
 
   public E removeLast() {
     if (last == null) {
-      return null;
+      throw new NoSuchElementException();
     }
 
     E element = last.element;
@@ -207,6 +209,11 @@ public class SinglyLinkedList<E> {
     Node(E element, Node<E> next) {
       this.element = element;
       this.next = next;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("%s:{element=%s, next=%h}", getClass().getSimpleName(), element, next);
     }
   }
 
