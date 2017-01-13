@@ -5,10 +5,25 @@ import java.util.NoSuchElementException;
 
 public class ArrayHeap {
 
+  static boolean debug = false;
+
   public static void heapSort(int[] elements) {
+    if (debug) {
+      System.out.println(Arrays.toString(elements));
+    }
+
     ArrayHeap heap = heapify(elements);
+    if (debug) {
+      System.out.println("heapify: " + Arrays.toString(heap.elements));
+    }
+
     for (int i = 0; i < elements.length; i++) {
       elements[i] = heap.removeLowest();
+      if (debug) {
+        System.out.printf("%s %s%n",
+            Arrays.toString(Arrays.copyOfRange(elements, 0, i + 1)),
+            Arrays.toString(Arrays.copyOfRange(heap.elements, 0, heap.size())));
+      }
     }
   }
 
