@@ -67,7 +67,7 @@ public class ArrayList<E> implements List<E> {
       return false;
     }
 
-    int newSize = elements.length << 1;
+    int newSize = Math.max(elements.length << 1, 1);
     elements = Arrays.copyOf(elements, elements.length << 1);
     return true;
   }
