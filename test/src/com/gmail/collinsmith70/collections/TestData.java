@@ -7,7 +7,9 @@ public class TestData {
   static final Integer[] WRAPPED_PRIMES;
   static {
     WRAPPED_PRIMES = new Integer[PRIMES.length];
-    System.arraycopy(PRIMES, 0, WRAPPED_PRIMES, 0, PRIMES.length);
+    for (int i = 0; i < PRIMES.length; i++) {
+      WRAPPED_PRIMES[i] = PRIMES[i];
+    }
   }
 
   static final int[] SORTING_PRIMES = {29, 17, 11, 3, 7, 19, 5, 2, 23, 13};
