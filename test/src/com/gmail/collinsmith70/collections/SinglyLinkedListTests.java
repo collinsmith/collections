@@ -355,15 +355,18 @@ public class SinglyLinkedListTests {
       l.add(PRIMES[0]);
       l.add(PRIMES[1]);
       if (output) System.out.println(l.toStateString());
+      SinglyLinkedList.Node<Integer> prevLast;
       for (int i = 2; i < PRIMES.length; i++) {
+        prevLast = l.last;
         l.add(PRIMES[i]);
         if (output) System.out.printf("%s add(%d)%n", l.toStateString(), PRIMES[i]);
         assertNotSame(l.first, l.last);
         assertEquals(PRIMES[i], (int) l.last.element);
         assertEquals(PRIMES[0], (int) l.first.element);
         assertEquals(i + 1, l.size);
-        assertSame(l.getNode(i - 1).next, l.getNode(i));
         assertNull(l.last.next);
+        assertNotSame(l.last, prevLast);
+        assertSame(prevLast.next, l.last);
       }
     }
 
@@ -495,15 +498,18 @@ public class SinglyLinkedListTests {
       l.addFirst(PRIMES[0]);
       l.addFirst(PRIMES[1]);
       if (output) System.out.println(l.toStateString());
+      SinglyLinkedList.Node<Integer> prevLast;
       for (int i = 2; i < PRIMES.length; i++) {
+        prevLast = l.last;
         l.addFirst(PRIMES[i]);
         if (output) System.out.printf("%s addFirst(%d)%n", l.toStateString(), PRIMES[i]);
         assertNotSame(l.first, l.last);
         assertEquals(PRIMES[i], (int) l.first.element);
         assertEquals(PRIMES[0], (int) l.last.element);
         assertEquals(i + 1, l.size);
-        assertSame(l.getNode(i - 1).next, l.getNode(i));
         assertNull(l.last.next);
+        assertNotSame(l.last, prevLast);
+        assertSame(prevLast.next, l.last);
       }
     }
 
@@ -545,15 +551,18 @@ public class SinglyLinkedListTests {
       l.addLast(PRIMES[0]);
       l.addLast(PRIMES[1]);
       if (output) System.out.println(l.toStateString());
+      SinglyLinkedList.Node<Integer> prevLast;
       for (int i = 2; i < PRIMES.length; i++) {
+        prevLast = l.last;
         l.addLast(PRIMES[i]);
         if (output) System.out.printf("%s addLast(%d)%n", l.toStateString(), PRIMES[i]);
         assertNotSame(l.first, l.last);
         assertEquals(PRIMES[i], (int) l.last.element);
         assertEquals(PRIMES[0], (int) l.first.element);
         assertEquals(i + 1, l.size);
-        assertSame(l.getNode(i - 1).next, l.getNode(i));
         assertNull(l.last.next);
+        assertNotSame(l.last, prevLast);
+        assertSame(prevLast.next, l.last);
       }
     }
 
