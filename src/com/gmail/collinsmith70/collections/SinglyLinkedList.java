@@ -197,7 +197,6 @@ public class SinglyLinkedList<E> implements List<E> {
     return prev;
   }
 
-
   private String getElementsString() {
     StringBuilder sb = new StringBuilder();
     sb.append("[");
