@@ -1,6 +1,10 @@
 package com.gmail.collinsmith70.collections;
 
-public class DoublyLinkedList<E> {
+import java.lang.reflect.Array;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
+public class DoublyLinkedList<E> implements List<E> {
 
   Node<E> first;
   Node<E> last;
@@ -13,8 +17,21 @@ public class DoublyLinkedList<E> {
     return size;
   }
 
-  public boolean isEmpty() {
-    return size() == 0;
+  @Override
+  public void clear() {
+    first = last = null;
+    size = 0;
+  }
+
+  @Override
+  public boolean contains(Object obj) {
+    for (Node<E> n = first; n != null; n = n.next) {
+      if (Objects.equals(n.element, obj)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public E get(int index) {
@@ -22,7 +39,7 @@ public class DoublyLinkedList<E> {
       throw new IndexOutOfBoundsException();
     }
 
-    Node<E> n = null;
+    Node<E> n;
     if (index < size()>>>1) {
       n = first;
       for (int i = 0; i < index; i++) {
@@ -37,6 +54,20 @@ public class DoublyLinkedList<E> {
     }
 
     return n.element;
+  }
+
+  @Override
+  public void set(int index, E element) {
+    if (index < 0 || index >= size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    Node<E> n = first;
+    for (int i = 0; i < index; i++) {
+      n = n.next;
+    }
+
+    n.element = element;
   }
 
   public void addFirst(E element) {
@@ -65,9 +96,37 @@ public class DoublyLinkedList<E> {
     size++;
   }
 
+  @Override
+  public void add(int index, E element) {
+    if (index < 0 || index > size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    Node<E> n = first, prev = null;
+    for (int i = 0; i < index; i++) {
+      prev = n;
+      n = n.next;
+    }
+
+    Node<E> newNode = new Node<>(prev, element, n);
+    if (prev == null) {
+      first = newNode;
+    } else {
+      prev.next = newNode;
+    }
+
+    if (n != null) {
+      n.prev = newNode;
+    } else {
+      last = newNode;
+    }
+
+    size++;
+  }
+
   public E removeFirst() {
     if (first == null) {
-      return null;
+      throw new NoSuchElementException();
     }
 
     E element = first.element;
@@ -84,7 +143,7 @@ public class DoublyLinkedList<E> {
 
   public E removeLast() {
     if (last == null) {
-      return null;
+      throw new NoSuchElementException();
     }
 
     E element = last.element;
@@ -97,6 +156,48 @@ public class DoublyLinkedList<E> {
 
     size--;
     return element;
+  }
+
+  @Override
+  public E remove(int index) {
+    if (index < 0 || index >= size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    Node<E> n = first, prev = null;
+    for (int i = 0; i < index; i++) {
+      prev = n;
+      n = n.next;
+    }
+
+    E element = n.element;
+    if (prev == null) {
+      first = n.next;
+    } else {
+      prev.next = n.next;
+    }
+
+    if (n.next != null) {
+      n.next.prev = prev;
+    } else {
+      last = prev;
+    }
+
+    size--;
+    return element;
+  }
+
+  @Override
+  public boolean remove(Object obj) {
+    int i = 0;
+    for (Node<E> n = first; n != null; n = n.next, i++) {
+      if (Objects.equals(n.element, obj)) {
+        remove(i);
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private String getElementsString() {
@@ -124,14 +225,23 @@ public class DoublyLinkedList<E> {
     return sb.toString();
   }
 
-  public E[] toArray() {
-    int i = 0;
-    E[] elements = (E[])new Object[size()];
-    for (Node<E> n = first; n != null; n = n.next) {
-      elements[i++] = n.element;
+  @Override
+  public <T> T[] toArray(T[] array) {
+    int size = size();
+    if (array.length < size) {
+      array = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
     }
 
-    return elements;
+    int i = 0;
+    for (Node<E> n = first; n != null; n = n.next) {
+      array[i++] = (T) n.element;
+    }
+
+    if (array.length > size) {
+      array[size] = null;
+    }
+
+    return array;
   }
 
   String toStateString() {
