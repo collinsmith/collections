@@ -69,7 +69,7 @@ public class ArrayList<E> implements List<E> {
 
     int newSize = Math.max(elements.length << 1, 1);
     elements = Arrays.copyOf(elements, newSize);
-    return true;
+    return checkAndGrow(by);
   }
 
   @Override
