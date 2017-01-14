@@ -197,11 +197,10 @@ public class SinglyLinkedList<E> implements List<E> {
     return prev;
   }
 
-  @Override
-  public String toString() {
+
+  private String getElementsString() {
     StringBuilder sb = new StringBuilder();
-    sb.append(getClass().getSimpleName());
-    sb.append(":[");
+    sb.append("[");
     for (Node<E> n = first; n != null; n = n.next) {
       sb.append(n.element);
       sb.append(", ");
@@ -212,6 +211,15 @@ public class SinglyLinkedList<E> implements List<E> {
     }
 
     sb.append("]");
+    return sb.toString();
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getClass().getSimpleName());
+    sb.append(":");
+    sb.append(getElementsString());
     return sb.toString();
   }
 
@@ -235,18 +243,8 @@ public class SinglyLinkedList<E> implements List<E> {
   }
 
   String toStateString() {
-    StringBuilder sb = new StringBuilder();
-    for (Node<E> n = first; n != null; n = n.next) {
-      sb.append(n.element);
-      sb.append(", ");
-    }
-
-    if (!isEmpty()) {
-      sb.delete(sb.length() - 2, sb.length());
-    }
-
-    return String.format("%s:{first=%s, last=%s, size=%d, elements=[%s]}",
-        getClass().getSimpleName(), first, last, size, sb.toString());
+    return String.format("%s:{first=%s, last=%s, size=%d, elements=%s}",
+        getClass().getSimpleName(), first, last, size, getElementsString());
   }
 
   static class Node<E> {
