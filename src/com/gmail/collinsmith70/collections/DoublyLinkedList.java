@@ -153,6 +153,12 @@ public class DoublyLinkedList<E> {
       this.next = next;
       this.prev = prev;
     }
+
+    @Override
+    public String toString() {
+      return String.format("%s:{prev=%h, element=%s, next=%h}",
+          getClass().getSimpleName(), prev, element, next);
+    }
   }
 
 }
