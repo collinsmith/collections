@@ -659,6 +659,8 @@ public class SinglyLinkedListTests {
       assertEquals(PRIMES[0], first);
       assertEquals(1, l.size);
       assertSame(l.first, l.last);
+      assertNotNull(l.first);
+      assertNotNull(l.last);
       assertEquals(PRIMES[1], (int) l.first.element);
       assertNull(l.first.next);
       assertNull(l.last.next);
@@ -675,6 +677,8 @@ public class SinglyLinkedListTests {
       assertEquals(PRIMES[1], last);
       assertEquals(1, l.size);
       assertSame(l.first, l.last);
+      assertNotNull(l.first);
+      assertNotNull(l.last);
       assertEquals(PRIMES[0], (int) l.first.element);
       assertNull(l.first.next);
       assertNull(l.last.next);
@@ -772,6 +776,8 @@ public class SinglyLinkedListTests {
       assertEquals(PRIMES[0], first);
       assertEquals(PRIMES[1], (int) l.first.element);
       assertSame(l.first, l.last);
+      assertNotNull(l.first);
+      assertNotNull(l.last);
       assertNull(l.first.next);
       assertNull(l.last.next);
     }
@@ -829,6 +835,8 @@ public class SinglyLinkedListTests {
       assertEquals(PRIMES[1], last);
       assertEquals(PRIMES[0], (int) l.first.element);
       assertSame(l.first, l.last);
+      assertNotNull(l.first);
+      assertNotNull(l.last);
       assertNull(l.first.next);
       assertNull(l.last.next);
     }
