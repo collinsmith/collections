@@ -99,11 +99,9 @@ public class DoublyLinkedList<E> {
     return element;
   }
 
-  @Override
-  public String toString() {
+  private String getElementsString() {
     StringBuilder sb = new StringBuilder();
-    sb.append(getClass().getSimpleName());
-    sb.append(":[");
+    sb.append("[");
     for (Node<E> n = first; n != null; n = n.next) {
       sb.append(n.element);
       sb.append(", ");
@@ -114,6 +112,15 @@ public class DoublyLinkedList<E> {
     }
 
     sb.append("]");
+    return sb.toString();
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getClass().getSimpleName());
+    sb.append(":");
+    sb.append(getElementsString());
     return sb.toString();
   }
 
