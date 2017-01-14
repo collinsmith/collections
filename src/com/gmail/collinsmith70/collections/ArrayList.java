@@ -2,6 +2,7 @@ package com.gmail.collinsmith70.collections;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class ArrayList<E> implements List<E> {
@@ -99,7 +100,7 @@ public class ArrayList<E> implements List<E> {
   @Override
   public E removeFirst() {
     if (isEmpty()) {
-      return null;
+      throw new NoSuchElementException();
     }
 
     E element = (E)elements[0];
@@ -110,7 +111,7 @@ public class ArrayList<E> implements List<E> {
   @Override
   public E removeLast() {
     if (isEmpty()) {
-      return null;
+      throw new NoSuchElementException();
     }
 
     E element = (E)elements[--size];
