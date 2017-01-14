@@ -141,21 +141,29 @@ public class ArrayList<E> implements List<E> {
     return false;
   }
 
-  @Override
-  public String toString() {
+  private String getElementsString() {
     StringBuilder sb = new StringBuilder();
-    sb.append(getClass().getSimpleName());
-    sb.append(":[");
-    for (E element : elements) {
-      sb.append(element);
+    sb.append("[");
+    for (int i = 0; i < size(); i++) {
+      sb.append(elements[i]);
       sb.append(", ");
     }
 
     if (!isEmpty()) {
-      sb.delete(sb.length()-2, sb.length());
+      sb.delete(sb.length() - 2, sb.length());
     }
 
-    sb.append("](");
+    sb.append("]");
+    return sb.toString();
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getClass().getSimpleName());
+    sb.append(":");
+    sb.append(getElementsString());
+    sb.append("(");
     sb.append(elements.length);
     sb.append(")");
     return sb.toString();
@@ -176,19 +184,8 @@ public class ArrayList<E> implements List<E> {
     return array;
   }
 
-  String toStateString() {
-    StringBuilder sb = new StringBuilder();
-    for (E element : elements) {
-      sb.append(element);
-      sb.append(", ");
-    }
-
-    if (!isEmpty()) {
-      sb.delete(sb.length() - 2, sb.length());
-    }
-
-    return String.format("%s:{size=%d, capacity=%d, elements=[%s]}",
-        getClass().getSimpleName(), size, elements.length, sb.toString());
+  String toStateString() {return String.format("%s:{size=%d, capacity=%d, elements=%s}",
+        getClass().getSimpleName(), size, elements.length, getElementsString());
   }
 
 }
