@@ -12,7 +12,19 @@ public interface Collection<E> {
 
   void add(E element);
 
+  default void addAll(E[] elements) {
+    for (E element : elements) {
+      add(element);
+    }
+  }
+
   boolean remove(Object obj);
+
+  default void removeAll(E[] elements) {
+    for (E element : elements) {
+      remove(element);
+    }
+  }
 
   boolean contains(Object obj);
 
