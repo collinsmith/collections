@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class ArrayList<E> implements List<E> {
 
-  E[] elements;
+  Object[] elements;
   int size;
 
   public ArrayList() {
@@ -14,7 +14,7 @@ public class ArrayList<E> implements List<E> {
   }
 
   public ArrayList(int initialCapacity) {
-    elements = (E[])new Object[initialCapacity];
+    elements = new Object[initialCapacity];
   }
 
   ArrayList(E[] elements) {
@@ -38,7 +38,7 @@ public class ArrayList<E> implements List<E> {
       throw new IndexOutOfBoundsException();
     }
 
-    return elements[index];
+    return (E)elements[index];
   }
 
   @Override
@@ -52,7 +52,7 @@ public class ArrayList<E> implements List<E> {
 
   @Override
   public boolean contains(Object obj) {
-    for (E element : elements) {
+    for (Object element : elements) {
       if (Objects.equals(element, obj)) {
         return true;
       }
@@ -102,7 +102,7 @@ public class ArrayList<E> implements List<E> {
       return null;
     }
 
-    E element = elements[0];
+    E element = (E)elements[0];
     System.arraycopy(elements, 1, elements, 0, size--);
     return element;
   }
@@ -113,7 +113,7 @@ public class ArrayList<E> implements List<E> {
       return null;
     }
 
-    E element = elements[--size];
+    E element = (E)elements[--size];
     return element;
   }
 
@@ -124,7 +124,7 @@ public class ArrayList<E> implements List<E> {
     }
 
     size--;
-    E element = elements[index];
+    E element = (E)elements[index];
     System.arraycopy(elements, index + 1, elements, index, size() - index);
     return element;
   }
