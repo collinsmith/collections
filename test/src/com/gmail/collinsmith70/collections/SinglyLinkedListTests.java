@@ -236,6 +236,8 @@ public class SinglyLinkedListTests {
       assertSame(l.first, l.last);
       assertEquals(PRIMES[0], (int) l.first.element);
       assertEquals(1, l.size);
+      assertNull(l.first.next);
+      assertNull(l.last.next);
     }
 
     @Test
@@ -249,6 +251,8 @@ public class SinglyLinkedListTests {
       assertEquals(PRIMES[0], (int) l.first.element);
       assertEquals(PRIMES[1], (int) l.last.element);
       assertEquals(2, l.size);
+      assertSame(l.first.next, l.last);
+      assertNull(l.last.next);
     }
 
     @Test
@@ -264,6 +268,8 @@ public class SinglyLinkedListTests {
         assertEquals(PRIMES[i], (int) l.last.element);
         assertEquals(PRIMES[0], (int) l.first.element);
         assertEquals(i + 1, l.size);
+        assertSame(l.getNode(i - 1).next, l.getNode(i));
+        assertNull(l.last.next);
       }
     }
 
@@ -298,6 +304,8 @@ public class SinglyLinkedListTests {
       assertSame(l.first, l.last);
       assertEquals(PRIMES[0], (int) l.first.element);
       assertEquals(1, l.size);
+      assertNull(l.first.next);
+      assertNull(l.last.next);
     }
 
     @Test
@@ -312,6 +320,8 @@ public class SinglyLinkedListTests {
         assertEquals(PRIMES[i], (int) l.first.element);
         assertEquals(PRIMES[0], (int) l.last.element);
         assertEquals(i + 1, l.size);
+        assertEquals(PRIMES[i - 1], (int) l.first.next.element);
+        assertNull(l.last.next);
       }
     }
 
@@ -327,6 +337,8 @@ public class SinglyLinkedListTests {
         assertEquals(PRIMES[i], (int) l.last.element);
         assertEquals(PRIMES[0], (int) l.first.element);
         assertEquals(i + 1, l.size);
+        assertEquals(PRIMES[i - 1], (int) l.getPrevious(l.last).element);
+        assertNull(l.last.next);
       }
     }
 
@@ -339,10 +351,11 @@ public class SinglyLinkedListTests {
       for (int i = PRIMES.length - 2; i > 0; i--) {
         l.add(1, PRIMES[i]);
         if (output) System.out.printf("%s add(%d, %d)%n", l.toStateString(), 1, PRIMES[i]);
-        assertEquals(PRIMES[i], (int) l.get(1));
+        assertEquals(PRIMES[i], (int) l.first.next.element);
         assertEquals(PRIMES.length - i + 1, l.size);
-        assertEquals(PRIMES[0], (int) l.get(0));
-        assertEquals(PRIMES[i + 1], (int) l.get(2));
+        assertEquals(PRIMES[0], (int) l.first.element);
+        assertEquals(PRIMES[i + 1], (int) l.first.next.next.element);
+        assertNull(l.last.next);
 
         // Test that first and last are still the same, since this is in-between them
         assertEquals(PRIMES[0], (int) l.first.element);
@@ -363,6 +376,8 @@ public class SinglyLinkedListTests {
       assertSame(l.first, l.last);
       assertEquals(PRIMES[0], (int) l.first.element);
       assertEquals(1, l.size);
+      assertNull(l.first.next);
+      assertNull(l.last.next);
     }
 
     @Test
@@ -376,6 +391,8 @@ public class SinglyLinkedListTests {
       assertEquals(PRIMES[1], (int) l.first.element);
       assertEquals(PRIMES[0], (int) l.last.element);
       assertEquals(2, l.size);
+      assertSame(l.first.next, l.last);
+      assertNull(l.last.next);
     }
 
     @Test
@@ -391,6 +408,8 @@ public class SinglyLinkedListTests {
         assertEquals(PRIMES[i], (int) l.first.element);
         assertEquals(PRIMES[0], (int) l.last.element);
         assertEquals(i + 1, l.size);
+        assertSame(l.getNode(i - 1).next, l.getNode(i));
+        assertNull(l.last.next);
       }
     }
 
@@ -407,6 +426,8 @@ public class SinglyLinkedListTests {
       assertSame(l.first, l.last);
       assertEquals(PRIMES[0], (int) l.first.element);
       assertEquals(1, l.size);
+      assertNull(l.first.next);
+      assertNull(l.last.next);
     }
 
     @Test
@@ -420,6 +441,8 @@ public class SinglyLinkedListTests {
       assertEquals(PRIMES[0], (int) l.first.element);
       assertEquals(PRIMES[1], (int) l.last.element);
       assertEquals(2, l.size);
+      assertSame(l.first.next, l.last);
+      assertNull(l.last.next);
     }
 
     @Test
@@ -435,6 +458,8 @@ public class SinglyLinkedListTests {
         assertEquals(PRIMES[i], (int) l.last.element);
         assertEquals(PRIMES[0], (int) l.first.element);
         assertEquals(i + 1, l.size);
+        assertSame(l.getNode(i - 1).next, l.getNode(i));
+        assertNull(l.last.next);
       }
     }
 
@@ -449,6 +474,8 @@ public class SinglyLinkedListTests {
       boolean removed = l.remove((Integer) PRIMES[0]);
       if (output) System.out.printf("%s remove((Integer)%d)%n", l.toStateString(), PRIMES[0]);
       assertFalse(removed);
+      assertNull(l.first);
+      assertNull(l.last);
     }
 
     @Test
@@ -459,6 +486,8 @@ public class SinglyLinkedListTests {
       boolean removed = l.remove((Integer) PRIMES[0]);
       if (output) System.out.printf("%s remove((Integer)%d)%n", l.toStateString(), PRIMES[0]);
       assertTrue(removed);
+      assertNull(l.first);
+      assertNull(l.last);
     }
 
     @Test
@@ -469,6 +498,8 @@ public class SinglyLinkedListTests {
       boolean removed = l.remove(null);
       if (output) System.out.printf("%s remove(%h)%n", l.toStateString(), null);
       assertTrue(removed);
+      assertNull(l.first);
+      assertNull(l.last);
     }
 
   }
@@ -519,6 +550,8 @@ public class SinglyLinkedListTests {
       assertEquals(1, l.size);
       assertSame(l.first, l.last);
       assertEquals(PRIMES[1], (int) l.first.element);
+      assertNull(l.first.next);
+      assertNull(l.last.next);
     }
 
     @Test
@@ -533,6 +566,8 @@ public class SinglyLinkedListTests {
       assertEquals(1, l.size);
       assertSame(l.first, l.last);
       assertEquals(PRIMES[0], (int) l.first.element);
+      assertNull(l.first.next);
+      assertNull(l.last.next);
     }
 
     @Test
@@ -543,7 +578,7 @@ public class SinglyLinkedListTests {
       }
 
       if (output) System.out.println(l.toStateString());
-      for (int i = 0; i < PRIMES.length - 1; i++) {
+      for (int i = 0; i < PRIMES.length - 2; i++) {
         int first = l.remove(0);
         if (output) System.out.printf("%s remove(%d)=%d%n", l.toStateString(), 0, first);
         assertEquals(PRIMES[i], first);
@@ -561,7 +596,7 @@ public class SinglyLinkedListTests {
       }
 
       if (output) System.out.println(l.toStateString());
-      for (int i = PRIMES.length - 1; i > 0; i--) {
+      for (int i = PRIMES.length - 1; i > 1; i--) {
         int index = l.size - 1;
         int last = l.remove(index);
         if (output) System.out.printf("%s remove(%d)=%d%n", l.toStateString(), index, last);
@@ -569,6 +604,7 @@ public class SinglyLinkedListTests {
         assertEquals(i, l.size);
         assertEquals(PRIMES[0], (int) l.first.element);
         assertEquals(PRIMES[i - 1], (int) l.last.element);
+        assertNotNull(l.getPrevious(l.last));
       }
     }
 
@@ -580,13 +616,14 @@ public class SinglyLinkedListTests {
       }
 
       if (output) System.out.println(l.toStateString());
-      for (int i = 1; i < PRIMES.length - 1; i++) {
+      for (int i = 1; i < PRIMES.length - 2; i++) {
         int nth = l.remove(1);
         if (output) System.out.printf("%s remove(%d)=%d%n", l.toStateString(), 1, nth);
         assertEquals(PRIMES[i], nth);
         assertEquals(PRIMES.length - i, l.size);
         assertEquals(PRIMES[0], (int) l.first.element);
         assertEquals(PRIMES[PRIMES.length - 1], (int) l.last.element);
+        assertEquals(PRIMES[i + 1], (int) l.first.next.element);
       }
     }
 
@@ -614,6 +651,22 @@ public class SinglyLinkedListTests {
     }
 
     @Test
+    public void second_to_last() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      l.addLast(PRIMES[1]);
+      if (output) System.out.println(l.toStateString());
+      int first = l.removeFirst();
+      if (output) System.out.printf("%s removeFirst()=%d%n", l.toStateString(), first);
+      assertEquals(1, l.size);
+      assertEquals(PRIMES[0], first);
+      assertEquals(PRIMES[1], (int) l.first.element);
+      assertSame(l.first, l.last);
+      assertNull(l.first.next);
+      assertNull(l.last.next);
+    }
+
+    @Test
     public void nth() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
       for (int prime : PRIMES) {
@@ -627,6 +680,7 @@ public class SinglyLinkedListTests {
         assertEquals(PRIMES[i], first);
         assertEquals(PRIMES.length - i - 1, l.size);
         assertEquals(PRIMES[i + 1], (int) l.first.element);
+        assertEquals(PRIMES[PRIMES.length - 1], (int) l.last.element);
       }
     }
 
@@ -654,6 +708,22 @@ public class SinglyLinkedListTests {
     }
 
     @Test
+    public void second_to_last() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      l.addLast(PRIMES[1]);
+      if (output) System.out.println(l.toStateString());
+      int last = l.removeLast();
+      if (output) System.out.printf("%s removeLast()=%d%n", l.toStateString(), last);
+      assertEquals(1, l.size);
+      assertEquals(PRIMES[1], last);
+      assertEquals(PRIMES[0], (int) l.first.element);
+      assertSame(l.first, l.last);
+      assertNull(l.first.next);
+      assertNull(l.last.next);
+    }
+
+    @Test
     public void nth() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
       for (int prime : PRIMES) {
@@ -661,12 +731,14 @@ public class SinglyLinkedListTests {
       }
 
       if (output) System.out.println(l.toStateString());
-      for (int i = PRIMES.length - 1; i > 0; i--) {
+      for (int i = PRIMES.length - 1; i > 1; i--) {
         int last = l.removeLast();
         if (output) System.out.printf("%s removeLast()=%d%n", l.toStateString(), last);
         assertEquals(PRIMES[i], last);
         assertEquals(i, l.size);
+        assertEquals(PRIMES[0], (int) l.first.element);
         assertEquals(PRIMES[i - 1], (int) l.last.element);
+        assertNotNull(l.getPrevious(l.last));
       }
     }
 
