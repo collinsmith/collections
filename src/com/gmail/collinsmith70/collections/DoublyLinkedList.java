@@ -1,7 +1,6 @@
 package com.gmail.collinsmith70.collections;
 
 import java.lang.reflect.Array;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class DoublyLinkedList<E> implements List<E> {
@@ -13,6 +12,7 @@ public class DoublyLinkedList<E> implements List<E> {
   public DoublyLinkedList() {
   }
 
+  @Override
   public int size() {
     return size;
   }
@@ -34,6 +34,7 @@ public class DoublyLinkedList<E> implements List<E> {
     return false;
   }
 
+  @Override
   public E get(int index) {
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
@@ -70,32 +71,6 @@ public class DoublyLinkedList<E> implements List<E> {
     n.element = element;
   }
 
-  public void addFirst(E element) {
-    if (first == null) {
-      first = last = new Node<>(null, element, null);
-      size++;
-      return;
-    }
-
-    Node<E> n = new Node<>(null, element, first);
-    first.prev = n;
-    first = n;
-    size++;
-  }
-
-  public void addLast(E element) {
-    if (last == null) {
-      first = last = new Node<>(null, element, null);
-      size++;
-      return;
-    }
-
-    Node<E> n = new Node<>(last, element, null);
-    last.next = n;
-    last = n;
-    size++;
-  }
-
   @Override
   public void add(int index, E element) {
     if (index < 0 || index > size()) {
@@ -122,40 +97,6 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     size++;
-  }
-
-  public E removeFirst() {
-    if (first == null) {
-      throw new NoSuchElementException();
-    }
-
-    E element = first.element;
-    first = first.next;
-    if (first != null) {
-      first.prev = null;
-    } else {
-      first = last = null;
-    }
-
-    size--;
-    return element;
-  }
-
-  public E removeLast() {
-    if (last == null) {
-      throw new NoSuchElementException();
-    }
-
-    E element = last.element;
-    last = last.prev;
-    if (last != null) {
-      last.next = null;
-    } else {
-      first = last = null;
-    }
-
-    size--;
-    return element;
   }
 
   @Override
@@ -198,12 +139,6 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     return false;
-  }
-
-  Node<E> getPrevious(Node<E> node) {
-    Node<E> prev = null;
-    for (Node<E> n = first; n != null && n != node; prev = n, n = n.next) ;
-    return prev;
   }
 
   Node<E> getNode(int index) {
