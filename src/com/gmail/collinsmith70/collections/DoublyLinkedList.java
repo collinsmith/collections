@@ -134,6 +134,11 @@ public class DoublyLinkedList<E> {
     return elements;
   }
 
+  String toStateString() {
+    return String.format("%s:{first=%s, last=%s, size=%d, elements=%s}",
+        getClass().getSimpleName(), first, last, size, getElementsString());
+  }
+
   static class Node<E> {
     E element;
     Node<E> next;
