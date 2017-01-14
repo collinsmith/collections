@@ -191,10 +191,23 @@ public class SinglyLinkedList<E> implements List<E> {
     return false;
   }
 
-  private Node<E> getPrevious(Node<E> node) {
+  Node<E> getPrevious(Node<E> node) {
     Node<E> prev = null;
     for (Node<E> n = first; n != null && n != node; prev = n, n = n.next);
     return prev;
+  }
+
+  Node<E> getNode(int index) {
+    if (index < 0 || index >= size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    Node<E> n = first;
+    for (int i = 0; i < index; i++) {
+      n = n.next;
+    }
+
+    return n;
   }
 
   private String getElementsString() {
