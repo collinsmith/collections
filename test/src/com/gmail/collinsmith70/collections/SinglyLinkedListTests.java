@@ -34,6 +34,100 @@ public class SinglyLinkedListTests {
 
   }
 
+  public static class getPrevious {
+
+    @Test
+    public void empty() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      if (output) System.out.println(l.toStateString());
+      assertNull(l.getPrevious(l.first));
+    }
+
+    @Test
+    public void single_element() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      if (output) System.out.println(l.toStateString());
+      assertNull(l.getPrevious(l.first));
+    }
+
+    @Test
+    public void two_elements() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      l.addLast(PRIMES[1]);
+      if (output) System.out.println(l.toStateString());
+      assertSame(l.first, l.getPrevious(l.last));
+    }
+
+    @Test
+    public void n_elements() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      if (output) System.out.println(l.toStateString());
+      SinglyLinkedList.Node<Integer> prevLast;
+      for (int prime : PRIMES) {
+        prevLast = l.last;
+        l.addLast(prime);
+        if (output) System.out.println(l.toStateString());
+        assertSame(prevLast, l.getPrevious(l.last));
+      }
+    }
+
+  }
+
+  public static class getNode {
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void fails_empty() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.getNode(0);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void fails_nonempty_low() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      l.getNode(-1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void fails_nonempty_high() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      l.getNode(1);
+    }
+
+    @Test
+    public void single_element() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      if (output) System.out.println(l.toStateString());
+      assertSame(l.first, l.getNode(0));
+    }
+
+    @Test
+    public void two_elements() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      l.addLast(PRIMES[0]);
+      l.addLast(PRIMES[1]);
+      if (output) System.out.println(l.toStateString());
+      assertSame(l.first, l.getNode(0));
+      assertSame(l.last, l.getNode(1));
+    }
+
+    @Test
+    public void n_elements() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      if (output) System.out.println(l.toStateString());
+      for (int i = 0; i < PRIMES.length; i++) {
+        l.addLast(PRIMES[i]);
+        if (output) System.out.println(l.toStateString());
+        assertSame(l.last, l.getNode(i));
+      }
+    }
+
+  }
+
   public static class clear {
 
     @Test
