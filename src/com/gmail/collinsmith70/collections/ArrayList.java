@@ -61,7 +61,7 @@ public class ArrayList<E> implements List<E> {
     return false;
   }
 
-  private boolean checkAndGrow(int by) {
+  boolean checkAndGrow(int by) {
     if (size() - 1 + by < elements.length) {
       return false;
     }

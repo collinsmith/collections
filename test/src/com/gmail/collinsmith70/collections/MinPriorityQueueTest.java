@@ -25,7 +25,7 @@ public class MinPriorityQueueTest {
     queue.elements.set(queue.size()-1, 'A');
     System.out.println("set: " + queue.elements);
     queue.update(queue.size() - 1);
-    Assert.assertArrayEquals(expected, queue.elements.toArray());
+    Assert.assertArrayEquals(expected, queue.elements.toArray(new Character[queue.size()]));
   }
 
 }
