@@ -2,6 +2,7 @@ package com.gmail.collinsmith70.collections;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -24,6 +25,42 @@ public class ArrayList<E> implements List<E> {
   }
 
   @Override
+  public Iterator<E> iterator() {
+    return new Iterator<E>() {
+
+      int currentIndex;
+      E current;
+
+      @Override
+      public boolean hasNext() {
+        return currentIndex < size();
+      }
+
+      @Override
+      @SuppressWarnings("unchecked")
+      public E next() {
+        if (!hasNext()) {
+          throw new NoSuchElementException();
+        }
+
+        current = (E) elements[currentIndex++];
+        return current;
+      }
+
+      @Override
+      public void remove() {
+        if (current == null) {
+          throw new IllegalStateException();
+        }
+
+        current = null;
+        ArrayList.this.remove(--currentIndex);
+      }
+
+    };
+  }
+
+  @Override
   public void clear() {
     size = 0;
   }
@@ -34,12 +71,13 @@ public class ArrayList<E> implements List<E> {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public E get(int index) {
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
     }
 
-    return (E)elements[index];
+    return (E) elements[index];
   }
 
   @Override
@@ -98,34 +136,36 @@ public class ArrayList<E> implements List<E> {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public E removeFirst() {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
 
-    E element = (E)elements[0];
+    E element = (E) elements[0];
     System.arraycopy(elements, 1, elements, 0, size--);
     return element;
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public E removeLast() {
     if (isEmpty()) {
       throw new NoSuchElementException();
     }
 
-    E element = (E)elements[--size];
-    return element;
+    return (E) elements[--size];
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public E remove(int index) {
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
     }
 
     size--;
-    E element = (E)elements[index];
+    E element = (E) elements[index];
     System.arraycopy(elements, index + 1, elements, index, size() - index);
     return element;
   }
@@ -160,17 +200,11 @@ public class ArrayList<E> implements List<E> {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(getClass().getSimpleName());
-    sb.append(":");
-    sb.append(getElementsString());
-    sb.append("(");
-    sb.append(elements.length);
-    sb.append(")");
-    return sb.toString();
+    return String.format("%s:{elements:%s}", getClass().getSimpleName(), getElementsString());
   }
 
   @Override
+  @SuppressWarnings({"unchecked", "cast"})
   public <T> T[] toArray(T[] array) {
     int size = size();
     if (array.length < size) {
@@ -185,7 +219,7 @@ public class ArrayList<E> implements List<E> {
     return array;
   }
 
-  String toStateString() {return String.format("%s:{size=%d, capacity=%d, elements=%s}",
+  String toStateString() {return String.format("%s:{size:%d, capacity:%d, elements:%s}",
         getClass().getSimpleName(), size, elements.length, getElementsString());
   }
 

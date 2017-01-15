@@ -1,6 +1,7 @@
 package com.gmail.collinsmith70.collections;
 
 import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class DoublyLinkedList<E> implements List<E> {
@@ -10,6 +11,11 @@ public class DoublyLinkedList<E> implements List<E> {
   int size;
 
   public DoublyLinkedList() {
+  }
+
+  @Override
+  public Iterator<E> iterator() {
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -172,11 +178,7 @@ public class DoublyLinkedList<E> implements List<E> {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(getClass().getSimpleName());
-    sb.append(":");
-    sb.append(getElementsString());
-    return sb.toString();
+    return String.format("%s:{elements:%s}", getClass().getSimpleName(), getElementsString());
   }
 
   @Override
@@ -199,7 +201,7 @@ public class DoublyLinkedList<E> implements List<E> {
   }
 
   String toStateString() {
-    return String.format("%s:{first=%s, last=%s, size=%d, elements=%s}",
+    return String.format("%s:{first:{%s}, last:{%s}, size:%d, elements:%s}",
         getClass().getSimpleName(), first, last, size, getElementsString());
   }
 
@@ -220,7 +222,7 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public String toString() {
-      return String.format("%s:{prev=%h, element=%s, next=%h}",
+      return String.format("%s:{prev:%h, element:%s, next:%h}",
           getClass().getSimpleName(), prev, element, next);
     }
   }

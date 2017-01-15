@@ -1,6 +1,6 @@
 package com.gmail.collinsmith70.collections;
 
-public interface Collection<E> {
+public interface Collection<E> extends Iterable<E> {
 
   int size();
 

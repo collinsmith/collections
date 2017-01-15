@@ -34,6 +34,61 @@ public class SinglyLinkedListTests {
 
   }
 
+  public static class link {
+
+    @Test
+    public void prepend() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      SinglyLinkedList.Node<Integer> next, node = l.link(null, PRIMES[0], null);
+      if (output) System.out.println(l.toStateString());
+      for (int i = 1; i < PRIMES.length; i++) {
+        next = node;
+        node = l.link(null, PRIMES[i], next);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], (int) node.element);
+        assertEquals(i + 1, l.size);
+        assertSame(next, node.next);
+        assertSame(l.first, node);
+      }
+    }
+
+    @Test
+    public void append() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      SinglyLinkedList.Node<Integer> prev, node = l.link(null, PRIMES[0], null);
+      if (output) System.out.println(l.toStateString());
+      for (int i = 1; i < PRIMES.length; i++) {
+        prev = node;
+        node = l.link(prev, PRIMES[i], null);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], (int) node.element);
+        assertEquals(i + 1, l.size);
+        assertSame(node, prev.next);
+        assertNull(node.next);
+        assertSame(l.last, node);
+      }
+    }
+
+    @Test
+    public void insert() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      SinglyLinkedList.Node<Integer> prev, node, next;
+      prev = l.link(null, PRIMES[0], null);
+      node = l.link(prev, PRIMES[PRIMES.length - 1], null);
+      if (output) System.out.println(l.toStateString());
+      for (int i = 1; i < PRIMES.length - 1; i++) {
+        next = node;
+        node = l.link(prev, PRIMES[i], next);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], (int) node.element);
+        assertEquals(i + 2, l.size);
+        assertSame(node, prev.next);
+        assertSame(next, node.next);
+      }
+    }
+
+  }
+
   public static class getPrevious {
 
     @Test

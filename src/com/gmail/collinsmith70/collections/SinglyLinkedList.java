@@ -1,7 +1,9 @@
 package com.gmail.collinsmith70.collections;
 
+import com.google.common.base.Preconditions;
+
 import java.lang.reflect.Array;
-import java.util.NoSuchElementException;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class SinglyLinkedList<E> implements List<E> {
@@ -11,6 +13,90 @@ public class SinglyLinkedList<E> implements List<E> {
   int size;
 
   public SinglyLinkedList() {
+  }
+
+  /**
+   * Creates a new link in the list after {@code prev} that should be followed by {@code next}.
+   * Additionally:
+   * <ul>
+   *   <li>If {@code prev == null}, then {@link #first} is changed to reference this new node.</li>
+   *   <li>If {@code next == null}, then {@link #last} is changed to reference this new node.</li>
+   * </ul>
+   *
+   * @param prev    Node which should precede the new node
+   * @param element Value of the new node
+   * @param next    Node which will follow the new node
+   *
+   * @return The newly created node
+   */
+  Node<E> link(Node<E> prev, E element, Node<E> next) {
+    final Node<E> newNode = new Node<>(element, next);
+    if (prev == null) {
+      first = newNode;
+    } else {
+      prev.next = newNode;
+    }
+
+    if (next == null) {
+      last = newNode;
+    }
+
+    size++;
+    return newNode;
+  }
+
+  /**
+   * Removes the specified link from the list. If the link immediately preceding this one is known,
+   * then {@link #unlink(Node, Node)} should be used instead, as this case can be optimized for.
+   *
+   * @param node Node to unlink
+   *
+   * @return Value of the node
+   *
+   * @see #unlink(Node, Node)
+   */
+  E unlink(Node<E> node) {
+    Preconditions.checkArgument(node != null, "node cannot be null");
+    Node<E> prev = getPrevious(node);
+    return unlink(prev, node);
+  }
+
+  /**
+   * Removes the specified link from the list. If {@code prev} is not known, then
+   * {@link #unlink(Node)} may be used instead.
+   *
+   * @param prev Node which immediately precedes {@code node}
+   * @param node Node to unlink
+   *
+   * @return Value of the node
+   *
+   * @see #unlink(Node)
+   */
+  E unlink(Node<E> prev, Node<E> node) {
+    Preconditions.checkArgument(node != null, "node cannot be null");
+    final E element = node.element;
+    final Node<E> next = node.next;
+    if (prev == null) {
+      first = next;
+    } else {
+      Preconditions.checkArgument(prev.next == node, "node must immediately follow prev");
+      prev.next = next;
+    }
+
+    if (next == null) {
+      last = prev;
+    } else {
+      node.next = null;
+    }
+
+    node.element = null;
+    size--;
+    return element;
+  }
+
+  @Override
+  public Iterator<E> iterator() {
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -64,91 +150,18 @@ public class SinglyLinkedList<E> implements List<E> {
   }
 
   @Override
-  public void addFirst(E element) {
-    if (first == null) {
-      first = last = new Node<>(element, null);
-      size++;
-      return;
-    }
-
-    Node<E> n = new Node<>(element, first);
-    first = n;
-    size++;
-  }
-
-  @Override
-  public void addLast(E element) {
-    if (first == null) {
-      first = last = new Node<>(element, null);
-      size++;
-      return;
-    }
-
-    Node<E> n = new Node<>(element, null);
-    last.next = n;
-    last = n;
-    size++;
-  }
-
-  @Override
   public void add(int index, E element) {
     if (index < 0 || index > size()) {
       throw new IndexOutOfBoundsException();
     }
 
-    Node<E> n = first, prev = null;
+    Node<E> node = first, prev = null;
     for (int i = 0; i < index; i++) {
-      prev = n;
-      n = n.next;
+      prev = node;
+      node = node.next;
     }
 
-    Node<E> newNode = new Node<>(element, n);
-    if (prev == null) {
-      first = newNode;
-    } else {
-      prev.next = newNode;
-    }
-
-    if (prev == last) {
-      last = newNode;
-    }
-
-    size++;
-  }
-
-  @Override
-  public E removeFirst() {
-    if (first == null) {
-      throw new NoSuchElementException();
-    }
-
-    E element = first.element;
-    if (first == last) {
-      first = last = null;
-    } else {
-      first = first.next;
-    }
-
-    size--;
-    return element;
-  }
-
-  @Override
-  public E removeLast() {
-    if (last == null) {
-      throw new NoSuchElementException();
-    }
-
-    E element = last.element;
-    if (last == first) {
-      first = last = null;
-    } else {
-      last = getPrevious(last);
-      last.next = null;
-    }
-
-    size--;
-    return element;
+    link(prev, element, node);
   }
 
   @Override
@@ -157,25 +170,13 @@ public class SinglyLinkedList<E> implements List<E> {
       throw new IndexOutOfBoundsException();
     }
 
-    Node<E> n = first, prev = null;
+    Node<E> node = first, prev = null;
     for (int i = 0; i < index; i++) {
-      prev = n;
-      n = n.next;
+      prev = node;
+      node = node.next;
     }
 
-    E element = n.element;
-    if (prev == null) {
-      first = n.next;
-    } else {
-      prev.next = n.next;
-    }
-
-    if (n == last) {
-      last = prev;
-    }
-
-    size--;
-    return element;
+    return unlink(prev, node);
   }
 
   @Override
@@ -228,14 +229,11 @@ public class SinglyLinkedList<E> implements List<E> {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(getClass().getSimpleName());
-    sb.append(":");
-    sb.append(getElementsString());
-    return sb.toString();
+    return String.format("%s:{elements:%s}", getClass().getSimpleName(), getElementsString());
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public <T> T[] toArray(T[] array) {
     int size = size();
     if (array.length < size) {
@@ -255,7 +253,7 @@ public class SinglyLinkedList<E> implements List<E> {
   }
 
   String toStateString() {
-    return String.format("%s:{first=%s, last=%s, size=%d, elements=%s}",
+    return String.format("%s:{first:{%s}, last:{%s}, size:%d, elements:%s}",
         getClass().getSimpleName(), first, last, size, getElementsString());
   }
 
@@ -274,7 +272,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public String toString() {
-      return String.format("%s:{element=%s, next=%h}", getClass().getSimpleName(), element, next);
+      return String.format("%s:{element:%s, next:%h}", getClass().getSimpleName(), element, next);
     }
   }
 
