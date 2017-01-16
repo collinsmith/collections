@@ -393,9 +393,8 @@ public class SinglyLinkedListTests {
 
     @Test
     public void _true() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
       for (int prime : PRIMES) {
-        l.addLast(prime);
         if (output) System.out.println(l.toStateString() + " contains " + prime);
         assertTrue(l.contains(prime));
       }
