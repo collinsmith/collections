@@ -279,30 +279,31 @@ public class SinglyLinkedListTests {
     @Test
     public void single_element() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      SinglyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
       if (output) System.out.println(l.toStateString());
-      assertNull(l.getPrevious(l.first));
+      assertNull(l.getPrevious(first));
     }
 
     @Test
     public void two_elements() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      l.addLast(PRIMES[1]);
+      SinglyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
+      SinglyLinkedList.Node<Integer> second = l.link(first, PRIMES[1], null);
       if (output) System.out.println(l.toStateString());
-      assertSame(l.first, l.getPrevious(l.last));
+      assertNull(l.getPrevious(first));
+      assertSame(first, l.getPrevious(second));
     }
 
     @Test
     public void n_elements() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
       if (output) System.out.println(l.toStateString());
-      SinglyLinkedList.Node<Integer> prevLast;
-      for (int prime : PRIMES) {
-        prevLast = l.last;
-        l.addLast(prime);
+      SinglyLinkedList.Node<Integer> prevLast, last = l.link(null, PRIMES[0], null);
+      for (int i = 1; i < PRIMES.length; i++) {
+        prevLast = last;
+        last = l.link(prevLast, PRIMES[i], null);
         if (output) System.out.println(l.toStateString());
-        assertSame(prevLast, l.getPrevious(l.last));
+        assertSame(prevLast, l.getPrevious(last));
       }
     }
 
