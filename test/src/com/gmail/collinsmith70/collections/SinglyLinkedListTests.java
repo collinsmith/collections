@@ -389,61 +389,6 @@ public class SinglyLinkedListTests {
 
   }
 
-  public static class size {
-
-    @Test
-    public void incrementing() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
-      if (output) System.out.println(l.toStateString());
-      assertEquals(l.size, l.size());
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
-        if (output) System.out.println(l.toStateString());
-        assertEquals(l.size, l.size());
-      }
-    }
-
-    @Test
-    public void decrementing() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
-      if (output) System.out.println(l.toStateString());
-      assertEquals(l.size, l.size());
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.removeLast();
-        if (output) System.out.println(l.toStateString());
-        assertEquals(l.size, l.size());
-      }
-    }
-
-  }
-
-  public static class isEmpty {
-
-    @Test
-    public void _true() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
-      if (output) System.out.println(l.toStateString() + " isEmpty()");
-      assertTrue(l.isEmpty());
-      assertEquals(l.size == 0, l.isEmpty());
-    }
-
-    @Test
-    public void _false() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
-        if (output) System.out.println(l.toStateString() + " !isEmpty()");
-        assertFalse(l.isEmpty());
-        assertEquals(l.size == 0, l.isEmpty());
-      }
-    }
-
-  }
-
   public static class contains {
 
     @Test
