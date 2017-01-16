@@ -464,6 +464,7 @@ public class SinglyLinkedListTests {
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_empty() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      if (output) System.out.printf("%s set(%d, %d)%n", l.toStateString(), 0, PRIMES[0]);
       l.set(0, PRIMES[0]);
     }
 
@@ -471,6 +472,7 @@ public class SinglyLinkedListTests {
     public void fails_nonempty_low() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
       l.addLast(PRIMES[0]);
+      if (output) System.out.printf("%s set(%d, %d)%n", l.toStateString(), -1, PRIMES[1]);
       l.set(-1, PRIMES[1]);
     }
 
@@ -478,6 +480,7 @@ public class SinglyLinkedListTests {
     public void fails_nonempty_high() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
       l.addLast(PRIMES[0]);
+      if (output) System.out.printf("%s set(%d, %d)%n", l.toStateString(), 1, PRIMES[1]);
       l.set(1, PRIMES[1]);
     }
 
@@ -490,8 +493,9 @@ public class SinglyLinkedListTests {
 
       for (int i = 0; i < PRIMES.length; i++) {
         l.set(i, PRIMES[i]);
-        if (output) System.out.printf("%s set(%d)=%d%n", l.toStateString(), i, PRIMES[i]);
-        assertEquals(PRIMES[i], (int) l.get(i));
+        int get = l.get(i);
+        if (output) System.out.printf("%s set(%d, %d)=%d%n", l.toStateString(), i, PRIMES[i], get);
+        assertEquals(PRIMES[i], get);
       }
     }
 
