@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 import static com.gmail.collinsmith70.collections.TestData.PRIMES;
+import static com.gmail.collinsmith70.collections.TestData.WRAPPED_PRIMES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -32,9 +33,30 @@ public class SinglyLinkedListTests {
       assertEquals(0, l.size);
     }
 
+    @Test
+    public void SinglyLinkedList_Iterable() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      assertEquals(WRAPPED_PRIMES.length, l.size);
+      int i = 0;
+      for (Integer prime : l) {
+        assertSame(WRAPPED_PRIMES[i++], prime);
+      }
+    }
+
   }
 
   public static class link {
+
+    @Test
+    public void first() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      if (output) System.out.println(l.toStateString());
+      SinglyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
+      if (output) System.out.println(l.toStateString());
+      assertSame(first, l.first);
+      assertSame(l.first, l.last);
+    }
 
     @Test
     public void prepend() {
@@ -84,6 +106,162 @@ public class SinglyLinkedListTests {
         assertEquals(i + 2, l.size);
         assertSame(node, prev.next);
         assertSame(next, node.next);
+      }
+    }
+
+  }
+
+  public static class unlink {
+
+    @Test(expected = IllegalArgumentException.class)
+    public void fails_remove_null() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      if (output) System.out.println(l.toStateString());
+      l.unlink(null, null);
+    }
+
+    @Test
+    public void ultimate() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      SinglyLinkedList.Node<Integer> node = l.link(null, PRIMES[0], null);
+      if (output) System.out.println(l.toStateString());
+      int element = l.unlink(null, node);
+      if (output) System.out.println(l.toStateString());
+      assertEquals(PRIMES[0], element);
+      assertEquals(0, l.size);
+      assertNull(node.next);
+      assertNull(node.element);
+      assertNull(l.first);
+      assertNull(l.last);
+    }
+
+    @Test
+    public void first() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      SinglyLinkedList.Node<Integer> oldFirst, newFirst = l.first;
+      for (int i = 0; i < PRIMES.length - 1; i++) {
+        oldFirst = newFirst;
+        newFirst = newFirst != null ? newFirst.next : null;
+        int element = l.unlink(null, oldFirst);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], element);
+        assertEquals(PRIMES.length - i - 1, l.size);
+        assertNull(oldFirst.next);
+        assertNull(oldFirst.element);
+        assertSame(newFirst, l.first);
+      }
+
+      assertSame(l.first, l.last);
+    }
+
+    @Test
+    public void last() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      SinglyLinkedList.Node<Integer> newLast, oldLast;
+      for (int i = PRIMES.length - 1; i > 0; i--) {
+        oldLast = l.last;
+        newLast = l.getPrevious(oldLast);
+        int element = l.unlink(oldLast);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], element);
+        assertEquals(i, l.size);
+        assertNull(oldLast.next);
+        assertNull(oldLast.element);
+        assertNull(newLast.next);
+        assertSame(newLast, l.last);
+        assertNull(l.last.next);
+      }
+
+      assertSame(l.first, l.last);
+    }
+
+    @Test
+    public void extract() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      SinglyLinkedList.Node<Integer> first, second, third;
+      for (int i = 1; i < PRIMES.length - 1; i++) {
+        first = l.first;
+        second = first.next;
+        third = second.next;
+        int element = l.unlink(first, second);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], element);
+        assertEquals(PRIMES.length - i, l.size);
+        assertNull(second.next);
+        assertNull(second.element);
+        assertSame(third, first.next);
+      }
+    }
+
+  }
+
+  public static class iterator {
+
+    @Test(expected = NoSuchElementException.class)
+    public void fails_next() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      if (output) System.out.println(l.toStateString());
+      SinglyLinkedList<Integer>.SinglyLinkedListIterator it
+          = (SinglyLinkedList<Integer>.SinglyLinkedListIterator) l.iterator();
+      Integer element = it.next();
+    }
+
+    @Test
+    public void next() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      SinglyLinkedList<Integer>.SinglyLinkedListIterator it
+          = (SinglyLinkedList<Integer>.SinglyLinkedListIterator) l.iterator();
+      if (output) System.out.println(it);
+      assertNull(it.lastReturned);
+      assertSame(l.first, it.next);
+      assertEquals(0, it.nextIndex);
+      for (int i = 0; i < WRAPPED_PRIMES.length; i++) {
+        assertTrue(it.hasNext());
+        SinglyLinkedList.Node<Integer> prevNext = it.next;
+        Integer element = it.next();
+        if (output) System.out.println(it);
+        assertSame(WRAPPED_PRIMES[i], element);
+        assertSame(prevNext, it.lastReturned);
+        assertSame(prevNext.next, it.next);
+        assertEquals(i + 1, it.nextIndex);
+      }
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void fails_remove() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      SinglyLinkedList<Integer>.SinglyLinkedListIterator it
+          = (SinglyLinkedList<Integer>.SinglyLinkedListIterator) l.iterator();
+      if (output) System.out.println(it);
+      it.remove();
+    }
+
+    @Test
+    public void remove() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      SinglyLinkedList<Integer>.SinglyLinkedListIterator it
+          = (SinglyLinkedList<Integer>.SinglyLinkedListIterator) l.iterator();
+      if (output) System.out.println(it);
+      assertNull(it.lastReturned);
+      assertSame(l.first, it.next);
+      assertEquals(0, it.nextIndex);
+      for (int i = 0; i < WRAPPED_PRIMES.length; i++) {
+        assertTrue(it.hasNext());
+        Integer element = it.next();
+        assertSame(WRAPPED_PRIMES[i], element);
+        assertNotNull(it.lastReturned);
+        assertEquals(1, it.nextIndex);
+
+        it.remove();
+        if (output) System.out.println(it);
+        assertNull(it.lastReturned);
+        assertEquals(0, it.nextIndex);
       }
     }
 

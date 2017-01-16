@@ -12,7 +12,7 @@ public interface Collection<E> extends Iterable<E> {
 
   void add(E element);
 
-  default void addAll(E[] elements) {
+  default void addAll(Iterable<? extends E> elements) {
     for (E element : elements) {
       add(element);
     }
@@ -20,7 +20,7 @@ public interface Collection<E> extends Iterable<E> {
 
   boolean remove(Object obj);
 
-  default void removeAll(E[] elements) {
+  default void removeAll(Iterable<? extends E> elements) {
     for (E element : elements) {
       remove(element);
     }

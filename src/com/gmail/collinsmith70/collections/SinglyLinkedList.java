@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 
 import java.lang.reflect.Array;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SinglyLinkedList<E> implements List<E> {
@@ -13,6 +14,10 @@ public class SinglyLinkedList<E> implements List<E> {
   int size;
 
   public SinglyLinkedList() {
+  }
+
+  public SinglyLinkedList(Iterable<E> elements) {
+    addAll(elements);
   }
 
   /**
@@ -96,7 +101,55 @@ public class SinglyLinkedList<E> implements List<E> {
 
   @Override
   public Iterator<E> iterator() {
-    throw new UnsupportedOperationException();
+    return new SinglyLinkedListIterator();
+  }
+
+  class SinglyLinkedListIterator implements Iterator<E> {
+
+    Node<E> lastReturned;
+    Node<E> next = first;
+    int nextIndex;
+
+    @Override
+    public boolean hasNext() {
+      return nextIndex < size();
+    }
+
+    @Override
+    public E next() {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
+      }
+
+      lastReturned = next;
+      next = next.next;
+      nextIndex++;
+      return lastReturned.element;
+    }
+
+    @Override
+    public void remove() {
+      if (lastReturned == null) {
+        throw new IllegalStateException();
+      }
+
+      Node<E> lastNext = lastReturned.next;
+      unlink(lastReturned);
+      if (next == lastReturned) {
+        next = lastNext;
+      } else {
+        nextIndex--;
+      }
+
+      lastReturned = null;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("%s:{lastReturned:%h, next:%h, lastIndex:%d, elements:%s}",
+          getClass().getSimpleName(), lastReturned, next, nextIndex, getElementsString(next));
+    }
+
   }
 
   @Override
@@ -212,6 +265,10 @@ public class SinglyLinkedList<E> implements List<E> {
   }
 
   private String getElementsString() {
+    return getElementsString(first);
+  }
+
+  private String getElementsString(Node<E> first) {
     StringBuilder sb = new StringBuilder();
     sb.append("[");
     for (Node<E> n = first; n != null; n = n.next) {
@@ -219,7 +276,7 @@ public class SinglyLinkedList<E> implements List<E> {
       sb.append(", ");
     }
 
-    if (!isEmpty()) {
+    if (sb.length() > 1) {
       sb.delete(sb.length() - 2, sb.length());
     }
 
@@ -229,7 +286,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
   @Override
   public String toString() {
-    return String.format("%s:{elements:%s}", getClass().getSimpleName(), getElementsString());
+    return getElementsString();
   }
 
   @Override
@@ -253,17 +310,13 @@ public class SinglyLinkedList<E> implements List<E> {
   }
 
   String toStateString() {
-    return String.format("%s:{first:{%s}, last:{%s}, size:%d, elements:%s}",
-        getClass().getSimpleName(), first, last, size, getElementsString());
+    return String.format("%s:{first:%s, last:%h, size:%d, elements:%s}",
+        getClass().getSimpleName(), first != null ? first.toStateString() : null, last, size, getElementsString());
   }
 
   static class Node<E> {
     E element;
     Node<E> next;
-
-    Node() {
-      this(null, null);
-    }
 
     Node(E element, Node<E> next) {
       this.element = element;
@@ -272,7 +325,11 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public String toString() {
-      return String.format("%s:{element:%s, next:%h}", getClass().getSimpleName(), element, next);
+      return String.format("%s:%s", getClass().getSimpleName(), toStateString());
+    }
+
+    public String toStateString() {
+      return String.format("{element:%s, next:%h}", element, next);
     }
   }
 
