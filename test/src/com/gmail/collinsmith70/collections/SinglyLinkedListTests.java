@@ -424,6 +424,7 @@ public class SinglyLinkedListTests {
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_empty() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      if (output) System.out.printf("%s get(%d)%n", l.toStateString(), 0);
       l.get(0);
     }
 
@@ -431,6 +432,7 @@ public class SinglyLinkedListTests {
     public void fails_nonempty_low() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
       l.addLast(PRIMES[0]);
+      if (output) System.out.printf("%s get(%d)%n", l.toStateString(), -1);
       l.get(-1);
     }
 
@@ -438,6 +440,7 @@ public class SinglyLinkedListTests {
     public void fails_nonempty_high() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
       l.addLast(PRIMES[0]);
+      if (output) System.out.printf("%s get(%d)%n", l.toStateString(), 1);
       l.get(1);
     }
 
