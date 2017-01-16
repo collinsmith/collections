@@ -378,11 +378,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void nonempty() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
       if (output) System.out.println(l.toStateString());
       l.clear();
       if (output) System.out.println(l.toStateString());
