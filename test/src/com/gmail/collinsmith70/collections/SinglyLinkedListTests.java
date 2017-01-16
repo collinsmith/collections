@@ -273,7 +273,7 @@ public class SinglyLinkedListTests {
     public void empty() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
       if (output) System.out.println(l.toStateString());
-      assertNull(l.getPrevious(l.first));
+      assertNull(l.getPrevious(null));
     }
 
     @Test
