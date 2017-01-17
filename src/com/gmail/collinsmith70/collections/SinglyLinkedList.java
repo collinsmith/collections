@@ -133,14 +133,8 @@ public class SinglyLinkedList<E> implements List<E> {
         throw new IllegalStateException();
       }
 
-      Node<E> lastNext = lastReturned.next;
       unlink(lastReturned);
-      if (next == lastReturned) {
-        next = lastNext;
-      } else {
-        nextIndex--;
-      }
-
+      nextIndex--;
       lastReturned = null;
     }
 
