@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 
 import static com.gmail.collinsmith70.collections.TestData.PRIMES;
 import static com.gmail.collinsmith70.collections.TestData.WRAPPED_PRIMES;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -1083,6 +1084,56 @@ public class SinglyLinkedListTests {
           assertEquals(PRIMES[j], (int) array[j]);
         }
       }
+    }
+
+    @Test
+    public void smaller() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      Integer[] array = l.toArray(new Integer[0]);
+      assertArrayEquals(WRAPPED_PRIMES, array);
+    }
+
+    @Test
+    public void larger() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      Integer[] array = l.toArray(new Integer[l.size() + 1]);
+      for (int i = 0; i < WRAPPED_PRIMES.length; i++) {
+        assertSame(WRAPPED_PRIMES[i], array[i]);
+      }
+
+      assertNull(array[l.size]);
+    }
+
+  }
+
+  public static class toString {
+
+    @Test
+    public void empty() {
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      String toString = l.toString();
+      assertNotNull(toString);
+      assertFalse(toString.isEmpty());
+    }
+
+  }
+
+  @RunWith(Enclosed.class)
+  public static class _Node {
+
+    public static class toString {
+
+      @Test
+      public void empty() {
+        SinglyLinkedList.Node<Integer> n = new SinglyLinkedList.Node<>(null, null);
+        if (output) System.out.println(n.toStateString());
+        String toString = n.toString();
+        assertNotNull(toString);
+        assertFalse(toString.isEmpty());
+      }
+
     }
 
   }
