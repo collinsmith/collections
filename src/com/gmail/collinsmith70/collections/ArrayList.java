@@ -166,6 +166,7 @@ public class ArrayList<E> implements List<E> {
 
     size--;
     E element = (E) elements[index];
+    elements[index] = null;
     System.arraycopy(elements, index + 1, elements, index, size() - index);
     return element;
   }
