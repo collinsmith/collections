@@ -201,7 +201,7 @@ public class ArrayList<E> implements List<E> {
 
   @Override
   public String toString() {
-    return String.format("%s:{elements:%s}", getClass().getSimpleName(), getElementsString());
+    return getElementsString();
   }
 
   @Override
@@ -220,7 +220,8 @@ public class ArrayList<E> implements List<E> {
     return array;
   }
 
-  String toStateString() {return String.format("%s:{size:%d, capacity:%d, elements:%s}",
+  String toStateString() {
+    return String.format("%s:{size:%d, capacity:%d, elements:%s}",
         getClass().getSimpleName(), size, elements.length, getElementsString());
   }
 
