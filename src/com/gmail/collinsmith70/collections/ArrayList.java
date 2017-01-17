@@ -91,8 +91,8 @@ public class ArrayList<E> implements List<E> {
 
   @Override
   public boolean contains(Object obj) {
-    for (Object element : elements) {
-      if (Objects.equals(element, obj)) {
+    for (int i = 0; i < size(); i++) {
+      if (Objects.equals(elements[i], obj)) {
         return true;
       }
     }
