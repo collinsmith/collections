@@ -8,7 +8,6 @@ public class Sorting {
   static boolean debug = false;
 
   private Sorting() {
-
   }
 
   /**
@@ -272,8 +271,7 @@ public class Sorting {
             joined.add(array[s - 1]);
             System.out.printf("%s %s %s%n",
                 joined,
-                l < l + l_length ? Arrays.toString(Arrays.copyOfRange(array, l, l + l_length)) :
-                    "[]",
+                Arrays.toString(Arrays.copyOfRange(array, l, l + l_length)),
                 Arrays.toString(Arrays.copyOfRange(array, Math.min(r, j), j)));
           }
         }

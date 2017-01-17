@@ -5,10 +5,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 import static com.gmail.collinsmith70.collections.TestData.PRIMES;
 import static com.gmail.collinsmith70.collections.TestData.SORTING_PRIMES;
+import static org.junit.Assert.assertTrue;
 
 public class SortingTest {
 
@@ -20,6 +24,14 @@ public class SortingTest {
   @After
   public void cleanup() {
     Sorting.debug = false;
+  }
+
+  @Test
+  public void testConstructorIsPrivate() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    Constructor<Sorting> constructor = Sorting.class.getDeclaredConstructor();
+    assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+    constructor.setAccessible(true);
+    constructor.newInstance();
   }
 
   @Test
