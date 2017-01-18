@@ -140,7 +140,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public String toString() {
-      return String.format("%s:{lastReturned:%h, next:%h, lastIndex:%d, elements:%s}",
+      return String.format("%s:{lastReturned:%h, next:%h, nextIndex:%d, elements:%s}",
           getClass().getSimpleName(), lastReturned, next, nextIndex, getElementsString(next));
     }
 
