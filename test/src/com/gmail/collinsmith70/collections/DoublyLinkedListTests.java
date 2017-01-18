@@ -1143,4 +1143,22 @@ public class DoublyLinkedListTests {
 
   }
 
+  @RunWith(Enclosed.class)
+  public static class _Node {
+
+    public static class toString {
+
+      @Test
+      public void empty() {
+        DoublyLinkedList.Node<Integer> n = new DoublyLinkedList.Node<>(null, null, null);
+        if (output) System.out.println(n.toStateString());
+        String toString = n.toString();
+        assertNotNull(toString);
+        assertFalse(toString.isEmpty());
+      }
+
+    }
+
+  }
+
 }

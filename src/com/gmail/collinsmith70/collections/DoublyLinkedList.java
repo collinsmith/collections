@@ -287,13 +287,10 @@ public class DoublyLinkedList<E> implements List<E> {
   }
 
   static class Node<E> {
+
     E element;
     Node<E> next;
     Node<E> prev;
-
-    Node() {
-      this(null, null, null);
-    }
 
     Node(Node<E> prev, E element, Node<E> next) {
       this.element = element;
@@ -303,9 +300,13 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public String toString() {
-      return String.format("%s:{prev:%h, element:%s, next:%h}",
-          getClass().getSimpleName(), prev, element, next);
+      return String.format("%s:%s", getClass().getSimpleName(), toStateString());
     }
+
+    public String toStateString() {
+      return String.format("{prev:%h, element:%s, next:%h}", prev, element, next);
+    }
+
   }
 
 }
