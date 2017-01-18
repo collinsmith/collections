@@ -14,6 +14,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Enclosed.class)
@@ -98,6 +100,70 @@ public class ArrayListTests {
         System.out.printf("%s checkAndGrow(%d) capacity %d -> %d%n",
             l.toStateString(), 16, capacityBefore, l.elements.length);
       assertTrue(l.elements.length >= 16);
+    }
+
+  }
+
+  public static class iterator {
+
+    @Test(expected = NoSuchElementException.class)
+    public void fails_next() {
+      ArrayList<Integer> l = new ArrayList<>();
+      if (output) System.out.println(l.toStateString());
+      ArrayList<Integer>.ArrayListIterator it
+          = (ArrayList<Integer>.ArrayListIterator) l.iterator();
+      Integer element = it.next();
+    }
+
+    @Test
+    public void next() {
+      ArrayList<Integer> l = new ArrayList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      ArrayList<Integer>.ArrayListIterator it
+          = (ArrayList<Integer>.ArrayListIterator) l.iterator();
+      if (output) System.out.println(it);
+      assertNull(it.lastReturned);
+      assertEquals(0, it.nextIndex);
+      for (int i = 0; i < WRAPPED_PRIMES.length; i++) {
+        assertTrue(it.hasNext());
+        Integer element = it.next();
+        if (output) System.out.println(it);
+        assertSame(WRAPPED_PRIMES[i], element);
+        assertEquals(i + 1, it.nextIndex);
+      }
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void fails_remove() {
+      ArrayList<Integer> l = new ArrayList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      ArrayList<Integer>.ArrayListIterator it
+          = (ArrayList<Integer>.ArrayListIterator) l.iterator();
+      if (output) System.out.println(it);
+      it.remove();
+    }
+
+    @Test
+    public void remove() {
+      ArrayList<Integer> l = new ArrayList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      ArrayList<Integer>.ArrayListIterator it
+          = (ArrayList<Integer>.ArrayListIterator) l.iterator();
+      if (output) System.out.println(it);
+      assertNull(it.lastReturned);
+      assertEquals(0, it.nextIndex);
+      for (int i = 0; i < WRAPPED_PRIMES.length; i++) {
+        assertTrue(it.hasNext());
+        Integer element = it.next();
+        assertSame(WRAPPED_PRIMES[i], element);
+        assertNotNull(it.lastReturned);
+        assertEquals(1, it.nextIndex);
+
+        it.remove();
+        if (output) System.out.println(it);
+        assertNull(it.lastReturned);
+        assertEquals(0, it.nextIndex);
+      }
     }
 
   }

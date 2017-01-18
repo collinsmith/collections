@@ -19,6 +19,11 @@ public class ArrayList<E> implements List<E> {
     elements = new Object[initialCapacity];
   }
 
+  public ArrayList(Iterable<? extends E> elements) {
+    this();
+    addAll(elements);
+  }
+
   ArrayList(E[] elements) {
     this.elements = Arrays.copyOf(elements, elements.length);
     this.size = elements.length;
@@ -31,12 +36,12 @@ public class ArrayList<E> implements List<E> {
 
   class ArrayListIterator implements Iterator<E> {
 
-    int currentIndex;
-    E current;
+    E lastReturned;
+    int nextIndex;
 
     @Override
     public boolean hasNext() {
-      return currentIndex < size();
+      return nextIndex < size();
     }
 
     @Override
@@ -46,18 +51,24 @@ public class ArrayList<E> implements List<E> {
         throw new NoSuchElementException();
       }
 
-      current = (E) elements[currentIndex++];
-      return current;
+      lastReturned = (E) elements[nextIndex++];
+      return lastReturned;
     }
 
     @Override
     public void remove() {
-      if (current == null) {
+      if (lastReturned == null) {
         throw new IllegalStateException();
       }
 
-      current = null;
-      ArrayList.this.remove(--currentIndex);
+      lastReturned = null;
+      ArrayList.this.remove(--nextIndex);
+    }
+
+    @Override
+    public String toString() {
+      return String.format("%s:{lastReturned:%h, nextIndex:%d, elements:%s}",
+          getClass().getSimpleName(), lastReturned, nextIndex, getElementsString(nextIndex));
     }
 
   }
@@ -186,14 +197,18 @@ public class ArrayList<E> implements List<E> {
   }
 
   private String getElementsString() {
+    return getElementsString(0);
+  }
+
+  private String getElementsString(int index) {
     StringBuilder sb = new StringBuilder();
     sb.append("[");
-    for (int i = 0; i < size(); i++) {
+    for (int i = index; i < size(); i++) {
       sb.append(elements[i]);
       sb.append(", ");
     }
 
-    if (!isEmpty()) {
+    if (sb.length() > 1) {
       sb.delete(sb.length() - 2, sb.length());
     }
 
