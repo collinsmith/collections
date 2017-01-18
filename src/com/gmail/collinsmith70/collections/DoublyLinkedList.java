@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 
 import java.lang.reflect.Array;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class DoublyLinkedList<E> implements List<E> {
@@ -84,8 +85,51 @@ public class DoublyLinkedList<E> implements List<E> {
 
   @Override
   public Iterator<E> iterator() {
-    throw new UnsupportedOperationException();
+    return new DoublyLinkedListIterator();
   }
+
+  class DoublyLinkedListIterator implements Iterator<E> {
+
+    Node<E> lastReturned;
+    Node<E> next = first;
+    int nextIndex;
+
+    @Override
+    public boolean hasNext() {
+      return nextIndex < size();
+    }
+
+    @Override
+    public E next() {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
+      }
+
+      lastReturned = next;
+      next = next.next;
+      nextIndex++;
+      return lastReturned.element;
+    }
+
+    @Override
+    public void remove() {
+      if (lastReturned == null) {
+        throw new IllegalStateException();
+      }
+
+      unlink(lastReturned);
+      nextIndex--;
+      lastReturned = null;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("%s:{lastReturned:%h, next:%h, nextIndex:%d, elements:%s}",
+          getClass().getSimpleName(), lastReturned, next, nextIndex, getElementsString(next));
+    }
+
+  }
+
 
   @Override
   public int size() {
@@ -194,6 +238,10 @@ public class DoublyLinkedList<E> implements List<E> {
   }
 
   private String getElementsString() {
+    return getElementsString(first);
+  }
+
+  private String getElementsString(Node<E> first) {
     StringBuilder sb = new StringBuilder();
     sb.append("[");
     for (Node<E> n = first; n != null; n = n.next) {
@@ -201,7 +249,7 @@ public class DoublyLinkedList<E> implements List<E> {
       sb.append(", ");
     }
 
-    if (!isEmpty()) {
+    if (sb.length() > 1) {
       sb.delete(sb.length() - 2, sb.length());
     }
 

@@ -196,7 +196,76 @@ public class DoublyLinkedListTests {
     }
 
   }
-  
+
+  public static class iterator {
+
+    @Test(expected = NoSuchElementException.class)
+    public void fails_next() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      if (output) System.out.println(l.toStateString());
+      DoublyLinkedList<Integer>.DoublyLinkedListIterator it
+          = (DoublyLinkedList<Integer>.DoublyLinkedListIterator) l.iterator();
+      Integer element = it.next();
+    }
+
+    @Test
+    public void next() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      DoublyLinkedList<Integer>.DoublyLinkedListIterator it
+          = (DoublyLinkedList<Integer>.DoublyLinkedListIterator) l.iterator();
+      if (output) System.out.println(it);
+      assertNull(it.lastReturned);
+      assertSame(l.first, it.next);
+      assertEquals(0, it.nextIndex);
+      for (int i = 0; i < WRAPPED_PRIMES.length; i++) {
+        assertTrue(it.hasNext());
+        DoublyLinkedList.Node<Integer> prevNext = it.next;
+        Integer element = it.next();
+        if (output) System.out.println(it);
+        assertSame(WRAPPED_PRIMES[i], element);
+        assertSame(prevNext, it.lastReturned);
+        assertSame(prevNext.next, it.next);
+        assertEquals(i + 1, it.nextIndex);
+      }
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void fails_remove() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      DoublyLinkedList<Integer>.DoublyLinkedListIterator it
+          = (DoublyLinkedList<Integer>.DoublyLinkedListIterator) l.iterator();
+      if (output) System.out.println(it);
+      it.remove();
+    }
+
+    @Test
+    public void remove() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      DoublyLinkedList<Integer>.DoublyLinkedListIterator it
+          = (DoublyLinkedList<Integer>.DoublyLinkedListIterator) l.iterator();
+      if (output) System.out.println(it);
+      assertNull(it.lastReturned);
+      assertSame(l.first, it.next);
+      assertEquals(0, it.nextIndex);
+      for (int i = 0; i < WRAPPED_PRIMES.length; i++) {
+        assertTrue(it.hasNext());
+        Integer element = it.next();
+        assertSame(WRAPPED_PRIMES[i], element);
+        assertNotNull(it.lastReturned);
+        assertEquals(1, it.nextIndex);
+
+        it.remove();
+        if (output) System.out.println(it);
+        assertNull(it.lastReturned);
+        assertEquals(0, it.nextIndex);
+      }
+    }
+
+  }
+
   public static class getNode {
 
     @Test(expected = IndexOutOfBoundsException.class)
