@@ -26,38 +26,40 @@ public class ArrayList<E> implements List<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new Iterator<E>() {
+    return new ArrayListIterator();
+  }
 
-      int currentIndex;
-      E current;
+  class ArrayListIterator implements Iterator<E> {
 
-      @Override
-      public boolean hasNext() {
-        return currentIndex < size();
+    int currentIndex;
+    E current;
+
+    @Override
+    public boolean hasNext() {
+      return currentIndex < size();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public E next() {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
       }
 
-      @Override
-      @SuppressWarnings("unchecked")
-      public E next() {
-        if (!hasNext()) {
-          throw new NoSuchElementException();
-        }
+      current = (E) elements[currentIndex++];
+      return current;
+    }
 
-        current = (E) elements[currentIndex++];
-        return current;
+    @Override
+    public void remove() {
+      if (current == null) {
+        throw new IllegalStateException();
       }
 
-      @Override
-      public void remove() {
-        if (current == null) {
-          throw new IllegalStateException();
-        }
+      current = null;
+      ArrayList.this.remove(--currentIndex);
+    }
 
-        current = null;
-        ArrayList.this.remove(--currentIndex);
-      }
-
-    };
   }
 
   @Override
