@@ -1,5 +1,7 @@
 package com.gmail.collinsmith70.collections;
 
+import com.google.common.base.Preconditions;
+
 import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.Objects;
@@ -11,6 +13,69 @@ public class DoublyLinkedList<E> implements List<E> {
   int size;
 
   public DoublyLinkedList() {
+  }
+
+  /**
+   * Creates a new link in the list after {@code prev} that should be followed by {@code next}.
+   * Additionally:
+   * <ul>
+   * <li>If {@code prev == null}, then {@link #first} is changed to reference this new node.</li>
+   * <li>If {@code next == null}, then {@link #last} is changed to reference this new node.</li>
+   * </ul>
+   *
+   * @param prev    Node which should precede the new node
+   * @param element Value of the new node
+   * @param next    Node which will follow the new node
+   *
+   * @return The newly created node
+   */
+  Node<E> link(Node<E> prev, E element, Node<E> next) {
+    final Node<E> newNode = new Node<>(prev, element, next);
+    if (prev == null) {
+      first = newNode;
+    } else {
+      prev.next = newNode;
+    }
+
+    if (next == null) {
+      last = newNode;
+    } else {
+      next.prev = newNode;
+    }
+
+    size++;
+    return newNode;
+  }
+
+  /**
+   * Removes the specified link from the list.
+   *
+   * @param node Node to unlink
+   *
+   * @return Value of the node
+   */
+  E unlink(Node<E> node) {
+    Preconditions.checkArgument(node != null, "node cannot be null");
+    final E element = node.element;
+    final Node<E> prev = node.prev;
+    final Node<E> next = node.next;
+    if (prev == null) {
+      first = next;
+    } else {
+      prev.next = next;
+      node.next = null;
+    }
+
+    if (next == null) {
+      last = prev;
+    } else {
+      next.prev = prev;
+      node.next = null;
+    }
+
+    node.element = null;
+    size--;
+    return element;
   }
 
   @Override
@@ -83,55 +148,19 @@ public class DoublyLinkedList<E> implements List<E> {
       throw new IndexOutOfBoundsException();
     }
 
-    Node<E> n = first, prev = null;
+    Node<E> node = first, prev = null;
     for (int i = 0; i < index; i++) {
-      prev = n;
-      n = n.next;
+      prev = node;
+      node = node.next;
     }
 
-    Node<E> newNode = new Node<>(prev, element, n);
-    if (prev == null) {
-      first = newNode;
-    } else {
-      prev.next = newNode;
-    }
-
-    if (n != null) {
-      n.prev = newNode;
-    } else {
-      last = newNode;
-    }
-
-    size++;
+    link(prev, element, node);
   }
 
   @Override
   public E remove(int index) {
-    if (index < 0 || index >= size()) {
-      throw new IndexOutOfBoundsException();
-    }
-
-    Node<E> n = first, prev = null;
-    for (int i = 0; i < index; i++) {
-      prev = n;
-      n = n.next;
-    }
-
-    E element = n.element;
-    if (prev == null) {
-      first = n.next;
-    } else {
-      prev.next = n.next;
-    }
-
-    if (n.next != null) {
-      n.next.prev = prev;
-    } else {
-      last = prev;
-    }
-
-    size--;
-    return element;
+    Node<E> node = getNode(index);
+    return unlink(node);
   }
 
   @Override
