@@ -178,7 +178,7 @@ public class DoublyLinkedList<E> implements List<E> {
 
   @Override
   public String toString() {
-    return String.format("%s:{elements:%s}", getClass().getSimpleName(), getElementsString());
+    return getElementsString();
   }
 
   @Override
