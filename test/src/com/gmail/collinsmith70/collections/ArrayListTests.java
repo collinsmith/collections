@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
+import static com.gmail.collinsmith70.collections.TestData.LISTED_PRIMES;
 import static com.gmail.collinsmith70.collections.TestData.PRIMES;
 import static com.gmail.collinsmith70.collections.TestData.WRAPPED_PRIMES;
 import static org.junit.Assert.assertArrayEquals;
@@ -117,7 +118,7 @@ public class ArrayListTests {
 
     @Test
     public void next() {
-      ArrayList<Integer> l = new ArrayList<>(Arrays.asList(WRAPPED_PRIMES));
+      ArrayList<Integer> l = new ArrayList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       ArrayList<Integer>.ArrayListIterator it
           = (ArrayList<Integer>.ArrayListIterator) l.iterator();
@@ -135,7 +136,7 @@ public class ArrayListTests {
 
     @Test(expected = IllegalStateException.class)
     public void fails_remove() {
-      ArrayList<Integer> l = new ArrayList<>(Arrays.asList(WRAPPED_PRIMES));
+      ArrayList<Integer> l = new ArrayList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       ArrayList<Integer>.ArrayListIterator it
           = (ArrayList<Integer>.ArrayListIterator) l.iterator();
@@ -145,7 +146,7 @@ public class ArrayListTests {
 
     @Test
     public void remove() {
-      ArrayList<Integer> l = new ArrayList<>(Arrays.asList(WRAPPED_PRIMES));
+      ArrayList<Integer> l = new ArrayList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       ArrayList<Integer>.ArrayListIterator it
           = (ArrayList<Integer>.ArrayListIterator) l.iterator();

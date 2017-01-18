@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
+import static com.gmail.collinsmith70.collections.TestData.LISTED_PRIMES;
 import static com.gmail.collinsmith70.collections.TestData.PRIMES;
 import static com.gmail.collinsmith70.collections.TestData.WRAPPED_PRIMES;
 import static org.junit.Assert.assertArrayEquals;
@@ -36,7 +37,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void SinglyLinkedList_Iterable() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       assertEquals(WRAPPED_PRIMES.length, l.size);
       int i = 0;
@@ -138,7 +139,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void first() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       SinglyLinkedList.Node<Integer> oldFirst, newFirst = l.first;
       for (int i = 0; i < PRIMES.length - 1; i++) {
@@ -158,7 +159,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void last() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       SinglyLinkedList.Node<Integer> newLast, oldLast;
       for (int i = PRIMES.length - 1; i > 0; i--) {
@@ -180,7 +181,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void extract() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       SinglyLinkedList.Node<Integer> first, second, third;
       for (int i = 1; i < PRIMES.length - 1; i++) {
@@ -212,7 +213,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void next() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       SinglyLinkedList<Integer>.SinglyLinkedListIterator it
           = (SinglyLinkedList<Integer>.SinglyLinkedListIterator) l.iterator();
@@ -234,7 +235,7 @@ public class SinglyLinkedListTests {
 
     @Test(expected = IllegalStateException.class)
     public void fails_remove() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       SinglyLinkedList<Integer>.SinglyLinkedListIterator it
           = (SinglyLinkedList<Integer>.SinglyLinkedListIterator) l.iterator();
@@ -244,7 +245,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void remove() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       SinglyLinkedList<Integer>.SinglyLinkedListIterator it
           = (SinglyLinkedList<Integer>.SinglyLinkedListIterator) l.iterator();
@@ -379,7 +380,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void nonempty() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       l.clear();
       if (output) System.out.println(l.toStateString());
@@ -394,7 +395,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void _true() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       for (int prime : PRIMES) {
         if (output) System.out.println(l.toStateString() + " contains " + prime);
         assertTrue(l.contains(prime));
@@ -1088,7 +1089,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void smaller() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       Integer[] array = l.toArray(new Integer[0]);
       assertArrayEquals(WRAPPED_PRIMES, array);
@@ -1096,7 +1097,7 @@ public class SinglyLinkedListTests {
 
     @Test
     public void larger() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      SinglyLinkedList<Integer> l = new SinglyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       Integer[] array = l.toArray(new Integer[l.size() + 1]);
       for (int i = 0; i < WRAPPED_PRIMES.length; i++) {
