@@ -15,6 +15,10 @@ public class DoublyLinkedList<E> implements List<E> {
   public DoublyLinkedList() {
   }
 
+  public DoublyLinkedList(Iterable<? extends E> elements) {
+    addAll(elements);
+  }
+
   /**
    * Creates a new link in the list after {@code prev} that should be followed by {@code next}.
    * Additionally:
