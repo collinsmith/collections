@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 import static com.gmail.collinsmith70.collections.TestData.PRIMES;
+import static com.gmail.collinsmith70.collections.TestData.WRAPPED_PRIMES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -34,31 +35,193 @@ public class DoublyLinkedListTests {
 
   }
 
+  public static class link {
+
+    @Test
+    public void first() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      if (output) System.out.println(l.toStateString());
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
+      if (output) System.out.println(l.toStateString());
+      assertSame(first, l.first);
+      assertSame(l.first, l.last);
+    }
+
+    @Test
+    public void prepend() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      DoublyLinkedList.Node<Integer> next, node = l.link(null, PRIMES[0], null);
+      if (output) System.out.println(l.toStateString());
+      for (int i = 1; i < PRIMES.length; i++) {
+        next = node;
+        node = l.link(null, PRIMES[i], next);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], (int) node.element);
+        assertEquals(i + 1, l.size);
+        assertSame(next, node.next);
+        assertSame(node, next.prev);
+        assertNull(node.prev);
+        assertSame(l.first, node);
+      }
+    }
+
+    @Test
+    public void append() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      DoublyLinkedList.Node<Integer> prev, node = l.link(null, PRIMES[0], null);
+      if (output) System.out.println(l.toStateString());
+      for (int i = 1; i < PRIMES.length; i++) {
+        prev = node;
+        node = l.link(prev, PRIMES[i], null);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], (int) node.element);
+        assertEquals(i + 1, l.size);
+        assertSame(node, prev.next);
+        assertSame(prev, node.prev);
+        assertNull(node.next);
+        assertSame(l.last, node);
+      }
+    }
+
+    @Test
+    public void insert() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      DoublyLinkedList.Node<Integer> prev, node, next;
+      prev = l.link(null, PRIMES[0], null);
+      node = l.link(prev, PRIMES[PRIMES.length - 1], null);
+      if (output) System.out.println(l.toStateString());
+      for (int i = 1; i < PRIMES.length - 1; i++) {
+        next = node;
+        node = l.link(prev, PRIMES[i], next);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], (int) node.element);
+        assertEquals(i + 2, l.size);
+        assertSame(node, prev.next);
+        assertSame(prev, node.prev);
+        assertSame(next, node.next);
+        assertSame(node, next.prev);
+      }
+    }
+
+  }
+
+  public static class unlink {
+
+    @Test(expected = IllegalArgumentException.class)
+    public void fails_remove_null() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      if (output) System.out.println(l.toStateString());
+      l.unlink(null);
+    }
+
+    @Test
+    public void ultimate() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      DoublyLinkedList.Node<Integer> node = l.link(null, PRIMES[0], null);
+      if (output) System.out.println(l.toStateString());
+      int element = l.unlink(node);
+      if (output) System.out.println(l.toStateString());
+      assertEquals(PRIMES[0], element);
+      assertEquals(0, l.size);
+      assertNull(node.next);
+      assertNull(node.prev);
+      assertNull(node.element);
+      assertNull(l.first);
+      assertNull(l.last);
+    }
+
+    @Test
+    public void first() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      DoublyLinkedList.Node<Integer> oldFirst, newFirst = l.first;
+      for (int i = 0; i < PRIMES.length - 1; i++) {
+        oldFirst = newFirst;
+        newFirst = newFirst != null ? newFirst.next : null;
+        int element = l.unlink(oldFirst);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], element);
+        assertEquals(PRIMES.length - i - 1, l.size);
+        assertNull(oldFirst.next);
+        assertNull(oldFirst.prev);
+        assertNull(oldFirst.element);
+        assertSame(newFirst, l.first);
+        assertNull(newFirst.prev);
+      }
+
+      assertSame(l.first, l.last);
+    }
+
+    @Test
+    public void last() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      DoublyLinkedList.Node<Integer> newLast, oldLast;
+      for (int i = PRIMES.length - 1; i > 0; i--) {
+        oldLast = l.last;
+        newLast = oldLast.prev;
+        int element = l.unlink(oldLast);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], element);
+        assertEquals(i, l.size);
+        assertNull(oldLast.next);
+        assertNull(oldLast.prev);
+        assertNull(oldLast.element);
+        assertNull(newLast.next);
+        assertSame(newLast, l.last);
+      }
+
+      assertSame(l.first, l.last);
+    }
+
+    @Test
+    public void extract() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      if (output) System.out.println(l.toStateString());
+      DoublyLinkedList.Node<Integer> prev, extracted, next;
+      for (int i = 1; i < PRIMES.length - 1; i++) {
+        prev = l.first;
+        extracted = prev.next;
+        next = extracted.next;
+        int element = l.unlink(extracted);
+        if (output) System.out.println(l.toStateString());
+        assertEquals(PRIMES[i], element);
+        assertEquals(PRIMES.length - i, l.size);
+        assertNull(extracted.next);
+        assertNull(extracted.prev);
+        assertNull(extracted.element);
+        assertSame(next, prev.next);
+        assertSame(prev, next.prev);
+      }
+    }
+
+  }
+  
   public static class getNode {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_empty() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
       l.getNode(0);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_nonempty_low() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
       l.addLast(PRIMES[0]);
       l.getNode(-1);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_nonempty_high() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
       l.addLast(PRIMES[0]);
       l.getNode(1);
     }
 
     @Test
     public void single_element() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
       l.addLast(PRIMES[0]);
       if (output) System.out.println(l.toStateString());
       assertSame(l.first, l.getNode(0));
@@ -66,7 +229,7 @@ public class DoublyLinkedListTests {
 
     @Test
     public void two_elements() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
       l.addLast(PRIMES[0]);
       l.addLast(PRIMES[1]);
       if (output) System.out.println(l.toStateString());
@@ -76,7 +239,7 @@ public class DoublyLinkedListTests {
 
     @Test
     public void n_elements() {
-      SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
       if (output) System.out.println(l.toStateString());
       for (int i = 0; i < PRIMES.length; i++) {
         l.addLast(PRIMES[i]);
