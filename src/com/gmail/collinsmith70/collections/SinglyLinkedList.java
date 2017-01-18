@@ -16,7 +16,7 @@ public class SinglyLinkedList<E> implements List<E> {
   public SinglyLinkedList() {
   }
 
-  public SinglyLinkedList(Iterable<E> elements) {
+  public SinglyLinkedList(Iterable<? extends E> elements) {
     addAll(elements);
   }
 
