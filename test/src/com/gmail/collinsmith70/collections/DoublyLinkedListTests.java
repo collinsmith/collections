@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
+import static com.gmail.collinsmith70.collections.TestData.LISTED_PRIMES;
 import static com.gmail.collinsmith70.collections.TestData.PRIMES;
 import static com.gmail.collinsmith70.collections.TestData.WRAPPED_PRIMES;
 import static org.junit.Assert.assertEquals;
@@ -132,7 +133,7 @@ public class DoublyLinkedListTests {
 
     @Test
     public void first() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       DoublyLinkedList.Node<Integer> oldFirst, newFirst = l.first;
       for (int i = 0; i < PRIMES.length - 1; i++) {
@@ -154,7 +155,7 @@ public class DoublyLinkedListTests {
 
     @Test
     public void last() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       DoublyLinkedList.Node<Integer> newLast, oldLast;
       for (int i = PRIMES.length - 1; i > 0; i--) {
@@ -176,7 +177,7 @@ public class DoublyLinkedListTests {
 
     @Test
     public void extract() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       DoublyLinkedList.Node<Integer> prev, extracted, next;
       for (int i = 1; i < PRIMES.length - 1; i++) {
@@ -210,7 +211,7 @@ public class DoublyLinkedListTests {
 
     @Test
     public void next() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       DoublyLinkedList<Integer>.DoublyLinkedListIterator it
           = (DoublyLinkedList<Integer>.DoublyLinkedListIterator) l.iterator();
@@ -232,7 +233,7 @@ public class DoublyLinkedListTests {
 
     @Test(expected = IllegalStateException.class)
     public void fails_remove() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       DoublyLinkedList<Integer>.DoublyLinkedListIterator it
           = (DoublyLinkedList<Integer>.DoublyLinkedListIterator) l.iterator();
@@ -242,7 +243,7 @@ public class DoublyLinkedListTests {
 
     @Test
     public void remove() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(Arrays.asList(WRAPPED_PRIMES));
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       DoublyLinkedList<Integer>.DoublyLinkedListIterator it
           = (DoublyLinkedList<Integer>.DoublyLinkedListIterator) l.iterator();
@@ -277,43 +278,44 @@ public class DoublyLinkedListTests {
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_nonempty_low() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
       l.getNode(-1);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_nonempty_high() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
       l.getNode(1);
     }
 
     @Test
     public void single_element() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
       if (output) System.out.println(l.toStateString());
-      assertSame(l.first, l.getNode(0));
+      assertSame(first, l.getNode(0));
     }
 
     @Test
     public void two_elements() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      l.addLast(PRIMES[1]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
+      DoublyLinkedList.Node<Integer> second = l.link(first, PRIMES[1], null);
       if (output) System.out.println(l.toStateString());
-      assertSame(l.first, l.getNode(0));
-      assertSame(l.last, l.getNode(1));
+      assertSame(first, l.getNode(0));
+      assertSame(second, l.getNode(1));
     }
 
     @Test
     public void n_elements() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
       if (output) System.out.println(l.toStateString());
+      DoublyLinkedList.Node<Integer> last = null;
       for (int i = 0; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
+        last = l.link(last, PRIMES[i], null);
         if (output) System.out.println(l.toStateString());
-        assertSame(l.last, l.getNode(i));
+        assertSame(last, l.getNode(i));
       }
     }
 
@@ -334,11 +336,7 @@ public class DoublyLinkedListTests {
 
     @Test
     public void nonempty() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       l.clear();
       if (output) System.out.println(l.toStateString());
@@ -349,68 +347,12 @@ public class DoublyLinkedListTests {
 
   }
 
-  public static class size {
-
-    @Test
-    public void incrementing() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      if (output) System.out.println(l.toStateString());
-      assertEquals(l.size, l.size());
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
-        if (output) System.out.println(l.toStateString());
-        assertEquals(l.size, l.size());
-      }
-    }
-
-    @Test
-    public void decrementing() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
-      if (output) System.out.println(l.toStateString());
-      assertEquals(l.size, l.size());
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.removeLast();
-        if (output) System.out.println(l.toStateString());
-        assertEquals(l.size, l.size());
-      }
-    }
-
-  }
-
-  public static class isEmpty {
-
-    @Test
-    public void _true() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      if (output) System.out.println(l.toStateString() + " isEmpty()");
-      assertTrue(l.isEmpty());
-      assertEquals(l.size == 0, l.isEmpty());
-    }
-
-    @Test
-    public void _false() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
-        if (output) System.out.println(l.toStateString() + " !isEmpty()");
-        assertFalse(l.isEmpty());
-        assertEquals(l.size == 0, l.isEmpty());
-      }
-    }
-
-  }
-
   public static class contains {
 
     @Test
     public void _true() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       for (int prime : PRIMES) {
-        l.addLast(prime);
         if (output) System.out.println(l.toStateString() + " contains " + prime);
         assertTrue(l.contains(prime));
       }
@@ -428,9 +370,10 @@ public class DoublyLinkedListTests {
     @Test
     public void true_contains_null() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(null);
+      DoublyLinkedList.Node<Integer> first = l.link(null, null, null);
       if (output) System.out.println(l.toStateString() + " contains " + null);
       assertTrue(l.contains(null));
+      assertNull(l.get(0));
     }
 
   }
@@ -440,32 +383,36 @@ public class DoublyLinkedListTests {
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_empty() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      if (output) System.out.printf("%s get(%d)%n", l.toStateString(), 0);
       l.get(0);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_nonempty_low() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      l.link(null, PRIMES[0], null);
+      if (output) System.out.printf("%s get(%d)%n", l.toStateString(), 0);
       l.get(-1);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_nonempty_high() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      l.link(null, PRIMES[0], null);
+      if (output) System.out.printf("%s get(%d)%n", l.toStateString(), 0);
       l.get(1);
     }
 
     @Test
     public void incrementing() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      DoublyLinkedList.Node<Integer> last = null;
       for (int i = 0; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
+        last = l.link(last, PRIMES[i], null);
         for (int j = 0; j <= i; j++) {
-          int last = l.get(j);
-          if (output) System.out.printf("%s get(%d)=%d%n", l.toStateString(), j, last);
-          assertEquals(PRIMES[j], last);
+          int element = l.get(j);
+          if (output) System.out.printf("%s get(%d)=%d%n", l.toStateString(), j, element);
+          assertEquals(PRIMES[j], element);
         }
       }
     }
@@ -477,34 +424,39 @@ public class DoublyLinkedListTests {
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_empty() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      if (output) System.out.printf("%s set(%d, %d)%n", l.toStateString(), 0, PRIMES[0]);
       l.set(0, PRIMES[0]);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_nonempty_low() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      l.link(null, PRIMES[0], null);
+      if (output) System.out.printf("%s set(%d, %d)%n", l.toStateString(), 0, PRIMES[0]);
       l.set(-1, PRIMES[1]);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_nonempty_high() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      l.link(null, PRIMES[0], null);
+      if (output) System.out.printf("%s set(%d, %d)%n", l.toStateString(), 0, PRIMES[0]);
       l.set(1, PRIMES[1]);
     }
 
     @Test
     public void incrementing() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
+      DoublyLinkedList.Node<Integer> last = null;
       for (int prime : PRIMES) {
-        l.addLast(0);
+        last = l.link(last, 0, null);
       }
 
       for (int i = 0; i < PRIMES.length; i++) {
         l.set(i, PRIMES[i]);
-        if (output) System.out.printf("%s set(%d)=%d%n", l.toStateString(), i, PRIMES[i]);
-        assertEquals(PRIMES[i], (int) l.get(i));
+        int get = l.get(i);
+        if (output) System.out.printf("%s set(%d, %d)=%d%n", l.toStateString(), i, PRIMES[i], get);
+        assertEquals(PRIMES[i], get);
       }
     }
 
@@ -606,7 +558,7 @@ public class DoublyLinkedListTests {
     @Test
     public void nonempty_insert_at_front() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
       if (output) System.out.println(l.toStateString());
       DoublyLinkedList.Node<Integer> prevFirst;
       for (int i = 1; i < PRIMES.length; i++) {
@@ -628,7 +580,7 @@ public class DoublyLinkedListTests {
     @Test
     public void nonempty_insert_at_back() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
       if (output) System.out.println(l.toStateString());
       DoublyLinkedList.Node<Integer> prevLast;
       for (int i = 1; i < PRIMES.length; i++) {
@@ -649,8 +601,8 @@ public class DoublyLinkedListTests {
     @Test
     public void nonempty_insert_in_between() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      l.addLast(PRIMES[PRIMES.length - 1]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
+      DoublyLinkedList.Node<Integer> second = l.link(first, PRIMES[PRIMES.length - 1], null);
       if (output) System.out.println(l.toStateString());
       DoublyLinkedList.Node<Integer> third;
       for (int i = PRIMES.length - 2; i > 0; i--) {
@@ -675,131 +627,13 @@ public class DoublyLinkedListTests {
 
   }
 
-  public static class addFirst {
-
-    @Test
-    public void first() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      if (output) System.out.println(l.toStateString());
-      l.addFirst(PRIMES[0]);
-      if (output) System.out.printf("%s addFirst(%d)%n", l.toStateString(), PRIMES[0]);
-      assertSame(l.first, l.last);
-      assertEquals(PRIMES[0], (int) l.first.element);
-      assertEquals(1, l.size);
-      assertNull(l.first.next);
-      assertNull(l.first.prev);
-      assertNull(l.last.next);
-      assertNull(l.last.prev);
-    }
-
-    @Test
-    public void second() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addFirst(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      l.addFirst(PRIMES[1]);
-      if (output) System.out.printf("%s addFirst(%d)%n", l.toStateString(), PRIMES[1]);
-      assertNotSame(l.first, l.last);
-      assertEquals(PRIMES[1], (int) l.first.element);
-      assertEquals(PRIMES[0], (int) l.last.element);
-      assertEquals(2, l.size);
-      assertSame(l.first.next, l.last);
-      assertSame(l.first, l.last.prev);
-      assertNull(l.last.next);
-      assertNull(l.first.prev);
-    }
-
-    @Test
-    public void nth() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addFirst(PRIMES[0]);
-      l.addFirst(PRIMES[1]);
-      if (output) System.out.println(l.toStateString());
-      DoublyLinkedList.Node<Integer> prevFirst;
-      for (int i = 2; i < PRIMES.length; i++) {
-        prevFirst = l.first;
-        l.addFirst(PRIMES[i]);
-        if (output) System.out.printf("%s addFirst(%d)%n", l.toStateString(), PRIMES[i]);
-        assertNotSame(l.first, l.last);
-        assertEquals(PRIMES[i], (int) l.first.element);
-        assertEquals(PRIMES[0], (int) l.last.element);
-        assertEquals(i + 1, l.size);
-        assertNull(l.last.next);
-        assertNull(l.first.prev);
-        assertNotSame(l.first, prevFirst);
-        assertSame(l.first.next, prevFirst);
-        assertSame(prevFirst.prev, l.first);
-      }
-    }
-
-  }
-
-  public static class addLast {
-
-    @Test
-    public void first() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      if (output) System.out.println(l.toStateString());
-      l.addLast(PRIMES[0]);
-      if (output) System.out.printf("%s addLast(%d)%n", l.toStateString(), PRIMES[0]);
-      assertSame(l.first, l.last);
-      assertEquals(PRIMES[0], (int) l.first.element);
-      assertEquals(1, l.size);
-      assertNull(l.first.next);
-      assertNull(l.first.prev);
-      assertNull(l.last.next);
-      assertNull(l.last.prev);
-    }
-
-    @Test
-    public void second() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      l.addLast(PRIMES[1]);
-      if (output) System.out.printf("%s addLast(%d)%n", l.toStateString(), PRIMES[1]);
-      assertNotSame(l.first, l.last);
-      assertEquals(PRIMES[0], (int) l.first.element);
-      assertEquals(PRIMES[1], (int) l.last.element);
-      assertEquals(2, l.size);
-      assertSame(l.first.next, l.last);
-      assertSame(l.first, l.last.prev);
-      assertNull(l.last.next);
-      assertNull(l.first.prev);
-    }
-
-    @Test
-    public void nth() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      l.addLast(PRIMES[1]);
-      if (output) System.out.println(l.toStateString());
-      DoublyLinkedList.Node<Integer> prevLast;
-      for (int i = 2; i < PRIMES.length; i++) {
-        prevLast = l.last;
-        l.addLast(PRIMES[i]);
-        if (output) System.out.printf("%s addLast(%d)%n", l.toStateString(), PRIMES[i]);
-        assertNotSame(l.first, l.last);
-        assertEquals(PRIMES[i], (int) l.last.element);
-        assertEquals(PRIMES[0], (int) l.first.element);
-        assertEquals(i + 1, l.size);
-        assertNull(l.last.next);
-        assertNull(l.first.prev);
-        assertNotSame(l.last, prevLast);
-        assertSame(prevLast.next, l.last);
-        assertSame(l.last.prev, prevLast);
-      }
-    }
-
-  }
-
   public static class remove_Object {
 
     @Test
     public void _false() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
       if (output) System.out.println(l.toStateString());
-      boolean removed = l.remove((Integer) PRIMES[0]);
+      boolean removed = l.remove(WRAPPED_PRIMES[0]);
       if (output) System.out.printf("%s remove((Integer)%d)%n", l.toStateString(), PRIMES[0]);
       assertFalse(removed);
       assertNull(l.first);
@@ -809,9 +643,9 @@ public class DoublyLinkedListTests {
     @Test
     public void _true() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, WRAPPED_PRIMES[0], null);
       if (output) System.out.println(l.toStateString());
-      boolean removed = l.remove((Integer) PRIMES[0]);
+      boolean removed = l.remove(WRAPPED_PRIMES[0]);
       if (output) System.out.printf("%s remove((Integer)%d)%n", l.toStateString(), PRIMES[0]);
       assertTrue(removed);
       assertNull(l.first);
@@ -821,7 +655,7 @@ public class DoublyLinkedListTests {
     @Test
     public void true_removed_null() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(null);
+      DoublyLinkedList.Node<Integer> first = l.link(null, null, null);
       if (output) System.out.println(l.toStateString());
       boolean removed = l.remove(null);
       if (output) System.out.printf("%s remove(%h)%n", l.toStateString(), null);
@@ -849,14 +683,14 @@ public class DoublyLinkedListTests {
     @Test(expected = IndexOutOfBoundsException.class)
     public void fails_nonempty_high() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
       l.remove(2);
     }
 
     @Test
     public void nonempty_last() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
       if (output) System.out.println(l.toStateString());
       int last = l.remove(0);
       if (output) System.out.printf("%s remove(%d)=%d%n", l.toStateString(), 0, last);
@@ -869,12 +703,12 @@ public class DoublyLinkedListTests {
     @Test
     public void nonempty_second_to_last_from_front() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      l.addLast(PRIMES[1]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
+      DoublyLinkedList.Node<Integer> second = l.link(first, PRIMES[1], null);
       if (output) System.out.println(l.toStateString());
-      int first = l.remove(0);
-      if (output) System.out.printf("%s remove(%d)=%d%n", l.toStateString(), 0, first);
-      assertEquals(PRIMES[0], first);
+      int element = l.remove(0);
+      if (output) System.out.printf("%s remove(%d)=%d%n", l.toStateString(), 0, element);
+      assertEquals(PRIMES[0], element);
       assertEquals(1, l.size);
       assertSame(l.first, l.last);
       assertNotNull(l.first);
@@ -889,12 +723,12 @@ public class DoublyLinkedListTests {
     @Test
     public void nonempty_second_to_last_from_back() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      l.addLast(PRIMES[1]);
+      DoublyLinkedList.Node<Integer> first = l.link(null, PRIMES[0], null);
+      DoublyLinkedList.Node<Integer> second = l.link(first, PRIMES[1], null);
       if (output) System.out.println(l.toStateString());
-      int last = l.remove(1);
-      if (output) System.out.printf("%s remove(%d)=%d%n", l.toStateString(), 1, last);
-      assertEquals(PRIMES[1], last);
+      int element = l.remove(1);
+      if (output) System.out.printf("%s remove(%d)=%d%n", l.toStateString(), 1, element);
+      assertEquals(PRIMES[1], element);
       assertEquals(1, l.size);
       assertSame(l.first, l.last);
       assertNotNull(l.first);
@@ -908,31 +742,22 @@ public class DoublyLinkedListTests {
 
     @Test
     public void nonempty_remove_from_front() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       for (int i = 0; i < PRIMES.length - 2; i++) {
-        int first = l.remove(0);
-        if (output) System.out.printf("%s remove(%d)=%d%n", l.toStateString(), 0, first);
-        assertEquals(PRIMES[i], first);
+        int element = l.remove(0);
+        if (output) System.out.printf("%s remove(%d)=%d%n", l.toStateString(), 0, element);
+        assertEquals(PRIMES[i], element);
         assertEquals(PRIMES.length - i - 1, l.size);
         assertEquals(PRIMES[i + 1], (int) l.first.element);
         assertEquals(PRIMES[PRIMES.length - 1], (int) l.last.element);
         assertNull(l.first.prev);
-        assertNull(l.last.next);
       }
     }
 
     @Test
     public void nonempty_remove_from_back() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       for (int i = PRIMES.length - 1; i > 1; i--) {
         int index = l.size - 1;
@@ -942,18 +767,13 @@ public class DoublyLinkedListTests {
         assertEquals(i, l.size);
         assertEquals(PRIMES[0], (int) l.first.element);
         assertEquals(PRIMES[i - 1], (int) l.last.element);
-        assertNull(l.first.prev);
         assertNull(l.last.next);
       }
     }
 
     @Test
     public void nonempty_remove_in_between() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
       if (output) System.out.println(l.toStateString());
       DoublyLinkedList.Node<Integer> third;
       for (int i = 1; i < PRIMES.length - 2; i++) {
@@ -967,132 +787,6 @@ public class DoublyLinkedListTests {
         assertEquals(PRIMES[i + 1], (int) l.first.next.element);
         assertSame(l.first.next, third);
         assertSame(l.first, third.prev);
-        assertNull(l.first.prev);
-        assertNull(l.last.next);
-      }
-    }
-
-  }
-
-  public static class removeFirst {
-
-    @Test(expected = NoSuchElementException.class)
-    public void fails_empty() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.removeFirst();
-    }
-
-    @Test
-    public void last() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      int first = l.removeFirst();
-      if (output) System.out.printf("%s removeFirst()=%d%n", l.toStateString(), first);
-      assertEquals(0, l.size);
-      assertEquals(PRIMES[0], first);
-      assertNull(l.first);
-      assertNull(l.last);
-    }
-
-    @Test
-    public void second_to_last() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      l.addLast(PRIMES[1]);
-      if (output) System.out.println(l.toStateString());
-      int first = l.removeFirst();
-      if (output) System.out.printf("%s removeFirst()=%d%n", l.toStateString(), first);
-      assertEquals(1, l.size);
-      assertEquals(PRIMES[0], first);
-      assertNotNull(l.first);
-      assertEquals(PRIMES[1], (int) l.first.element);
-      assertSame(l.first, l.last);
-      assertNotNull(l.last);
-      assertNull(l.first.next);
-      assertNull(l.first.prev);
-      assertNull(l.last.next);
-      assertNull(l.last.prev);
-    }
-
-    @Test
-    public void nth() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
-      if (output) System.out.println(l.toStateString());
-      for (int i = 0; i < PRIMES.length - 2; i++) {
-        int first = l.removeFirst();
-        if (output) System.out.printf("%s removeFirst()=%d%n", l.toStateString(), first);
-        assertEquals(PRIMES[i], first);
-        assertEquals(PRIMES.length - i - 1, l.size);
-        assertEquals(PRIMES[i + 1], (int) l.first.element);
-        assertEquals(PRIMES[PRIMES.length - 1], (int) l.last.element);
-        assertNull(l.first.prev);
-        assertNull(l.last.next);
-      }
-    }
-
-  }
-
-  public static class removeLast {
-
-    @Test(expected = NoSuchElementException.class)
-    public void fails_empty() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.removeLast();
-    }
-
-    @Test
-    public void last() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      int last = l.removeLast();
-      if (output) System.out.printf("%s removeLast()=%d%n", l.toStateString(), last);
-      assertEquals(0, l.size);
-      assertEquals(PRIMES[0], last);
-      assertNull(l.first);
-      assertNull(l.last);
-    }
-
-    @Test
-    public void second_to_last() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      l.addLast(PRIMES[0]);
-      l.addLast(PRIMES[1]);
-      if (output) System.out.println(l.toStateString());
-      int last = l.removeLast();
-      if (output) System.out.printf("%s removeLast()=%d%n", l.toStateString(), last);
-      assertEquals(1, l.size);
-      assertEquals(PRIMES[1], last);
-      assertEquals(PRIMES[0], (int) l.first.element);
-      assertSame(l.first, l.last);
-      assertNotNull(l.first);
-      assertNotNull(l.last);
-      assertNull(l.first.next);
-      assertNull(l.first.prev);
-      assertNull(l.last.next);
-      assertNull(l.last.prev);
-    }
-
-    @Test
-    public void nth() {
-      DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
-      if (output) System.out.println(l.toStateString());
-      for (int i = PRIMES.length - 1; i > 1; i--) {
-        int last = l.removeLast();
-        if (output) System.out.printf("%s removeLast()=%d%n", l.toStateString(), last);
-        assertEquals(PRIMES[i], last);
-        assertEquals(i, l.size);
-        assertEquals(PRIMES[0], (int) l.first.element);
-        assertEquals(PRIMES[i - 1], (int) l.last.element);
         assertNull(l.first.prev);
         assertNull(l.last.next);
       }
