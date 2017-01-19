@@ -121,6 +121,19 @@ public class CollectionTests {
   }
 
   @Test
+  public void remove_null() {
+    collection.clear();
+    collection.add(null);
+    if (output) outputCurrentState();
+    int sizeBefore = collection.size();
+    boolean removed = collection.remove(null);
+    if (output) outputCurrentState();
+    assertTrue(removed);
+    assertFalse(collection.contains(null));
+    assertEquals(sizeBefore - 1, collection.size());
+  }
+
+  @Test
   public void removeAll() {
     collection.clear();
     collection.addAll(LISTED_PRIMES);
