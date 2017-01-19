@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 import static com.gmail.collinsmith70.collections.TestData.LISTED_PRIMES;
@@ -344,47 +343,6 @@ public class ArrayListTests {
 
   }
 
-  public static class add_Object {
-
-    @Test
-    public void first() {
-      ArrayList<Integer> l = new ArrayList<>();
-      if (output) System.out.println(l.toStateString());
-      l.add(PRIMES[0]);
-      if (output) System.out.printf("%s add(%d)%n", l.toStateString(), PRIMES[0]);
-      assertEquals(PRIMES[0], (int) l.elements[0]);
-      assertEquals(1, l.size);
-    }
-
-    @Test
-    public void second() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.add(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      l.add(PRIMES[1]);
-      if (output) System.out.printf("%s add(%d)%n", l.toStateString(), PRIMES[1]);
-      assertEquals(PRIMES[0], (int) l.elements[0]);
-      assertEquals(PRIMES[1], (int) l.elements[1]);
-      assertEquals(2, l.size);
-    }
-
-    @Test
-    public void nth() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.add(PRIMES[0]);
-      l.add(PRIMES[1]);
-      if (output) System.out.println(l.toStateString());
-      for (int i = 2; i < PRIMES.length; i++) {
-        l.add(PRIMES[i]);
-        if (output) System.out.printf("%s add(%d)%n", l.toStateString(), PRIMES[i]);
-        assertEquals(PRIMES[i], (int) l.elements[l.size - 1]);
-        assertEquals(PRIMES[0], (int) l.elements[0]);
-        assertEquals(i + 1, l.size);
-      }
-    }
-
-  }
-
   public static class add_int_E {
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -413,6 +371,18 @@ public class ArrayListTests {
       if (output) System.out.printf("%s add(%d, %d)%n", l.toStateString(), 0, PRIMES[0]);
       assertEquals(PRIMES[0], (int) l.elements[0]);
       assertEquals(1, l.size);
+    }
+
+    @Test
+    public void second() {
+      ArrayList<Integer> l = new ArrayList<>();
+      l.add(0, PRIMES[0]);
+      if (output) System.out.println(l.toStateString());
+      l.add(0, PRIMES[1]);
+      if (output) System.out.printf("%s add(%d, %d)%n", l.toStateString(), 0, PRIMES[0]);
+      assertEquals(PRIMES[0], (int) l.elements[0]);
+      assertEquals(PRIMES[1], (int) l.elements[1]);
+      assertEquals(2, l.size);
     }
 
     @Test
@@ -461,121 +431,6 @@ public class ArrayListTests {
         assertEquals(PRIMES[0], (int) l.elements[0]);
         assertEquals(PRIMES[PRIMES.length - 1], (int) l.elements[l.size - 1]);
       }
-    }
-
-  }
-
-  public static class addFirst {
-
-    @Test
-    public void first() {
-      ArrayList<Integer> l = new ArrayList<>();
-      if (output) System.out.println(l.toStateString());
-      l.addFirst(PRIMES[0]);
-      if (output) System.out.printf("%s addFirst(%d)%n", l.toStateString(), PRIMES[0]);
-      assertEquals(PRIMES[0], (int) l.elements[0]);
-      assertEquals(1, l.size);
-    }
-
-    @Test
-    public void second() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addFirst(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      l.addFirst(PRIMES[1]);
-      if (output) System.out.printf("%s addFirst(%d)%n", l.toStateString(), PRIMES[1]);
-      assertEquals(PRIMES[1], (int) l.elements[0]);
-      assertEquals(PRIMES[0], (int) l.elements[l.size - 1]);
-      assertEquals(2, l.size);
-    }
-
-    @Test
-    public void nth() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addFirst(PRIMES[0]);
-      l.addFirst(PRIMES[1]);
-      if (output) System.out.println(l.toStateString());
-      for (int i = 2; i < PRIMES.length; i++) {
-        l.addFirst(PRIMES[i]);
-        if (output) System.out.printf("%s addFirst(%d)%n", l.toStateString(), PRIMES[i]);
-        assertEquals(PRIMES[i], (int) l.elements[0]);
-        assertEquals(PRIMES[0], (int) l.elements[l.size - 1]);
-        assertEquals(i + 1, l.size);
-      }
-    }
-
-  }
-
-  public static class addLast {
-
-    @Test
-    public void first() {
-      ArrayList<Integer> l = new ArrayList<>();
-      if (output) System.out.println(l.toStateString());
-      l.addLast(PRIMES[0]);
-      if (output) System.out.printf("%s addLast(%d)%n", l.toStateString(), PRIMES[0]);
-      assertEquals(PRIMES[0], (int) l.elements[0]);
-      assertEquals(1, l.size);
-    }
-
-    @Test
-    public void second() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      l.addLast(PRIMES[1]);
-      if (output) System.out.printf("%s addLast(%d)%n", l.toStateString(), PRIMES[1]);
-      assertEquals(PRIMES[0], (int) l.elements[0]);
-      assertEquals(PRIMES[1], (int) l.elements[l.size - 1]);
-      assertEquals(2, l.size);
-    }
-
-    @Test
-    public void nth() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      l.addLast(PRIMES[1]);
-      if (output) System.out.println(l.toStateString());
-      for (int i = 2; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
-        if (output) System.out.printf("%s addLast(%d)%n", l.toStateString(), PRIMES[i]);
-        assertEquals(PRIMES[i], (int) l.elements[l.size - 1]);
-        assertEquals(PRIMES[0], (int) l.elements[0]);
-        assertEquals(i + 1, l.size);
-      }
-    }
-
-  }
-
-  public static class remove_Object {
-
-    @Test
-    public void _false() {
-      ArrayList<Integer> l = new ArrayList<>();
-      if (output) System.out.println(l.toStateString());
-      boolean removed = l.remove((Integer) PRIMES[0]);
-      if (output) System.out.printf("%s remove((Integer)%d)%n", l.toStateString(), PRIMES[0]);
-      assertFalse(removed);
-    }
-
-    @Test
-    public void _true() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      boolean removed = l.remove((Integer) PRIMES[0]);
-      if (output) System.out.printf("%s remove((Integer)%d)%n", l.toStateString(), PRIMES[0]);
-      assertTrue(removed);
-    }
-
-    @Test
-    public void true_removed_null() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(null);
-      if (output) System.out.println(l.toStateString());
-      boolean removed = l.remove(null);
-      if (output) System.out.printf("%s remove(%h)%n", l.toStateString(), null);
-      assertTrue(removed);
     }
 
   }
@@ -690,125 +545,6 @@ public class ArrayListTests {
         assertEquals(PRIMES.length - i, l.size);
         assertEquals(PRIMES[0], (int) l.elements[0]);
         assertEquals(PRIMES[PRIMES.length - 1], (int) l.elements[l.size - 1]);
-      }
-    }
-
-  }
-
-  public static class removeFirst {
-
-    @Test(expected = NoSuchElementException.class)
-    public void fails_empty() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.removeFirst();
-    }
-
-    @Test
-    public void last() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      int first = l.removeFirst();
-      if (output) System.out.printf("%s removeFirst()=%d%n", l.toStateString(), first);
-      assertEquals(0, l.size);
-      assertEquals(PRIMES[0], first);
-    }
-
-    @Test
-    public void nth() {
-      ArrayList<Integer> l = new ArrayList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
-      if (output) System.out.println(l.toStateString());
-      for (int i = 0; i < PRIMES.length - 2; i++) {
-        int first = l.removeFirst();
-        if (output) System.out.printf("%s removeFirst()=%d%n", l.toStateString(), first);
-        assertEquals(PRIMES[i], first);
-        assertEquals(PRIMES.length - i - 1, l.size);
-        assertEquals(PRIMES[i + 1], (int) l.elements[0]);
-      }
-    }
-
-  }
-
-  public static class removeLast {
-
-    @Test(expected = NoSuchElementException.class)
-    public void fails_empty() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.removeLast();
-    }
-
-    @Test
-    public void last() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      int last = l.removeLast();
-      if (output) System.out.printf("%s removeLast()=%d%n", l.toStateString(), last);
-      assertEquals(0, l.size);
-      assertEquals(PRIMES[0], last);
-    }
-
-    @Test
-    public void nth() {
-      ArrayList<Integer> l = new ArrayList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-      }
-
-      if (output) System.out.println(l.toStateString());
-      for (int i = PRIMES.length - 1; i > 0; i--) {
-        int last = l.removeLast();
-        if (output) System.out.printf("%s removeLast()=%d%n", l.toStateString(), last);
-        assertEquals(PRIMES[i], last);
-        assertEquals(i, l.size);
-        assertEquals(PRIMES[i - 1], (int) l.elements[l.size - 1]);
-      }
-    }
-
-  }
-
-  public static class toArray {
-
-    @Test
-    public void empty() {
-      ArrayList<Integer> l = new ArrayList<>();
-      if (output) System.out.println(l.toStateString());
-      Integer[] array = l.toArray(new Integer[l.size]);
-      if (output) System.out.printf("%s toArray=%s%n", l.toStateString(), Arrays.toString(array));
-      assertNotNull(array);
-      assertEquals(0, array.length);
-    }
-
-    @Test
-    public void single() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      Integer[] array = l.toArray(new Integer[l.size]);
-      if (output) System.out.printf("%s toArray=%s%n", l.toStateString(), Arrays.toString(array));
-      assertNotNull(array);
-      assertEquals(1, array.length);
-      assertEquals(PRIMES[0], (int) array[0]);
-    }
-
-    @Test
-    public void nth() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      if (output) System.out.println(l.toStateString());
-      for (int i = 1; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
-        Integer[] array = l.toArray(new Integer[l.size]);
-        if (output) System.out.printf("%s toArray=%s%n", l.toStateString(), Arrays.toString(array));
-        assertNotNull(array);
-        assertEquals(i + 1, array.length);
-        for (int j = 0; j < array.length; j++) {
-          assertEquals(PRIMES[j], (int) array[j]);
-        }
       }
     }
 
