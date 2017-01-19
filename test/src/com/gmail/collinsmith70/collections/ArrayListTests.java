@@ -11,7 +11,6 @@ import static com.gmail.collinsmith70.collections.TestData.PRIMES;
 import static com.gmail.collinsmith70.collections.TestData.WRAPPED_PRIMES;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
@@ -186,88 +185,6 @@ public class ArrayListTests {
       l.clear();
       if (output) System.out.println(l.toStateString());
       assertEquals(0, l.size);
-    }
-
-  }
-
-  public static class size {
-
-    @Test
-    public void incrementing() {
-      ArrayList<Integer> l = new ArrayList<>();
-      if (output) System.out.println(l.toStateString());
-      assertEquals(l.size, l.size());
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
-        if (output) System.out.println(l.toStateString());
-        assertEquals(l.size, l.size());
-      }
-    }
-
-    @Test
-    public void decrementing() {
-      ArrayList<Integer> l = new ArrayList<>(WRAPPED_PRIMES);
-      if (output) System.out.println(l.toStateString());
-      assertEquals(l.size, l.size());
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.removeLast();
-        if (output) System.out.println(l.toStateString());
-        assertEquals(l.size, l.size());
-      }
-    }
-
-  }
-
-  public static class isEmpty {
-
-    @Test
-    public void _true() {
-      ArrayList<Integer> l = new ArrayList<>();
-      if (output) System.out.println(l.toStateString() + " isEmpty()");
-      assertTrue(l.isEmpty());
-      assertEquals(l.size == 0, l.isEmpty());
-    }
-
-    @Test
-    public void _false() {
-      ArrayList<Integer> l = new ArrayList<>();
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
-        if (output) System.out.println(l.toStateString() + " !isEmpty()");
-        assertFalse(l.isEmpty());
-        assertEquals(l.size == 0, l.isEmpty());
-      }
-    }
-
-  }
-
-  public static class contains {
-
-    @Test
-    public void _true() {
-      ArrayList<Integer> l = new ArrayList<>();
-      for (int prime : PRIMES) {
-        l.addLast(prime);
-        if (output) System.out.println(l.toStateString() + " contains " + prime);
-        assertTrue(l.contains(prime));
-      }
-    }
-
-    @Test
-    public void _false() {
-      ArrayList<Integer> l = new ArrayList<>();
-      for (int prime : PRIMES) {
-        if (output) System.out.println(l.toStateString() + " does not contain " + prime);
-        assertFalse(l.contains(prime));
-      }
-    }
-
-    @Test
-    public void true_contains_null() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(null);
-      if (output) System.out.println(l.toStateString() + " contains " + null);
-      assertTrue(l.contains(null));
     }
 
   }
