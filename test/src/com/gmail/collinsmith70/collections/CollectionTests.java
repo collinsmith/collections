@@ -75,7 +75,7 @@ public class CollectionTests {
     collection.clear();
     int sizeBefore = collection.size();
     if (output) outputCurrentState();
-    collection.add(PRIMES[0]);
+    collection.add(WRAPPED_PRIMES[0]);
     if (output) outputCurrentState();
     assertTrue(collection.contains(PRIMES[0]));
     assertEquals(sizeBefore + 1, collection.size());
@@ -98,13 +98,13 @@ public class CollectionTests {
   @Test
   public void remove_true() {
     collection.clear();
-    collection.add(PRIMES[0]);
+    collection.add(WRAPPED_PRIMES[0]);
     if (output) outputCurrentState();
     int sizeBefore = collection.size();
-    boolean removed = collection.remove(PRIMES[0]);
+    boolean removed = collection.remove(WRAPPED_PRIMES[0]);
     if (output) outputCurrentState();
     assertTrue(removed);
-    assertFalse(collection.contains(PRIMES[0]));
+    assertFalse(collection.contains(WRAPPED_PRIMES[0]));
     assertEquals(sizeBefore - 1, collection.size());
   }
 
@@ -113,10 +113,10 @@ public class CollectionTests {
     collection.clear();
     if (output) outputCurrentState();
     int sizeBefore = collection.size();
-    boolean removed = collection.remove(PRIMES[0]);
+    boolean removed = collection.remove(WRAPPED_PRIMES[0]);
     if (output) outputCurrentState();
     assertFalse(removed);
-    assertFalse(collection.contains(PRIMES[0]));
+    assertFalse(collection.contains(WRAPPED_PRIMES[0]));
     assertEquals(sizeBefore, collection.size());
   }
 
