@@ -96,7 +96,7 @@ public class CollectionTests {
   }
 
   @Test
-  public void remove() {
+  public void remove_true() {
     collection.clear();
     collection.add(PRIMES[0]);
     if (output) outputCurrentState();
@@ -106,6 +106,18 @@ public class CollectionTests {
     assertTrue(removed);
     assertFalse(collection.contains(PRIMES[0]));
     assertEquals(sizeBefore - 1, collection.size());
+  }
+
+  @Test
+  public void remove_false() {
+    collection.clear();
+    if (output) outputCurrentState();
+    int sizeBefore = collection.size();
+    boolean removed = collection.remove(PRIMES[0]);
+    if (output) outputCurrentState();
+    assertFalse(removed);
+    assertFalse(collection.contains(PRIMES[0]));
+    assertEquals(sizeBefore, collection.size());
   }
 
   @Test
