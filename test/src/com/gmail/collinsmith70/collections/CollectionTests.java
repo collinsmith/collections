@@ -1,13 +1,10 @@
 package com.gmail.collinsmith70.collections;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
 import static com.gmail.collinsmith70.collections.TestData.LISTED_PRIMES;
-import static com.gmail.collinsmith70.collections.TestData.PRIMES;
 import static com.gmail.collinsmith70.collections.TestData.WRAPPED_PRIMES;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -17,144 +14,149 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-@RunWith(Parameterized.class)
 public class CollectionTests {
 
   static final boolean output = true;
 
-  @Parameterized.Parameters(name = "{0}")
-  public static java.util.Collection<Object[]> data() {
-    return Arrays.asList(
-        new Object[]{ArrayList.class.getSimpleName(), new ArrayList<Integer>()},
-        new Object[]{SinglyLinkedList.class.getSimpleName(), new SinglyLinkedList<Integer>()},
-        new Object[]{DoublyLinkedList.class.getSimpleName(), new DoublyLinkedList<Integer>()}
-    );
+  final Class<? extends Collection> clazz;
+
+  public CollectionTests(Class<? extends Collection> clazz) {
+    this.clazz = clazz;
   }
 
-  Collection<Integer> collection;
-
-  public CollectionTests(String name, Collection<Integer> collection) {
-    this.collection = collection;
+  public Collection newInstance() {
+    Collection c = null;
+    try {
+      c = clazz.newInstance();
+    } catch (InstantiationException e) {
+      fail(e.getMessage());
+    } catch (IllegalAccessException e) {
+      fail(e.getMessage());
+    } finally {
+      return c;
+    }
   }
 
-  public void outputCurrentState() {
-    System.out.printf("%s:%s%n", collection.getClass().getSimpleName(), collection);
+  public void outputCurrentState(Collection instance) {
+    System.out.printf("%s:%s%n", instance.getClass().getSimpleName(), instance);
   }
 
   @Test
   public void clear_empty() {
-    collection.clear();
-    if (output) outputCurrentState();
-    assertEquals(0, collection.size());
-    assertTrue(collection.isEmpty());
+    Collection c = newInstance();
+    c.clear();
+    if (output) outputCurrentState(c);
+    assertEquals(0, c.size());
+    assertTrue(c.isEmpty());
   }
 
   @Test
   public void clear_nonempty() {
-    collection.clear();
-    collection.addAll(LISTED_PRIMES);
-    if (output) outputCurrentState();
-    collection.clear();
-    if (output) outputCurrentState();
-    assertEquals(0, collection.size());
-    assertTrue(collection.isEmpty());
+    Collection c = newInstance();
+    c.addAll(LISTED_PRIMES);
+    if (output) outputCurrentState(c);
+    c.clear();
+    if (output) outputCurrentState(c);
+    assertEquals(0, c.size());
+    assertTrue(c.isEmpty());
   }
 
   @Test
   public void contains_null() {
-    collection.clear();
-    if (output) outputCurrentState();
-    collection.add(null);
-    if (output) outputCurrentState();
-    assertTrue(collection.contains(null));
+    Collection c = newInstance();
+    if (output) outputCurrentState(c);
+    c.add(null);
+    if (output) outputCurrentState(c);
+    assertTrue(c.contains(null));
   }
 
   @Test
   public void add() {
-    collection.clear();
-    int sizeBefore = collection.size();
-    if (output) outputCurrentState();
-    collection.add(WRAPPED_PRIMES[0]);
-    if (output) outputCurrentState();
-    assertTrue(collection.contains(PRIMES[0]));
-    assertEquals(sizeBefore + 1, collection.size());
+    Collection c = newInstance();
+    int sizeBefore = c.size();
+    if (output) outputCurrentState(c);
+    c.add(WRAPPED_PRIMES[0]);
+    if (output) outputCurrentState(c);
+    assertTrue(c.contains(WRAPPED_PRIMES[0]));
+    assertEquals(sizeBefore + 1, c.size());
   }
 
   @Test
   public void addAll() {
-    collection.clear();
-    int sizeBefore = collection.size();
-    if (output) outputCurrentState();
-    collection.addAll(LISTED_PRIMES);
-    if (output) outputCurrentState();
+    Collection c = newInstance();
+    int sizeBefore = c.size();
+    if (output) outputCurrentState(c);
+    c.addAll(LISTED_PRIMES);
+    if (output) outputCurrentState(c);
     for (Integer prime : LISTED_PRIMES) {
-      assertTrue(collection.contains(prime));
+      assertTrue(c.contains(prime));
     }
 
-    assertEquals(sizeBefore + LISTED_PRIMES.size(), collection.size());
+    assertEquals(sizeBefore + LISTED_PRIMES.size(), c.size());
   }
 
   @Test
   public void remove_true() {
-    collection.clear();
-    collection.add(WRAPPED_PRIMES[0]);
-    if (output) outputCurrentState();
-    int sizeBefore = collection.size();
-    boolean removed = collection.remove(WRAPPED_PRIMES[0]);
-    if (output) outputCurrentState();
+    Collection c = newInstance();
+    c.add(WRAPPED_PRIMES[0]);
+    if (output) outputCurrentState(c);
+    int sizeBefore = c.size();
+    boolean removed = c.remove(WRAPPED_PRIMES[0]);
+    if (output) outputCurrentState(c);
     assertTrue(removed);
-    assertFalse(collection.contains(WRAPPED_PRIMES[0]));
-    assertEquals(sizeBefore - 1, collection.size());
+    assertFalse(c.contains(WRAPPED_PRIMES[0]));
+    assertEquals(sizeBefore - 1, c.size());
   }
 
   @Test
   public void remove_false() {
-    collection.clear();
-    if (output) outputCurrentState();
-    int sizeBefore = collection.size();
-    boolean removed = collection.remove(WRAPPED_PRIMES[0]);
-    if (output) outputCurrentState();
+    Collection c = newInstance();
+    if (output) outputCurrentState(c);
+    int sizeBefore = c.size();
+    boolean removed = c.remove(WRAPPED_PRIMES[0]);
+    if (output) outputCurrentState(c);
     assertFalse(removed);
-    assertFalse(collection.contains(WRAPPED_PRIMES[0]));
-    assertEquals(sizeBefore, collection.size());
+    assertFalse(c.contains(WRAPPED_PRIMES[0]));
+    assertEquals(sizeBefore, c.size());
   }
 
   @Test
   public void remove_null() {
-    collection.clear();
-    collection.add(null);
-    if (output) outputCurrentState();
-    int sizeBefore = collection.size();
-    boolean removed = collection.remove(null);
-    if (output) outputCurrentState();
+    Collection c = newInstance();
+    c.add(null);
+    if (output) outputCurrentState(c);
+    int sizeBefore = c.size();
+    boolean removed = c.remove(null);
+    if (output) outputCurrentState(c);
     assertTrue(removed);
-    assertFalse(collection.contains(null));
-    assertEquals(sizeBefore - 1, collection.size());
+    assertFalse(c.contains(null));
+    assertEquals(sizeBefore - 1, c.size());
   }
 
   @Test
   public void removeAll() {
-    collection.clear();
-    collection.addAll(LISTED_PRIMES);
-    if (output) outputCurrentState();
-    int sizeBefore = collection.size();
-    collection.removeAll(LISTED_PRIMES);
-    if (output) outputCurrentState();
+    Collection c = newInstance();
+    c.addAll(LISTED_PRIMES);
+    if (output) outputCurrentState(c);
+    int sizeBefore = c.size();
+    c.removeAll(LISTED_PRIMES);
+    if (output) outputCurrentState(c);
     for (Integer prime : LISTED_PRIMES) {
-      assertFalse(collection.contains(prime));
+      assertFalse(c.contains(prime));
     }
 
-    assertEquals(sizeBefore - LISTED_PRIMES.size(), collection.size());
+    assertEquals(sizeBefore - LISTED_PRIMES.size(), c.size());
   }
 
   @Test
   public void toArray_same() {
-    collection.clear();
-    collection.addAll(LISTED_PRIMES);
-    if (output) outputCurrentState();
-    Integer[] existing = new Integer[collection.size()];
-    Integer[] array = collection.toArray(existing);
+    Collection c = newInstance();
+    c.addAll(LISTED_PRIMES);
+    if (output) outputCurrentState(c);
+    Object[] existing = new Object[c.size()];
+    Object[] array = c.toArray(existing);
     if (output) System.out.println(Arrays.toString(array));
     assertArrayEquals(WRAPPED_PRIMES, array);
     assertSame(existing, array);
@@ -162,11 +164,11 @@ public class CollectionTests {
 
   @Test
   public void toArray_smaller() {
-    collection.clear();
-    collection.addAll(LISTED_PRIMES);
-    if (output) outputCurrentState();
-    Integer[] existing = new Integer[0];
-    Integer[] array = collection.toArray(existing);
+    Collection c = newInstance();
+    c.addAll(LISTED_PRIMES);
+    if (output) outputCurrentState(c);
+    Object[] existing = new Object[0];
+    Object[] array = c.toArray(existing);
     if (output) System.out.println(Arrays.toString(array));
     assertArrayEquals(WRAPPED_PRIMES, array);
     assertNotSame(existing, array);
@@ -174,25 +176,25 @@ public class CollectionTests {
 
   @Test
   public void toArray_larger() {
-    collection.clear();
-    collection.addAll(LISTED_PRIMES);
-    if (output) outputCurrentState();
-    Integer[] existing = new Integer[collection.size() + 1];
-    Integer[] array = collection.toArray(existing);
+    Collection c = newInstance();
+    c.addAll(LISTED_PRIMES);
+    if (output) outputCurrentState(c);
+    Object[] existing = new Object[c.size() + 1];
+    Object[] array = c.toArray(existing);
     if (output) System.out.println(Arrays.toString(array));
     for (int i = 0; i < WRAPPED_PRIMES.length; i++) {
       assertSame(WRAPPED_PRIMES[i], array[i]);
     }
 
-    assertNull(array[collection.size()]);
+    assertNull(array[c.size()]);
     assertSame(existing, array);
   }
 
   @Test
   public void toString_notnull_nonempty() {
-    collection.clear();
-    String result = collection.toString();
-    if (output) outputCurrentState();
+    Collection c = newInstance();
+    String result = c.toString();
+    if (output) outputCurrentState(c);
     assertNotNull(result);
     assertFalse(result.isEmpty());
   }
