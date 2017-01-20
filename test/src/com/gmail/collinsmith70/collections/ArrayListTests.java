@@ -176,6 +176,9 @@ public class ArrayListTests {
       l.clear();
       if (output) System.out.println(l.toStateString());
       assertEquals(0, l.size);
+      for (Object element : l.elements) {
+        assertNull(element);
+      }
     }
 
     @Test
@@ -185,76 +188,8 @@ public class ArrayListTests {
       l.clear();
       if (output) System.out.println(l.toStateString());
       assertEquals(0, l.size);
-    }
-
-  }
-
-  public static class get {
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void fails_empty() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.get(0);
-    }
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void fails_nonempty_low() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      l.get(-1);
-    }
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void fails_nonempty_high() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      l.get(1);
-    }
-
-    @Test
-    public void incrementing() {
-      ArrayList<Integer> l = new ArrayList<>();
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.addLast(PRIMES[i]);
-        for (int j = 0; j <= i; j++) {
-          int last = l.get(j);
-          if (output) System.out.printf("%s get(%d)=%d%n", l.toStateString(), j, last);
-          assertEquals(PRIMES[j], last);
-        }
-      }
-    }
-
-  }
-
-  public static class set {
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void fails_empty() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.set(0, PRIMES[0]);
-    }
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void fails_nonempty_low() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      l.set(-1, PRIMES[1]);
-    }
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void fails_nonempty_high() {
-      ArrayList<Integer> l = new ArrayList<>();
-      l.addLast(PRIMES[0]);
-      l.set(1, PRIMES[1]);
-    }
-
-    @Test
-    public void incrementing() {
-      ArrayList<Integer> l = new ArrayList<>(WRAPPED_PRIMES);
-      for (int i = 0; i < PRIMES.length; i++) {
-        l.set(i, PRIMES[i]);
-        if (output) System.out.printf("%s set(%d)=%d%n", l.toStateString(), i, PRIMES[i]);
-        assertEquals(PRIMES[i], (int) l.get(i));
+      for (Object element : l.elements) {
+        assertNull(element);
       }
     }
 
@@ -295,7 +230,7 @@ public class ArrayListTests {
       ArrayList<Integer> l = new ArrayList<>();
       l.add(0, PRIMES[0]);
       if (output) System.out.println(l.toStateString());
-      l.add(0, PRIMES[1]);
+      l.add(1, PRIMES[1]);
       if (output) System.out.printf("%s add(%d, %d)%n", l.toStateString(), 0, PRIMES[0]);
       assertEquals(PRIMES[0], (int) l.elements[0]);
       assertEquals(PRIMES[1], (int) l.elements[1]);
