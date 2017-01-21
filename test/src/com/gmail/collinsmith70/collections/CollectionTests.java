@@ -71,6 +71,21 @@ public class CollectionTests {
   }
 
   @Test
+  public void containsAll_true() {
+    collection.clear();
+    collection.addAll(LISTED_PRIMES);
+    if (output) outputCurrentState();
+    assertTrue(collection.containsAll(LISTED_PRIMES));
+  }
+
+  @Test
+  public void containsAll_false() {
+    collection.clear();
+    if (output) outputCurrentState();
+    assertFalse(collection.containsAll(LISTED_PRIMES));
+  }
+
+  @Test
   public void add() {
     collection.clear();
     int sizeBefore = collection.size();

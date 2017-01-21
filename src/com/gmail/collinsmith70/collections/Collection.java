@@ -28,6 +28,16 @@ public interface Collection<E> extends Iterable<E> {
 
   boolean contains(Object obj);
 
+  default boolean containsAll(Iterable<? extends E> elements) {
+    for (E element : elements) {
+      if (!contains(element)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   <T> T[] toArray(T[] array);
 
 }
