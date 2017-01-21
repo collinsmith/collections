@@ -49,6 +49,17 @@ public class ArrayListTests {
       assertNotSame(WRAPPED_PRIMES, l.elements);
     }
 
+    @Test
+    public void ArrayList_Iterable() {
+      ArrayList<Integer> l = new ArrayList<>(LISTED_PRIMES);
+      if (output) System.out.println(l.toStateString());
+      assertEquals(WRAPPED_PRIMES.length, l.size);
+      int i = 0;
+      for (Integer prime : l) {
+        assertSame(WRAPPED_PRIMES[i++], prime);
+      }
+    }
+
   }
 
   public static class checkAndGrow {
