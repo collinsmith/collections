@@ -25,7 +25,7 @@ public class ArrayListTests {
   public static class _ArrayList {
 
     @Test
-    public void default_constructor() {
+    public void ArrayList() {
       ArrayList<Integer> l = new ArrayList<>();
       if (output) System.out.println(l.toStateString());
       assertEquals(0, l.size);

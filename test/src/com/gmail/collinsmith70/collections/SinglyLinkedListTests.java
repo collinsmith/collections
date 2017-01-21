@@ -25,7 +25,7 @@ public class SinglyLinkedListTests {
   public static class _SinglyLinkedList {
 
     @Test
-    public void default_constructor() {
+    public void SinglyLinkedList() {
       SinglyLinkedList<Integer> l = new SinglyLinkedList<>();
       if (output) System.out.println(l.toStateString());
       assertNull(l.first);
