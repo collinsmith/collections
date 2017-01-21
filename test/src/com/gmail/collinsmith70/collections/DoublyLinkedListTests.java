@@ -25,12 +25,23 @@ public class DoublyLinkedListTests {
   public static class _DoublyLinkedList {
 
     @Test
-    public void default_constructor() {
+    public void DoublyLinkedList() {
       DoublyLinkedList<Integer> l = new DoublyLinkedList<>();
       if (output) System.out.println(l.toStateString());
       assertNull(l.first);
       assertNull(l.last);
       assertEquals(0, l.size);
+    }
+
+    @Test
+    public void DoublyLinkedList_Iterable() {
+      DoublyLinkedList<Integer> l = new DoublyLinkedList<>(LISTED_PRIMES);
+      if (output) System.out.println(l.toStateString());
+      assertEquals(WRAPPED_PRIMES.length, l.size);
+      int i = 0;
+      for (Integer prime : l) {
+        assertSame(WRAPPED_PRIMES[i++], prime);
+      }
     }
 
   }
