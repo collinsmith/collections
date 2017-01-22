@@ -345,7 +345,7 @@ public class ArrayList<E> extends AbstractList<E>
   }
 
   /**
-   * An optimized implementation of {@link AbstractList.Itr}.
+   * An optimized implementation of {@code AbstractList.Itr}.
    */
   private class Itr implements Iterator<E> {
 
@@ -464,7 +464,7 @@ public class ArrayList<E> extends AbstractList<E>
   }
 
   /**
-   * An optimized implementation of {@link AbstractList.ListItr}.
+   * An optimized implementation of {@code AbstractList.ListItr}.
    */
   private class ListItr extends Itr implements ListIterator<E> {
 
@@ -477,9 +477,6 @@ public class ArrayList<E> extends AbstractList<E>
      * This iterator is <a href="https://en.wikipedia.org/wiki/Fail-fast">fail-fast</a>.
      *
      * @param index initial cursor position of the returned iterator
-     *
-     * @return an iterator over the elements in this {@code ArrayList} starting at the specified
-     *         position
      */
     private ListItr(int index) {
       super();
