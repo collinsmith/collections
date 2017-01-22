@@ -15,8 +15,8 @@ public class SetTests {
   public static java.util.Collection<Object[]> data() {
     return Arrays.asList(
         // TODO: fill in set implementations
-        new Object[]{ArrayList.class.getSimpleName(), new ArrayList<Integer>()},
-        new Object[]{DoublyLinkedList.class.getSimpleName(), new DoublyLinkedList<Integer>()}
+        new Object[]{null, null},
+        new Object[]{null, null}
     );
   }
 
