@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 // TODO: document class header
 public class ArrayList<E> extends AbstractList<E>
-    implements List<E>, RandomAccess, Cloneable {
+    implements List<E>, RandomAccess {
 
   private static final int DEFAULT_CAPACITY = 16;
 
